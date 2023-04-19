@@ -182,6 +182,7 @@ def executar():
             
             # Finaliza a janela de diálogo se o usuário fechar a janela
             if dialog_event2 == sg.WINDOW_CLOSED:
+                dialog_window2.close()
                 break
             
             # Avança para a janela principal se o usuário clicar no botão
@@ -189,8 +190,10 @@ def executar():
                 maquina = dialog_values2['maquina']
                 with open("configuracoes/outros/nome_maquina.txt", "w") as f:
                     f.write(maquina)
+                    dialog_window2.close()
+                print('teste')
                 break
-            dialog_window2.close()
+            
 
         
         #maquina = input("Qual nome deseja que apareça na planilha?: ")
