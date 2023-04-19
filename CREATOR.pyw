@@ -13,23 +13,6 @@ import re
 with open("configuracoes\outros\SPREADSHEET_ID.txt", "r") as arquivo:
     SPREADSHEET_ID = arquivo.read().strip()
 
-RANGE_NAME = 'contas!A:D'
-
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
-creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-service = build('sheets', 'v4', credentials=creds)
-
-# Obter os valores da página 'teste' da planilha
-result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-values = result.get('values', [])
-
-# Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-regex = re.compile(r'^.*\.\d{3}\s.*$')
-
-# Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-num_rows = sum(1 for row in values if regex.match(row[0]))
-
 
 check_img = 'storage\\img\\total.png'
 
@@ -193,6 +176,22 @@ def executar():
         with open("configuracoes/outros/nome_maquina.txt") as f:
             maquina = f.readline().strip()
 
+    RANGE_NAME = 'contas!A:D'
+
+    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    service = build('sheets', 'v4', credentials=creds)
+
+    # Obter os valores da página 'teste' da planilha
+    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+    values = result.get('values', [])
+
+    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+    regex = re.compile(r'^.*\.\d{3}\s.*$')
+
+    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+    num_rows = sum(1 for row in values if regex.match(row[0]))
 
     logger = logging.getLogger(__name__)
 
