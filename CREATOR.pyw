@@ -187,13 +187,15 @@ def executar():
             # Avança para a janela principal se o usuário clicar no botão
             if dialog_event2 == 'Avançar':
                 maquina = dialog_values2['maquina']
+                with open("configuracoes/outros/nome_maquina.txt", "w") as f:
+                    f.write(maquina)
                 break
+            dialog_window.close()
 
-        dialog_window.close()
+        
         #maquina = input("Qual nome deseja que apareça na planilha?: ")
         # escreve o nome do arquivo em um arquivo de configuração
-        with open("configuracoes/outros/nome_maquina.txt", "w") as f:
-            f.write(maquina)
+        
     else:
         # se o arquivo existe, lê o nome do arquivo a partir do arquivo de configuração ou da variável global
         with open("configuracoes/outros/nome_maquina.txt") as f:
