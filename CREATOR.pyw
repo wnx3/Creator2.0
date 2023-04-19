@@ -98,34 +98,12 @@ def executar():
             pass
     else:
         pass
-    base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
-    local_path = 'CREATOR.pyw'
-    url = base_url + local_path
-    # Obtenha a última versão do arquivo do GitHub
-    response = requests.get(url)
-    github_version = response.content
-    #
-    # Obtenha o hash SHA256 da versão local do arquivo
-    with open(local_path, 'rb') as f:
-        local_version = f.read()
-    local_hash = hashlib.sha256(local_version).hexdigest()
-    #
-    # Obtenha o hash SHA256 da versão do GitHub do arquivo
-    github_hash = hashlib.sha256(github_version).hexdigest()
-    #
-    # Compare os hashes
-    if local_hash != github_hash:
-        # Baixe a nova versão do GitHub e salve-a localmente
-        with open(local_path, 'wb') as f:
-            f.write(github_version)
-            window['output'].print("Bot atualizado com sucesso.\nAbra novamente.")
-            window.Refresh()
-    time.sleep(100)
+
     base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
 
     # Lista de arquivos que você deseja verificar e atualizar
     #file_list = ['relatorio.json', 'requirements.txt']
-    file_list = ['relatorio.json', 'requirements.txt']
+    file_list = ['relatorio.json', 'requirements.txt', 'CREATOR.pyw']
 
     for file_name in file_list:
         # Caminho local do seu arquivo Python
