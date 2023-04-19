@@ -47,7 +47,7 @@ sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text(num_rows, key='total')]
+    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
