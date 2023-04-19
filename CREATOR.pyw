@@ -47,7 +47,7 @@ sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
+    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('CALCULANDO.', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
@@ -167,7 +167,30 @@ def executar():
     if not os.path.exists("configuracoes/outros/nome_maquina.txt"):
         # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
         global nome_arquivo
-        maquina = input("Qual nome deseja que apareça na planilha?: ")
+        sg.theme('Dark')
+        # Define a janela de diálogo com um input e um botão
+        dialog_layout2 = [
+            [sg.Text('Qual nome deseja que apareça na planilha?: ', font=('Open Sans', 10))],
+            [sg.Input(key='maquina', font=('Open Sans', 10))],
+            [sg.Button('Avançar', font=('Open Sans', 10))]
+        ]
+
+        dialog_window2 = sg.Window('Configuração.', dialog_layout2)
+        # Loop principal da janela de diálogo
+        while True:
+            dialog_event, dialog_values = dialog_window2.read()
+            
+            # Finaliza a janela de diálogo se o usuário fechar a janela
+            if dialog_event == sg.WINDOW_CLOSED:
+                break
+            
+            # Avança para a janela principal se o usuário clicar no botão
+            if dialog_event == 'Avançar':
+                maquina = dialog_values['maquina']
+                break
+
+        dialog_window.close()
+        #maquina = input("Qual nome deseja que apareça na planilha?: ")
         # escreve o nome do arquivo em um arquivo de configuração
         with open("configuracoes/outros/nome_maquina.txt", "w") as f:
             f.write(maquina)
