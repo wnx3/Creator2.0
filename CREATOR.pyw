@@ -178,15 +178,15 @@ def executar():
         dialog_window2 = sg.Window('Configuração.', dialog_layout2)
         # Loop principal da janela de diálogo
         while True:
-            dialog_event, dialog_values = dialog_window2.read()
+            dialog_event2, dialog_values2 = dialog_window2.read()
             
             # Finaliza a janela de diálogo se o usuário fechar a janela
-            if dialog_event == sg.WINDOW_CLOSED:
+            if dialog_event2 == sg.WINDOW_CLOSED:
                 break
             
             # Avança para a janela principal se o usuário clicar no botão
-            if dialog_event == 'Avançar':
-                maquina = dialog_values['maquina']
+            if dialog_event2 == 'Avançar':
+                maquina = dialog_values2['maquina']
                 break
 
         dialog_window.close()
