@@ -47,7 +47,7 @@ sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('CALCULANDO.', key='total')]
+    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
@@ -190,7 +190,7 @@ def executar():
                 with open("configuracoes/outros/nome_maquina.txt", "w") as f:
                     f.write(maquina)
                 break
-            dialog_window.close()
+            dialog_window2.close()
 
         
         #maquina = input("Qual nome deseja que apareça na planilha?: ")
