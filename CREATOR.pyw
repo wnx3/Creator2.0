@@ -51,6 +51,7 @@ for file_name in file_list:
         # Baixe a nova versão do GitHub e salve-a localmente
         with open(local_path, 'w', encoding='utf-8') as f:
             f.write(github_version)
+        sg.theme('Dark')
         layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
