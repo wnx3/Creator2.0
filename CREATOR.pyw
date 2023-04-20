@@ -460,6 +460,8 @@ def executar():
     def gerar_email():
         global lista_user
         global sms
+        global nome
+        global sobrenome
         global email
         lista_user = random.choices(range(1, 9), k=3)
         with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
@@ -851,6 +853,8 @@ def executar():
 
 
     def firts_reg():
+        global nome
+        global sobrenome
         abc = True
         while abc:
             global sms
