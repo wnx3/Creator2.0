@@ -14,9 +14,6 @@ with open("configuracoes\outros\SPREADSHEET_ID.txt", "r") as arquivo:
     SPREADSHEET_ID = arquivo.read().strip()
 
 
-check_img = 'storage\\img\\total.png'
-
-sg.SetOptions(font=('Open Sans', 10))
 
 sg.theme('Dark')
 # Define a janela de diálogo com um input e um botão
@@ -51,6 +48,25 @@ layout = [
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
+
+RANGE_NAME = 'contas!A:D'
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+service = build('sheets', 'v4', credentials=creds)
+
+# Obter os valores da página 'teste' da planilha
+result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+values = result.get('values', [])
+
+# Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+regex = re.compile(r'^.*\.\d{3}\s.*$')
+
+# Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+num_rows = sum(1 for row in values if regex.match(row[0]))
+window['total'].update(num_rows)
+check_img = 'storage\\img\\total.png'
+
+sg.SetOptions(font=('Open Sans', 10))
 
 def contagem():
     contagem += 1
@@ -1036,21 +1052,7 @@ def executar():
     #               stderr=subprocess.DEVNULL)
     cont = True
     while cont is True:
-        RANGE_NAME = 'contas!A:D'
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-        service = build('sheets', 'v4', credentials=creds)
-        
-        # Obter os valores da página 'teste' da planilha
-        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-        values = result.get('values', [])
-        
-        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-        regex = re.compile(r'^.*\.\d{3}\s.*$')
-        
-        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-        num_rows = sum(1 for row in values if regex.match(row[0]))
-        window['total'].update(num_rows)
+
         window['output'].print(linha_ret)
         window.Refresh()
         window['output'].print('Iniciando criação')
