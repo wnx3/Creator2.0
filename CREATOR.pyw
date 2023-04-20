@@ -1,6 +1,58 @@
+import requests
+import hashlib
+try:
+    import PySimpleGUI as sg
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'PySimpleGUI'])
+    subprocess.run(['deactivate'], shell=True)
+    import PySimpleGUI as sg
+    sg.theme('Dark')
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Erro", layout)
+    event, values = window.read()
+    window.close()
+
+base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
+# Lista de arquivos que você deseja verificar e atualizar
+#file_list = ['relatorio.json', 'requirements.txt']
+file_list = ['relatorio.json', 'requirements.txt', 'CREATOR.pyw']
+for file_name in file_list:
+    # Caminho local do seu arquivo Python
+    local_path = file_name
+    
+    # URL completa do arquivo no GitHub
+    url = base_url + file_name
+    # Obtenha a última versão do arquivo do GitHub
+    response = requests.get(url)
+    github_version = response.content.decode('utf-8')
+    # Verifique se o arquivo local tem a mesma versão do GitHub
+    with open(local_path, 'r', encoding='utf-8') as f:
+        local_version = f.read()
+    local_hash = hashlib.sha256(local_version.encode()).hexdigest()
+    github_hash = hashlib.sha256(github_version.encode()).hexdigest()
+    if local_hash != github_hash:
+        # Baixe a nova versão do GitHub e salve-a localmente
+        with open(local_path, 'w', encoding='utf-8') as f:
+            f.write(github_version)
+        sg.theme('Dark')
+        layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+                  [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+                  [sg.Button("OK")]]
+        window = sg.Window("Erro", layout)
+        event, values = window.read()
+        window.close()
+    else:
+        pass
+
 import multiprocessing
 import os
-import PySimpleGUI as sg
+
 import time
 from datetime import datetime
 from google.oauth2.credentials import Credentials
@@ -100,40 +152,6 @@ def executar():
     else:
         pass
 
-    base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
-
-    # Lista de arquivos que você deseja verificar e atualizar
-    #file_list = ['relatorio.json', 'requirements.txt']
-    file_list = ['relatorio.json', 'requirements.txt', 'CREATOR.pyw']
-
-    for file_name in file_list:
-        # Caminho local do seu arquivo Python
-        local_path = file_name
-        
-        # URL completa do arquivo no GitHub
-        url = base_url + file_name
-
-        # Obtenha a última versão do arquivo do GitHub
-        response = requests.get(url)
-        github_version = response.content.decode('utf-8')
-
-        # Verifique se o arquivo local tem a mesma versão do GitHub
-        with open(local_path, 'r', encoding='utf-8') as f:
-            local_version = f.read()
-
-        local_hash = hashlib.sha256(local_version.encode()).hexdigest()
-        github_hash = hashlib.sha256(github_version.encode()).hexdigest()
-
-        if local_hash != github_hash:
-            # Baixe a nova versão do GitHub e salve-a localmente
-            with open(local_path, 'w', encoding='utf-8') as f:
-                f.write(github_version)
-            window['output'].print("BOT atualizado.\nAbra novamente.")
-            window.Refresh()
-            time.sleep(100)
-        else:
-            pass
-
     try:
         from rich.console import Console
     except ModuleNotFoundError:
@@ -142,11 +160,16 @@ def executar():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print('Instalando dependências...')
-        window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
+        sg.theme('Dark')
+        layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+                  [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+                  [sg.Button("OK")]]
+        window = sg.Window("Erro", layout)
+        event, values = window.read()
         from rich.console import Console
+        window.close()
     import os
     import time
     import requests
