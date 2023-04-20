@@ -65,24 +65,8 @@ layout = [
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
 
-RANGE_NAME = 'contas!A:D'
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-service = build('sheets', 'v4', credentials=creds)
-
-# Obter os valores da página 'teste' da planilha
-result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-values = result.get('values', [])
-
-# Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-regex = re.compile(r'^.*\.\d{3}\s.*$')
-
-# Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-num_rows = sum(1 for row in values if regex.match(row[0]))
-window['total'].update(num_rows)
 
 
-sg.SetOptions(font=('Open Sans', 10))
 
 def contagem():
     contagem += 1
@@ -1072,6 +1056,23 @@ def executar():
         window['output'].print(linha_ret)
         window.Refresh()
         window['output'].print('Iniciando criação')
+
+        RANGE_NAME = 'contas!A:D'
+        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+        service = build('sheets', 'v4', credentials=creds)
+        
+        # Obter os valores da página 'teste' da planilha
+        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+        values = result.get('values', [])
+        
+        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+        regex = re.compile(r'^.*\.\d{3}\s.*$')
+        
+        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+        num_rows = sum(1 for row in values if regex.match(row[0]))
+        window['total'].update(num_rows)
+
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, check=True, shell=True)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
