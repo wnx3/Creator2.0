@@ -152,7 +152,7 @@ sg.SetOptions(font=('Open Sans', 10))
 check_img = 'storage\\img\\total.png'
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar'),sg.Button('Reiniciar', key='clear', pad=((5, 190), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
+    [sg.Button('Executar'),sg.Button('Reiniciar', key='clear', pad=((5, 190), 0), disabled=True),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
@@ -161,6 +161,8 @@ window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
 
 
 def contagem():
+    global nome
+    global sobrenome
     contagem += 1
     window['contagem'].update(contagem)
     window.Refresh()
@@ -261,6 +263,8 @@ def executar():
 
 
     def vpn_nord():
+        global nome
+        global sobrenome
         global sms
         window['output'].print('SMS\nAlterando IP da NordVPN', text_color='red')
         window.Refresh()
@@ -297,6 +301,8 @@ def executar():
 
 
     def vpn_surf():
+        global nome
+        global sobrenome
         global sms
         sms = True
         window['output'].print('SMS\nAlterando IP da SurfShark', text_color='red')
@@ -329,6 +335,8 @@ def executar():
         abc = False
 
     def vpn_better():
+        global nome
+        global sobrenome
         global sms
         sms = True
         window['output'].print('SMS\nAlterando IP da BetterNet', text_color='red')
@@ -388,6 +396,8 @@ def executar():
         abc = False
 
     def vpn_cyberghost():
+        global nome
+        global sobrenome
         global sms
         sms = True
         window['output'].print('SMS\nAlterando IP da CyberGhost', text_color='red')
@@ -419,6 +429,8 @@ def executar():
         abc = False
 
     def vpn_avg():
+        global nome
+        global sobrenome
         global sms
         window['output'].print('SMS\nAlterando IP da AVG', text_color='red')
         window.Refresh()
@@ -452,6 +464,8 @@ def executar():
 
 
     def listener(message):
+        global nome
+        global sobrenome
         global cod
         if 'code' in message['subject']:
             cod = re.search(r'\d+', message['subject']).group(0)
