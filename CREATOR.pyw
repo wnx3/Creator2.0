@@ -14,7 +14,21 @@ import re
 with open("configuracoes\outros\SPREADSHEET_ID.txt", "r") as arquivo:
     SPREADSHEET_ID = arquivo.read().strip()
 
+import PySimpleGUI as sg
 
+# Tenta abrir o arquivo token.json
+try:
+    with open("token.json", "r") as f:
+        # Se o arquivo existir, lê o conteúdo
+        content = f.read()
+except FileNotFoundError:
+    # Se o arquivo não existir, abre uma GUI para informar o usuário
+    sg.theme('Dark')
+    layout = [[sg.Text("Arquivo token.json não encontrado.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Erro", layout)
+    event, values = window.read()
+    window.close()
 
 sg.theme('Dark')
 # Define a janela de diálogo com um input e um botão
