@@ -1,4 +1,5 @@
 import multiprocessing
+import os
 import PySimpleGUI as sg
 import time
 from datetime import datetime
@@ -1352,6 +1353,13 @@ while True:
     
     # Executa o código e atualiza a saída na Multiline em tempo real
     if event == 'Executar':
+        if not os.path.exists("token.json"):
+        # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+            window['output'].print('Nenhum token.json encontrado.')
+            window.Refresh()
+            time.sleep(200)
+        else:
+            pass
         with open("configuracoes\\contas\\senha_perfis.txt", "r") as arquivo:
             config = arquivo.read().strip()
         if config == 'digite_a_senha_que_sera_usada_nos_perfis':
