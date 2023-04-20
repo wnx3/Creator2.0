@@ -42,6 +42,7 @@ dialog_window.close()
 sg.theme('Dark')
 sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
+check_img = 'storage\\img\\total.png'
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
     [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
@@ -64,7 +65,7 @@ regex = re.compile(r'^.*\.\d{3}\s.*$')
 # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
 num_rows = sum(1 for row in values if regex.match(row[0]))
 window['total'].update(num_rows)
-check_img = 'storage\\img\\total.png'
+
 
 sg.SetOptions(font=('Open Sans', 10))
 
