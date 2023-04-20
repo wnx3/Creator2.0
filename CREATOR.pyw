@@ -168,6 +168,7 @@ def executar():
         # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
         global nome_arquivo
         with open("configuracoes/outros/nome_maquina.txt", "w") as f:
+            f.write('Configure o nome da maquina.')
             pass
         
     else:
