@@ -1000,7 +1000,7 @@ def executar():
                     # Insert user, password, and timestamp into first empty row
                     range_to_update = f'relatorio_geral!A{first_empty_row_index}:D{first_empty_row_index}'
                     value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina]]}
+                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                     result = service.spreadsheets().values().update(
                         spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
                         range=range_to_update,
@@ -1328,7 +1328,7 @@ def executar():
                         # Insert user, password, and timestamp into first empty row
                         range_to_update = f'relatorio_geral!A{first_empty_row_index}:D{first_empty_row_index}'
                         value_input_option = 'USER_ENTERED'
-                        value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina]]}
+                        value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                         result = service.spreadsheets().values().update(
                             spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
                             range=range_to_update,
