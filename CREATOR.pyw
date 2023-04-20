@@ -1,5 +1,23 @@
+try:
+    import requests
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'requests'])
+    subprocess.run(['deactivate'], shell=True)
+    import requests
+    sg.theme('Dark')
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Atualização", layout)
+    event, values = window.read()
+    window.close()
+
 import time
-import requests
+
 import hashlib
 import os
 
