@@ -1106,7 +1106,7 @@ def executar():
     #subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     window.Refresh()
-    window['output'].print('Iniciando criação')
+    window['output'].print('Iniciando criação.\n')
     window.Refresh()
     cont = True
     while cont is True:
