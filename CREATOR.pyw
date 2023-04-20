@@ -957,7 +957,8 @@ def executar():
             try:
                 if len(verificar) == 1:
                     window['output'].print('Conta criada com sucesso.', text_color='green')
-                    
+                    with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
+                        conteudo = arquivo.read().strip()
                     window.Refresh()
                     now = datetime.now()
                     timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -971,7 +972,7 @@ def executar():
                     # Insert user, password, and timestamp into first empty row
                     range_to_update = f'contas!A{first_empty_row_index}:D{first_empty_row_index}'
                     value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina]]}
+                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                     result = service.spreadsheets().values().update(
                         spreadsheetId=SPREADSHEET_ID,
                         range=range_to_update,
@@ -1282,6 +1283,8 @@ def executar():
                         except:
                             pass
                         window['output'].print('Conta criada com sucesso.', text_color='green')
+                        with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
+                            conteudo = arquivo.read().strip()
                         window.Refresh()
                         now = datetime.now()
                         timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
@@ -1297,7 +1300,7 @@ def executar():
                         # Insert user, password, and timestamp into first empty row
                         range_to_update = f'contas!A{first_empty_row_index}:D{first_empty_row_index}'
                         value_input_option = 'USER_ENTERED'
-                        value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina]]}
+                        value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                         result = service.spreadsheets().values().update(
                             spreadsheetId=SPREADSHEET_ID,
                             range=range_to_update,
