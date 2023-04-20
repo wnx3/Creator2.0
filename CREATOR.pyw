@@ -1,6 +1,14 @@
 import time
 import requests
 import hashlib
+import os
+
+if not os.path.exists("relatorio.json"):
+        # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+        with open("relatorio.json", "w") as f:
+            pass
+else:
+    pass
 
 try:
     import PySimpleGUI as sg
@@ -147,12 +155,7 @@ def executar():
 
     
     # verifica se o arquivo existe na pasta do bot
-    if not os.path.exists("relatorio.json"):
-        # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-        with open("relatorio.json", "w") as f:
-            pass
-    else:
-        pass
+    
     try:
         from rich.console import Console
     except ModuleNotFoundError:
