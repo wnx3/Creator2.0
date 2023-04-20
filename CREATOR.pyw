@@ -1105,12 +1105,15 @@ def executar():
     time.sleep(2)
     #subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
+    window.Refresh()
+    window['output'].print('Iniciando criação')
+    window.Refresh()
     cont = True
     while cont is True:
 
         window['output'].print(linha_ret)
         window.Refresh()
-        window['output'].print('Iniciando criação')
+        window['output'].print('Abrindo Instagram')
 
         RANGE_NAME = 'contas!A:E'
         SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
