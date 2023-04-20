@@ -868,7 +868,7 @@ def executar():
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup'))).click()
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[6]'))).click()
-            idade_aleatoria = random.randint(25, 50)
+            idade_aleatoria = random.randint(18, 35)
             window['output'].print(f'Idade escolhida: {idade_aleatoria}')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
