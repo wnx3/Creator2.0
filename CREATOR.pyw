@@ -970,7 +970,7 @@ def executar():
                     # Find first empty row
                     first_empty_row_index = len(values) + 1
                     # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'contas!A{first_empty_row_index}:D{first_empty_row_index}'
+                    range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
                     value_input_option = 'USER_ENTERED'
                     value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                     result = service.spreadsheets().values().update(
@@ -998,7 +998,7 @@ def executar():
                     # Find first empty row
                     first_empty_row_index = len(values) + 1
                     # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'relatorio_geral!A{first_empty_row_index}:D{first_empty_row_index}'
+                    range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
                     value_input_option = 'USER_ENTERED'
                     value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                     result = service.spreadsheets().values().update(
@@ -1081,7 +1081,7 @@ def executar():
         window.Refresh()
         window['output'].print('Iniciando criação')
 
-        RANGE_NAME = 'contas!A:D'
+        RANGE_NAME = 'contas!A:E'
         SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         service = build('sheets', 'v4', credentials=creds)
@@ -1329,7 +1329,7 @@ def executar():
                         # Find first empty row
                         first_empty_row_index = len(values) + 1
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'contas!A{first_empty_row_index}:D{first_empty_row_index}'
+                        range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
                         value_input_option = 'USER_ENTERED'
                         value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                         result = service.spreadsheets().values().update(
@@ -1357,7 +1357,7 @@ def executar():
                         # Find first empty row
                         first_empty_row_index = len(values) + 1
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'relatorio_geral!A{first_empty_row_index}:D{first_empty_row_index}'
+                        range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
                         value_input_option = 'USER_ENTERED'
                         value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
                         result = service.spreadsheets().values().update(
