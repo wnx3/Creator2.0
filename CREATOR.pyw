@@ -1067,7 +1067,7 @@ def executar():
         #except:
         #    pass
         with open("storage/apk/caminho.txt", "r") as arquivo:
-            appinsta = 'storage\\apk\\InstagramLite.apk'
+            appinsta = arquivo.read().strip()
         try:
             time.sleep(10)
             quantidade = 0
