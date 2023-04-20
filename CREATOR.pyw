@@ -1,4 +1,17 @@
 try:
+    from google.oauth2.credentials import Credentials
+    from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+    subprocess.run(['deactivate'], shell=True)
+    from google.oauth2.credentials import Credentials
+    from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
+try:
     import requests
 except ModuleNotFoundError:
     import subprocess
@@ -84,9 +97,7 @@ import os
 import PySimpleGUI as sg
 import time
 from datetime import datetime
-from google.oauth2.credentials import Credentials
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
 import threading
 import asyncio
 import concurrent.futures
@@ -209,9 +220,6 @@ def executar():
     window.Refresh()
     import random
     from datetime import datetime
-    from google.oauth2.credentials import Credentials
-    from googleapiclient.discovery import build
-    from googleapiclient.errors import HttpError
     import string
     from appium import webdriver
     from selenium.webdriver.common.by import By
