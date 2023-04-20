@@ -1457,19 +1457,24 @@ def executar():
                 except:
                     sms = True
         except Exception as e:
-            logger.error('Ocorreu um erro: %s', e)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, shell=True)
-            window['output'].print('Algum erro não catalogado encontrado.')
-            window['output'].print(e)
-            #window['output'].print(e)
-            window.Refresh()
+            if driver.current_activity() is 'com.facebook.lite.MainActivity':
+                logger.error('Ocorreu um erro: %s', e)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
+                window['output'].print('Algum erro não catalogado encontrado.')
+                window['output'].print(e)
+                #window['output'].print(e)
+                window.Refresh()
+            else:
+                window['output'].print('Instagram fechou.')
+                window.Refresh()
+                
 
 pool = concurrent.futures.ThreadPoolExecutor()
 while True:
