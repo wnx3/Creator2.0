@@ -203,9 +203,9 @@ def executar():
 
     with open("configuracoes\outros\SPREADSHEET_ID.txt", "r") as arquivo:
         SPREADSHEET_ID = arquivo.read().strip()
-    RANGE_NAME = 'contas!A:D'
-
-    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    #RANGE_NAME = 'contas!A:D'
+#
+    #SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 
     def vpn_nord():
