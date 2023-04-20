@@ -1210,17 +1210,6 @@ def executar():
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                     
 
-                    time.sleep(0.5)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
-                                            stderr=subprocess.DEVNULL, check=True, shell=True)
-                    time.sleep(0.5)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
-                                            stderr=subprocess.DEVNULL, check=True, shell=True)
-                    time.sleep(0.5)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
-                                            stderr=subprocess.DEVNULL, check=True, shell=True)
-                    time.sleep(0.5)
-
                         # Clicar em perfis
                     try:
                         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
@@ -1375,7 +1364,17 @@ def executar():
                         time.sleep(0.5)
                         window['output'].print('Alterado para publico.')
                         window.Refresh()
-                        
+                        time.sleep(0.5)
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
+                                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                        time.sleep(0.5)
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
+                                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                        time.sleep(0.5)
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
+                                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                        time.sleep(0.5)
+                            
                         sms = False
 
                     else:
