@@ -164,17 +164,17 @@ def executar():
     import logging
 
     # verifica se o arquivo existe na pasta do bot
-    if not os.path.exists("configuracoes/outros/nome_maquina.txt"):
-        # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-        global nome_arquivo
-        with open("configuracoes/outros/nome_maquina.txt", "w") as f:
-            f.write('Configure o nome da maquina.')
-            pass
-        
-    else:
-        # se o arquivo existe, lê o nome do arquivo a partir do arquivo de configuração ou da variável global
-        with open("configuracoes/outros/nome_maquina.txt") as f:
-            maquina = f.readline().strip()
+    #if not os.path.exists("configuracoes/outros/nome_maquina.txt"):
+    #    # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+    #    global nome_arquivo
+    #    with open("configuracoes/outros/nome_maquina.txt", "w") as f:
+    #        f.write('Configure o nome da maquina.')
+    #        pass
+    #    
+    #else:
+    #    # se o arquivo existe, lê o nome do arquivo a partir do arquivo de configuração ou da variável global
+    #    with open("configuracoes/outros/nome_maquina.txt") as f:
+    #        maquina = f.readline().strip()
 
 
     
