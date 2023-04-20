@@ -24,7 +24,7 @@ except ModuleNotFoundError:
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
-    window = sg.Window("Erro", layout)
+    window = sg.Window("Atualização", layout)
     event, values = window.read()
     window.close()
 
@@ -55,7 +55,7 @@ for file_name in file_list:
         layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
-        window = sg.Window("Erro", layout)
+        window = sg.Window("Atualização", layout)
         event, values = window.read()
         window.close()
     else:
