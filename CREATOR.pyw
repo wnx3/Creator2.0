@@ -1352,13 +1352,25 @@ while True:
         with open("configuracoes\\contas\\senha_perfis.txt", "r") as arquivo:
             config = arquivo.read().strip()
         if config == 'digite_a_senha_que_sera_usada_nos_perfis':
-            window['output'].print('Configure o bot primeiro.')
+            window['output'].print('Configure a senha das contas primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\outros\\SPREADSHEET_ID.txt", "r") as arquivo:
             config_sheets = arquivo.read().strip()
         if config_sheets == 'digite aqui sua SPREADSHEET_ID':
-            window['output'].print('Configure o bot primeiro.')
+            window['output'].print('Configure a sua SPREADSHEET primeiro.')
+            window.Refresh()
+            time.sleep(200)
+        with open("configuracoes\\outros\\nome_maquina.txt", "r") as arquivo:
+            config_maquina = arquivo.read().strip()
+        if config_maquina == 'Configure o nome da maquina.':
+            window['output'].print('Configure o nome da maquina primeiro.')
+            window.Refresh()
+            time.sleep(200)
+        with open("configuracoes\\vpn\\vpn.txt", "r") as arquivo:
+            config_vpn = arquivo.read().strip()
+        if config_vpn == 'avg, surf, nord, cyberghost ou betternet':
+            window['output'].print('Configure a vpn que você deseja primeiro.')
             window.Refresh()
             time.sleep(200)
         
