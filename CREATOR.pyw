@@ -152,7 +152,7 @@ sg.SetOptions(font=('Open Sans', 10))
 check_img = 'storage\\img\\total.png'
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar', pad=((5, 250), 0)),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
+    [sg.Button('Executar'),sg.Button('Reiniciar', key='clear', pad=((5, 250), 0), border_width=0),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
@@ -1498,7 +1498,40 @@ while True:
             window['output'].print('Configure a vpn que você deseja primeiro.')
             window.Refresh()
             time.sleep(200)
-        
+        pool.submit(executar)
+    elif event == 'Reiniciar':
+        window['output'].update('')
+        if not os.path.exists("token.json"):
+        # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+            window['output'].print('Nenhum token.json encontrado.')
+            window.Refresh()
+            time.sleep(200)
+        else:
+            pass
+        with open("configuracoes\\contas\\senha_perfis.txt", "r") as arquivo:
+            config = arquivo.read().strip()
+        if config == 'digite_a_senha_que_sera_usada_nos_perfis':
+            window['output'].print('Configure a senha das contas primeiro.')
+            window.Refresh()
+            time.sleep(200)
+        with open("configuracoes\\outros\\SPREADSHEET_ID.txt", "r") as arquivo:
+            config_sheets = arquivo.read().strip()
+        if config_sheets == 'digite aqui sua SPREADSHEET_ID':
+            window['output'].print('Configure a sua SPREADSHEET primeiro.')
+            window.Refresh()
+            time.sleep(200)
+        with open("configuracoes\\outros\\nome_maquina.txt", "r") as arquivo:
+            config_maquina = arquivo.read().strip()
+        if config_maquina == 'Configure o nome da maquina.':
+            window['output'].print('Configure o nome da maquina primeiro.')
+            window.Refresh()
+            time.sleep(200)
+        with open("configuracoes\\vpn\\vpn.txt", "r") as arquivo:
+            config_vpn = arquivo.read().strip()
+        if config_vpn == 'avg, surf, nord, cyberghost ou betternet':
+            window['output'].print('Configure a vpn que você deseja primeiro.')
+            window.Refresh()
+            time.sleep(200)
         pool.submit(executar)
 
 window.close()
