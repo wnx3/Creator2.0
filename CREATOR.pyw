@@ -478,6 +478,7 @@ def executar():
         test = Email()
         arquivo = open('configuracoes/contas/senha_perfis.txt')
         senha = arquivo.read()
+        time.sleep(2)
         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
