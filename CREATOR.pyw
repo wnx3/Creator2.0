@@ -1,6 +1,24 @@
+import time
 import requests
 import hashlib
-import time
+
+try:
+    import PySimpleGUI as sg
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'PySimpleGUI'])
+    subprocess.run(['deactivate'], shell=True)
+    import PySimpleGUI as sg
+    sg.theme('Dark')
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Erro", layout)
+    event, values = window.read()
+    window.close()
 
 base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
 
@@ -25,8 +43,12 @@ for file_name in file_list:
         # Baixe a nova versão do GitHub e salve-a localmente
         with open(local_path, 'w', encoding='utf-8') as f:
             f.write(github_version)
-        print("BOT atualizado.\nAbra novamente.")
-        time.sleep(100)
+        layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+        window = sg.Window("Erro", layout)
+        event, values = window.read()
+        window.close()
     else:
         pass
 
@@ -131,9 +153,6 @@ def executar():
             pass
     else:
         pass
-
-    
-
     try:
         from rich.console import Console
     except ModuleNotFoundError:
