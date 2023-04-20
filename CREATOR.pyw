@@ -79,7 +79,7 @@ regex = re.compile(r'^.*\.\d{3}\s.*$')
 
 # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
 num_rows = sum(1 for row in values if regex.match(row[0]))
-window['total'].update(num_rows)
+
 
 
 sg.SetOptions(font=('Open Sans', 10))
@@ -1072,6 +1072,7 @@ def executar():
         window['output'].print(linha_ret)
         window.Refresh()
         window['output'].print('Iniciando criação')
+        window['total'].update(num_rows)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, check=True, shell=True)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
