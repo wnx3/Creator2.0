@@ -1101,7 +1101,7 @@ def executar():
 
     arquivo = open('configuracoes/contas/senha_perfis.txt')
     senha = arquivo.read()
-    window['output'].print(f'{time}Senha sendo utilizada: {senha}')
+    window['output'].print(f'Senha sendo utilizada: {senha}')
     window.Refresh()
 
     console = Console()
