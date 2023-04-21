@@ -31,8 +31,7 @@ except ModuleNotFoundError:
 
 import datetime
 import time
-now = datetime.datetime.now()
-time = now.strftime("[%d/%m/%Y] ")
+time = time.strftime("[%H:%M:%S] ")
 import hashlib
 import os
 
