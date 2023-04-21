@@ -1205,7 +1205,7 @@ def executar():
                 firts_reg()
 
             except Exception as e:
-                if driver.current_activity() is 'com.facebook.lite.MainActivity':
+                if driver.current_activity() == 'com.facebook.lite.MainActivity':
                     logger.error('Ocorreu um erro: %s', e)
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                                 stderr=subprocess.DEVNULL, check=True, shell=True)
