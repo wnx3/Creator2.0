@@ -996,7 +996,7 @@ def executar():
             time.sleep(5)
             window['output'].print('Verificando...')
             window.Refresh()
-            time.sleep(2)
+            time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
             # time.sleep(10)
