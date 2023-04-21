@@ -450,10 +450,10 @@ def executar():
                     stderr=subprocess.DEVNULL, check=True, shell=True)
 
         # time.sleep(10)
-        WebDriverWait(driver, 30).until(
+        WebDriverWait(driver, 1).until(
             EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
         # time.sleep(10)
-        WebDriverWait(driver, 30).until(
+        WebDriverWait(driver, 1).until(
         EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
         # time.sleep(5)
         # WebDriverWait(driver, 30).until(
