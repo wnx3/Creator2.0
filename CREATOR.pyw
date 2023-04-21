@@ -199,7 +199,7 @@ def executar():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print(hora + 'Instalando dependências...')
+        window['output'].print('Instalando dependências...')
         window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
@@ -269,9 +269,9 @@ def executar():
         global nome
         global sobrenome
         global sms
-        window['output'].print(hora + 'SMS\nAlterando IP da NordVPN', text_color='red')
+        window['output'].print('SMS\nAlterando IP da NordVPN', text_color='red')
         window.Refresh()
-        window['output'].print(hora + 'Limpando dados.')
+        window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -308,9 +308,9 @@ def executar():
         global sobrenome
         global sms
         sms = True
-        window['output'].print(hora + 'SMS\nAlterando IP da SurfShark', text_color='red')
+        window['output'].print('SMS\nAlterando IP da SurfShark', text_color='red')
         window.Refresh()
-        window['output'].print(hora + 'Limpando dados.')
+        window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -342,9 +342,9 @@ def executar():
         global sobrenome
         global sms
         sms = True
-        window['output'].print(hora + 'SMS\nAlterando IP da BetterNet', text_color='red')
+        window['output'].print('SMS\nAlterando IP da BetterNet', text_color='red')
         window.Refresh()
-        window['output'].print(hora + 'Limpando dados.')
+        window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -384,7 +384,7 @@ def executar():
 
         # Verifica se a conexão VPN está ativa
         if not re.search(b"tun0", output):
-            window['output'].print(hora + "Não conectado na BetterNet.")
+            window['output'].print("Não conectado na BetterNet.")
             window.Refresh()
             try:
                 connect = driver.find_element(By.ID, 'com.freevpnintouch:id/buttonConnect').text
@@ -403,9 +403,9 @@ def executar():
         global sobrenome
         global sms
         sms = True
-        window['output'].print(hora + 'SMS\nAlterando IP da CyberGhost', text_color='red')
+        window['output'].print('SMS\nAlterando IP da CyberGhost', text_color='red')
         window.Refresh()
-        window['output'].print(hora + 'Limpando dados.')
+        window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -436,9 +436,9 @@ def executar():
         global nome
         global sobrenome
         global sms
-        window['output'].print(hora + 'SMS\nAlterando IP da AVG', text_color='red')
+        window['output'].print('SMS\nAlterando IP da AVG', text_color='red')
         window.Refresh()
-        window['output'].print(hora + 'Limpando dados.')
+        window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -503,7 +503,7 @@ def executar():
                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
         test.register(username=user_completo, password=senha)
-        window['output'].print(hora + "Email: " + str(test.address))
+        window['output'].print("Email: " + str(test.address))
         window.Refresh()
         email = str(test.address)
         time.sleep(2)
@@ -516,7 +516,7 @@ def executar():
         # driver.find_element(By.XPATH,
         #                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]').click()
 
-        window['output'].print(hora + 'Aguardando codigo...')
+        window['output'].print('Aguardando codigo...')
         window.Refresh()
         codigo = None
         try:
@@ -531,14 +531,14 @@ def executar():
                 pass
             else:
                 pass
-        window['output'].print(f"{hora}Codigo recebido: {codigo}")
+        window['output'].print(f"Codigo recebido: {codigo}")
         window.Refresh()
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                 codigo)
         except:
-            window['output'].print(hora + 'Instagram fechou')
+            window['output'].print('Instagram fechou')
             window.Refresh()
         time.sleep(2)
 
@@ -585,9 +585,9 @@ def executar():
            #     if "Too Many Requests" in str(e):
            #         pass
            #     else:
-           #         window['output'].print(hora + e)
+           #         window['output'].print(e)
            #         window.Refresh()
-           # window['output'].print(f"{hora}Codigo recebido: {codigo}")
+           # window['output'].print(f"Codigo recebido: {codigo}")
            # window.Refresh()
            # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
            #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -620,7 +620,7 @@ def executar():
         #reenv_cod = driver.find_elements(By.XPATH,
         #                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
         #if len(reenv_cod) == 1:
-        #    window['output'].print(hora + 'Enviando um novo codigo.')
+        #    window['output'].print('Enviando um novo codigo.')
         #    window.Refresh()
         #    driver.find_element(By.XPATH,
         #                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
@@ -643,9 +643,9 @@ def executar():
         #        if "Too Many Requests" in str(e):
         #            pass
         #        else:
-        #            window['output'].print(hora + e)
+        #            window['output'].print(e)
         #            window.Refresh()
-        #    window['output'].print(f"{hora}Codigo recebido: {codigo}")
+        #    window['output'].print(f"Codigo recebido: {codigo}")
         #    window.Refresh()
         #    # time.sleep(3)
         #    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
@@ -698,9 +698,9 @@ def executar():
         #            if "Too Many Requests" in str(e):
         #                pass
         #            else:
-        #                window['output'].print(hora + e)
+        #                window['output'].print(e)
         #                window.Refresh()
-        #        window['output'].print(f"{hora}Codigo recebido: {codigo}")
+        #        window['output'].print(f"Codigo recebido: {codigo}")
         #        window.Refresh()
         #        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
         #                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -725,7 +725,7 @@ def executar():
         #        test.stop()
         #        time.sleep(5)
         #elif reenv_cod == 0:
-        #    window['output'].print(hora + 'Codigo aceito.')
+        #    window['output'].print('Codigo aceito.')
         #    window.Refresh()
 #
     def gerar_email_firts_reg():
@@ -759,7 +759,7 @@ def executar():
         arquivo = open('configuracoes/contas/senha_perfis.txt')
         senha = arquivo.read()
         test.register(username=user_completo, password=senha)
-        window['output'].print(hora + "Email: " + str(test.address))
+        window['output'].print("Email: " + str(test.address))
         window.Refresh()
         time.sleep(2)
         email = str(test.address)
@@ -771,7 +771,7 @@ def executar():
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
 
-        window['output'].print(hora + 'Aguardando codigo...')
+        window['output'].print('Aguardando codigo...')
         window.Refresh()
         codigo = None
         try:
@@ -786,7 +786,7 @@ def executar():
                 pass
             else:
                 pass
-        window['output'].print(f"{hora}Codigo recebido: {codigo}")
+        window['output'].print(f"Codigo recebido: {codigo}")
         window.Refresh()
         try:
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
@@ -794,7 +794,7 @@ def executar():
                 codigo)
             time.sleep(2)
         except:
-            window['output'].print(hora + 'Erro encontrado.')
+            window['output'].print('Erro encontrado.')
             window.Refresh()
             time.sleep(5)
         time.sleep(2)
@@ -811,7 +811,7 @@ def executar():
         continua_na_tela = driver.find_elements(By.XPATH,
                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.View')
         if len(codigo_invalido) and len(continua_na_tela) == 1:
-            window['output'].print(hora + 'Erro encontrado.')
+            window['output'].print('Erro encontrado.')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
@@ -834,9 +834,9 @@ def executar():
                 if "Too Many Requests" in str(e):
                     pass
                 else:
-                    window['output'].print(hora + e)
+                    window['output'].print(e)
                     window.Refresh()
-            window['output'].print(hora + f"Código recebido: {codigo}")
+            window['output'].print(f"Código recebido: {codigo}")
             window.Refresh()
             WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -880,25 +880,14 @@ def executar():
                 time.sleep(3)
                 gerar_email_firts_reg()
             except Exception as e:
-                logger.error('Ocorreu um erro: %s', e)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL, shell=True)
-                window['output'].print(hora + 'Algum erro não catalogado encontrado.')
-                window['output'].print(hora + e)
-                #window['output'].print(hora + e)
+                window['output'].print(e)
                 window.Refresh()
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
             user_completo = nome_completo_s + '.' + str(numeros_concatenados)
             window.Refresh()
-            window['output'].print(hora + 'Nome escolhido: ' + nome_completo)
+            window['output'].print('Nome escolhido: ' + nome_completo)
             window.Refresh()
             try:
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -906,7 +895,7 @@ def executar():
                     nome_completo)
             except:
                 cont = False
-                window['output'].print(hora + 'Erro encontrado.')
+                window['output'].print('Erro encontrado.')
                 window.Refresh()
                 pass
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -921,7 +910,7 @@ def executar():
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[6]'))).click()
             idade_aleatoria = random.randint(18, 35)
-            window['output'].print(f'{hora}Idade escolhida: {idade_aleatoria}')
+            window['output'].print(f'Idade escolhida: {idade_aleatoria}')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -947,7 +936,7 @@ def executar():
                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View').click()
 
                 except:
-                    window['output'].print(hora + 'Erro ao criar')
+                    window['output'].print('Erro ao criar')
                     window.Refresh()
                     sms = True
                     continue
@@ -960,7 +949,7 @@ def executar():
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                     user_completo)
-                window['output'].print(f'{hora}Usuário: {user_completo}')
+                window['output'].print(f'Usuário: {user_completo}')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
@@ -971,7 +960,7 @@ def executar():
                 erro_1 = driver.find_elements(By.XPATH,
                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 if len(erro_2) == 1:
-                    window['output'].print(hora + 'Tentando gerar novamente')
+                    window['output'].print('Tentando gerar novamente')
                     window.Refresh()
                     time.sleep(5)
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -994,7 +983,7 @@ def executar():
             WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
             time.sleep(5)
-            window['output'].print(hora + 'Verificando...')
+            window['output'].print('Verificando...')
             window.Refresh()
             time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
@@ -1008,7 +997,7 @@ def executar():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print(hora + 'Conta criada com sucesso.', text_color='green')
+                    window['output'].print('Conta criada com sucesso.', text_color='green')
                     with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
                         conteudo = arquivo.read().strip()
                     window.Refresh()
@@ -1087,7 +1076,7 @@ def executar():
                     elif conteudo == "nord":
                         vpn_nord()
                     else:
-                        window['output'].print(hora + 
+                        window['output'].print(
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
 
@@ -1134,7 +1123,7 @@ def executar():
 
         window['output'].print(linha_ret)
         window.Refresh()
-        window['output'].print(hora + 'Abrindo Instagram')
+        window['output'].print('Abrindo Instagram')
 
         RANGE_NAME = 'contas!A:E'
         SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -1195,21 +1184,21 @@ def executar():
             error = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
             if len(error) == 1:
                 driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-                window['output'].print(hora + 'Erro fechado.')
+                window['output'].print('Erro fechado.')
                 window.Refresh()
             try:
                 time.sleep(3)
                 cookies = driver.find_elements(By.ID, 'com.android.packageinstaller:id/permission_deny_button')
                 if len(cookies) == 1:
                     WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'com.android.packageinstaller:id/permission_deny_button'))).click()
-                    window['output'].print(hora + 'Pop-up fechado.')
+                    window['output'].print('Pop-up fechado.')
                     window.Refresh()
                     time.sleep(1)
                 firts_reg()
 
             except Exception as e:
                 sms = True
-                window['output'].print(hora + e)
+                window['output'].print(e)
                 window.Refresh()
                 with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
                     conteudo = arquivo.read().strip()
@@ -1226,7 +1215,7 @@ def executar():
                 elif conteudo == "cyberghost":
                     vpn_cyberghost()
                 else:
-                    window['output'].print(hora + 
+                    window['output'].print(
                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                     window.Refresh()
                 continue
@@ -1250,7 +1239,7 @@ def executar():
                             continue
                     window['output'].print(linha_ret)
                     window.Refresh()
-                    window['output'].print(hora + 'Criação de outro perfil.')
+                    window['output'].print('Criação de outro perfil.')
                     window.Refresh()
                     #subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                     # Clicar no botão de perfil
@@ -1298,7 +1287,7 @@ def executar():
                     nome_completo = nome + sobrenome
                     numeros_concatenados = ''.join(str(numero) for numero in lista_user)
                     user_completo = nome_completo + '.' + str(numeros_concatenados)
-                    window['output'].print(hora + 'Usuário: ' + user_completo)
+                    window['output'].print('Usuário: ' + user_completo)
                     window.Refresh()
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -1325,7 +1314,7 @@ def executar():
                     WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
-                    window['output'].print(hora + 'Verificando...')
+                    window['output'].print('Verificando...')
                     window.Refresh()
                     #WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                     #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
@@ -1344,7 +1333,7 @@ def executar():
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                         except:
                             pass
-                        window['output'].print(hora + 'Conta criada com sucesso.', text_color='green')
+                        window['output'].print('Conta criada com sucesso.', text_color='green')
                         with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
                             conteudo = arquivo.read().strip()
                         window.Refresh()
@@ -1405,7 +1394,7 @@ def executar():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                         window.Refresh()
-                        window['output'].print(hora + 'Alterando perfil para publico.')
+                        window['output'].print('Alterando perfil para publico.')
                         window.Refresh()
 
                         # Clicar nas 3 barras
@@ -1431,7 +1420,7 @@ def executar():
                         # Clicar no botão
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.ViewGroup'))).click()
                         time.sleep(0.5)
-                        window['output'].print(hora + 'Alterado para publico.')
+                        window['output'].print('Alterado para publico.')
                         window.Refresh()
                         time.sleep(0.5)
                         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
@@ -1461,7 +1450,7 @@ def executar():
                             elif conteudo == "nord":
                                 vpn_nord()
                             else:
-                                window['output'].print(hora + 
+                                window['output'].print(
                                     "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                                 window.Refresh()
 
@@ -1479,9 +1468,9 @@ def executar():
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
-            window['output'].print(hora + 'Algum erro não catalogado encontrado.')
-            window['output'].print(hora + e)
-            #window['output'].print(hora + e)
+            window['output'].print('Algum erro não catalogado encontrado.')
+            window['output'].print(e)
+            #window['output'].print(e)
             window.Refresh()
                 
 
@@ -1497,7 +1486,7 @@ while True:
     if event == 'Executar':
         if not os.path.exists("token.json"):
         # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print(hora + 'Nenhum token.json encontrado.')
+            window['output'].print('Nenhum token.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
@@ -1505,25 +1494,25 @@ while True:
         with open("configuracoes\\contas\\senha_perfis.txt", "r") as arquivo:
             config = arquivo.read().strip()
         if config == 'digite_a_senha_que_sera_usada_nos_perfis':
-            window['output'].print(hora + 'Configure a senha das contas primeiro.')
+            window['output'].print('Configure a senha das contas primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\outros\\SPREADSHEET_ID.txt", "r") as arquivo:
             config_sheets = arquivo.read().strip()
         if config_sheets == 'digite aqui sua SPREADSHEET_ID':
-            window['output'].print(hora + 'Configure a sua SPREADSHEET primeiro.')
+            window['output'].print('Configure a sua SPREADSHEET primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\outros\\nome_maquina.txt", "r") as arquivo:
             config_maquina = arquivo.read().strip()
         if config_maquina == 'Configure o nome da maquina.':
-            window['output'].print(hora + 'Configure o nome da maquina primeiro.')
+            window['output'].print('Configure o nome da maquina primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\vpn\\vpn.txt", "r") as arquivo:
             config_vpn = arquivo.read().strip()
         if config_vpn == 'avg, surf, nord, cyberghost ou betternet':
-            window['output'].print(hora + 'Configure a vpn que você deseja primeiro.')
+            window['output'].print('Configure a vpn que você deseja primeiro.')
             window.Refresh()
             time.sleep(200)
         pool.submit(executar)
@@ -1531,7 +1520,7 @@ while True:
         window['output'].update('')
         if not os.path.exists("token.json"):
         # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print(hora + 'Nenhum token.json encontrado.')
+            window['output'].print('Nenhum token.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
@@ -1539,25 +1528,25 @@ while True:
         with open("configuracoes\\contas\\senha_perfis.txt", "r") as arquivo:
             config = arquivo.read().strip()
         if config == 'digite_a_senha_que_sera_usada_nos_perfis':
-            window['output'].print(hora + 'Configure a senha das contas primeiro.')
+            window['output'].print('Configure a senha das contas primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\outros\\SPREADSHEET_ID.txt", "r") as arquivo:
             config_sheets = arquivo.read().strip()
         if config_sheets == 'digite aqui sua SPREADSHEET_ID':
-            window['output'].print(hora + 'Configure a sua SPREADSHEET primeiro.')
+            window['output'].print('Configure a sua SPREADSHEET primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\outros\\nome_maquina.txt", "r") as arquivo:
             config_maquina = arquivo.read().strip()
         if config_maquina == 'Configure o nome da maquina.':
-            window['output'].print(hora + 'Configure o nome da maquina primeiro.')
+            window['output'].print('Configure o nome da maquina primeiro.')
             window.Refresh()
             time.sleep(200)
         with open("configuracoes\\vpn\\vpn.txt", "r") as arquivo:
             config_vpn = arquivo.read().strip()
         if config_vpn == 'avg, surf, nord, cyberghost ou betternet':
-            window['output'].print(hora + 'Configure a vpn que você deseja primeiro.')
+            window['output'].print('Configure a vpn que você deseja primeiro.')
             window.Refresh()
             time.sleep(200)
         pool.submit(executar)
