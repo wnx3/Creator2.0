@@ -500,8 +500,25 @@ def executar():
         arquivo = open('configuracoes/contas/senha_perfis.txt')
         senha = arquivo.read()
         time.sleep(2)
-        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+        num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.View')
+
+        while len(num) == 1:
+            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+            time.sleep(2)
+            num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.View')
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL,
+                                                stderr=subprocess.DEVNULL, check=True, shell=True)
+            try:
+                WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
+                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
+                time.sleep(5)
+                WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
+                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+                time.sleep(3)
+            except Exception as e:
+                window['output'].print('Erro.')
+                window.Refresh()
 
         test.register(username=user_completo, password=senha)
         window['output'].print("Email: " + str(test.address))
@@ -516,7 +533,6 @@ def executar():
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
         # driver.find_element(By.XPATH,
         #                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]').click()
-
         window['output'].print('Aguardando codigo...')
         window.Refresh()
         codigo = None
@@ -542,11 +558,9 @@ def executar():
             window['output'].print('Instagram fechou')
             window.Refresh()
         time.sleep(2)
-
         try:
             WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
-
         except:
             WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
@@ -567,55 +581,55 @@ def executar():
         #                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View')
         #time.sleep(25)
         #if len(codigo_invalido) == 1:
-           # driver.find_element(By.XPATH,
-           #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-           # time.sleep(2)
-           # driver.find_element(By.XPATH,
-           #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').clear()
-           # driver.find_element(By.XPATH,
-           #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]').click()
-           # codigo = None
-           # try:
-           #     test.start(listener, interval=5)
-           #     codigo = 0
-           #     while codigo != 20:
-           #         time.sleep(1.5)
-           #         codigo = codigo + 1
-           #     codigo = cod
-           # except Exception as e:
-           #     if "Too Many Requests" in str(e):
-           #         pass
-           #     else:
-           #         window['output'].print(e)
-           #         window.Refresh()
-           # window['output'].print(f"Codigo recebido: {codigo}")
-           # window.Refresh()
-           # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
-           #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
-           #     codigo)
-           # try:
-           #     WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
-           #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
-           # except:
-           #     pass
-           # try:
-           #     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH,
-           #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
-           #     try:
-           #         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-           #                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
-           #     except:
-           #         pass
-           # except:
-           #     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH,
-           #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
-           #     try:
-           #         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-           #                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
-           #     except:
-           #         pass
-           # test.stop()
-           # time.sleep(3)
+        # driver.find_element(By.XPATH,
+        #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
+        # time.sleep(2)
+        # driver.find_element(By.XPATH,
+        #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').clear()
+        # driver.find_element(By.XPATH,
+        #                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]').click()
+        # codigo = None
+        # try:
+        #     test.start(listener, interval=5)
+        #     codigo = 0
+        #     while codigo != 20:
+        #         time.sleep(1.5)
+        #         codigo = codigo + 1
+        #     codigo = cod
+        # except Exception as e:
+        #     if "Too Many Requests" in str(e):
+        #         pass
+        #     else:
+        #         window['output'].print(e)
+        #         window.Refresh()
+        # window['output'].print(f"Codigo recebido: {codigo}")
+        # window.Refresh()
+        # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
+        #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
+        #     codigo)
+        # try:
+        #     WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
+        #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
+        # except:
+        #     pass
+        # try:
+        #     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH,
+        #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
+        #     try:
+        #         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+        #                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
+        #     except:
+        #         pass
+        # except:
+        #     WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH,
+        #                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
+        #     try:
+        #         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+        #                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.View')))
+        #     except:
+        #         pass
+        # test.stop()
+        # time.sleep(3)
         #WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
         #                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')))
         #reenv_cod = driver.find_elements(By.XPATH,
