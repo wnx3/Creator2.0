@@ -415,14 +415,15 @@ def executar():
         except:
             pass
         #time.sleep(3)
-        #WebDriverWait(driver, 10).until(
-        #    EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        #time.sleep(3)
-        #WebDriverWait(driver, 10).until(
-        #    EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        #time.sleep(5)
-        #WebDriverWait(driver, 10).until(
-        #    EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, 'de.mobileconcepts.cyberghost:id/button'))).click()
+        rate = driver.find_elements(By.ID, 'de.mobileconcepts.cyberghost:id/rate_me_text')
+        if len(rate) == 1:
+            WebDriverWait(driver, 10).until(
+                EC.element_to_be_clickable((By.ID, 'android:id/button2'))).click()
+        time.sleep(2)
+        WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, 'de.mobileconcepts.cyberghost:id/button'))).click()
         #time.sleep(5)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL, check=True, shell=True)
