@@ -991,7 +991,7 @@ def executar():
             except:
                 WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
-            WebDriverWait(driver, 40).until(EC.element_to_be_clickable((By.XPATH,
+            WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
             time.sleep(5)
             window['output'].print('Verificando...')
