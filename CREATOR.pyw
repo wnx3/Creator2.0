@@ -1188,11 +1188,15 @@ def executar():
             android_id = gerar_id()
             #subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}',
             #               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            time.sleep(2)
+            time.sleep(5)
             #subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True,
             #               stdout=subprocess.DEVNULL,
             #               stderr=subprocess.DEVNULL)
-
+            error = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
+            if len(error) == 1:
+                driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
+                window['output'].print('Erro fechado.')
+                window.Refresh()
             try:
                 time.sleep(3)
                 cookies = driver.find_elements(By.ID, 'com.android.packageinstaller:id/permission_deny_button')
