@@ -1208,39 +1208,27 @@ def executar():
                 firts_reg()
 
             except Exception as e:
-                if driver.current_activity() == 'com.facebook.lite.MainActivity':
-                    logger.error('Ocorreu um erro: %s', e)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL, check=True, shell=True)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL, check=True, shell=True)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                                stderr=subprocess.DEVNULL, shell=True)
-                    window['output'].print(hora + 'Algum erro não catalogado encontrado.')
-                    window['output'].print(hora + e)
-                    #window['output'].print(hora + e)
-                    window.Refresh()
-                else:
-                    window['output'].print(hora + 'Instagram fechou.')
-                    window.Refresh()
-                    with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
-                        conteudo = arquivo.read().strip()
+                sms = True
+                window['output'].print(hora + e)
+                window.Refresh()
+                with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
+                    conteudo = arquivo.read().strip()
 
-                    # Executa a função correspondente ao conteúdo do arquivo
-                    if conteudo == "avg":
-                        vpn_avg()
-                    elif conteudo == "surf":
-                        vpn_surf()
-                    elif conteudo == "betternet":
-                        vpn_better()
-                    elif conteudo == "nord":
-                        vpn_nord()
-                    else:
-                        window['output'].print(hora + 
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
+                # Executa a função correspondente ao conteúdo do arquivo
+                if conteudo == "avg":
+                    vpn_avg()
+                elif conteudo == "surf":
+                    vpn_surf()
+                elif conteudo == "betternet":
+                    vpn_better()
+                elif conteudo == "nord":
+                    vpn_nord()
+                elif conteudo == "cyberghost":
+                    vpn_cyberghost()
+                else:
+                    window['output'].print(hora + 
+                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                    window.Refresh()
                 continue
 
             try:
