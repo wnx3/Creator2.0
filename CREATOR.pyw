@@ -155,7 +155,7 @@ sg.SetOptions(font=('Open Sans', 10))
 check_img = 'storage\\img\\total.png'
 layout = [
     [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar'),sg.Button('Reiniciar', key='clear', pad=((5, 190), 0), disabled=True),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
+    [sg.Button('Executar'),sg.Button('Reiniciar', key='clear', disabled=True),sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
