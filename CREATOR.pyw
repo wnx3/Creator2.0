@@ -884,8 +884,23 @@ def executar():
                 time.sleep(3)
                 gerar_email_firts_reg()
             except Exception as e:
-                window['output'].print(e)
-                window.Refresh()
+                if driver.current_activity() is 'com.facebook.lite.MainActivity':
+                    logger.error('Ocorreu um erro: %s', e)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, shell=True)
+                    window['output'].print('Algum erro não catalogado encontrado.')
+                    window['output'].print(e)
+                    #window['output'].print(e)
+                    window.Refresh()
+                else:
+                    window['output'].print('Instagram fechou.')
+                    window.Refresh()
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
@@ -1197,11 +1212,25 @@ def executar():
                 firts_reg()
 
             except Exception as e:
-                sms = True
-                window['output'].print(e)
-                window.Refresh()
-                with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
-                    conteudo = arquivo.read().strip()
+                if driver.current_activity() is 'com.facebook.lite.MainActivity':
+                    logger.error('Ocorreu um erro: %s', e)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, shell=True)
+                    window['output'].print('Algum erro não catalogado encontrado.')
+                    window['output'].print(e)
+                    #window['output'].print(e)
+                    window.Refresh()
+                else:
+                    window['output'].print('Instagram fechou.')
+                    window.Refresh()
+                    with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
+                        conteudo = arquivo.read().strip()
 
                     # Executa a função correspondente ao conteúdo do arquivo
                     if conteudo == "avg":
