@@ -231,6 +231,7 @@ def executar():
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.chrome.options import Options
+    from selenium.common.exceptions import NoSuchElementException
     from mailtm import Email
     import re
     import logging
@@ -880,7 +881,7 @@ def executar():
                 time.sleep(3)
                 gerar_email_firts_reg()
             except Exception as e:
-                window['output'].print(e)
+                window['output'].print('Erro não catalogado.')
                 window.Refresh()
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
@@ -1198,7 +1199,7 @@ def executar():
 
             except Exception as e:
                 sms = True
-                window['output'].print(e)
+                window['output'].print('Erro não catalogado.')
                 window.Refresh()
                 with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
                     conteudo = arquivo.read().strip()
@@ -1468,8 +1469,7 @@ def executar():
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
-            window['output'].print('Algum erro não catalogado encontrado.')
-            window['output'].print(e)
+            window['output'].print('Erro não catalogado.')
             #window['output'].print(e)
             window.Refresh()
                 
