@@ -1535,6 +1535,12 @@ while True:
             window['output'].print('Configure a vpn que você deseja primeiro.')
             window.Refresh()
             time.sleep(200)
+        with open("storage\\apk\\caminho.txt", "r") as arquivo:
+            config_caminho = arquivo.read().strip()
+        if config_caminho == 'C:\Users\welli\Documents\PycharmProjects\bot_emulador\build\Creator\storage\apk\InstagramLite.apk':
+            window['output'].print('Configure o caminho do apk primeiro.')
+            window.Refresh()
+            time.sleep(200)
         pool.submit(executar)
     if event == 'clear':
         window['output'].update('')
