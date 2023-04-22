@@ -265,6 +265,34 @@ def executar():
 #
     #SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
+    def vpn_express():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print('SMS\nAlterando IP da ExpressVPN', text_color='red')
+        window.Refresh()
+        window['output'].print('Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        sms = True
+        try:
+            driver.start_activity("com.expressvpn.vpn", ".ui.SplashActivity")
+        except:
+            pass
+        #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, 'com.expressvpn.vpn:id/obiButton'))).click()
+        time.sleep(3)
+        WebDriverWait(driver, 5).until(
+        EC.element_to_be_clickable((By.ID, 'com.expressvpn.vpn:id/obiButton'))).click()
+
+        abc = False
 
     def vpn_nord():
         global nome
@@ -1084,6 +1112,8 @@ def executar():
                         vpn_avg()
                     elif conteudo == "cyberghost":
                         vpn_cyberghost()
+                    elif conteudo == "express":
+                        vpn_express()
                     elif conteudo == "surf":
                         vpn_surf()
                     elif conteudo == "betternet":
@@ -1229,6 +1259,8 @@ def executar():
                     vpn_avg()
                 elif conteudo == "surf":
                     vpn_surf()
+                elif conteudo == "express":
+                    vpn_express()
                 elif conteudo == "betternet":
                     vpn_better()
                 elif conteudo == "nord":
@@ -1464,6 +1496,8 @@ def executar():
                                 vpn_avg()
                             elif conteudo == "surf":
                                 vpn_surf()
+                            elif conteudo == "express":
+                                vpn_express()
                             elif conteudo == "betternet":
                                 vpn_better()
                             elif conteudo == "cyberghost":
