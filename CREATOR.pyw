@@ -281,6 +281,7 @@ def executar():
         sms = True
         try:
             driver.start_activity("com.avast.android.vpn", ".app.wizard.WizardActivity")
+            time.sleep(10)
         except Exception as e:
             print(e)
 
@@ -1027,8 +1028,9 @@ def executar():
                             stderr=subprocess.DEVNULL, shell=True)
                 subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, shell=True)
-                window['output'].print('Erro não catalogado.')
+                
                 window.Refresh()
+                break
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
@@ -1673,6 +1675,7 @@ def executar():
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
             window['output'].print('Erro não catalogado.')
+            print(e)
             #window['output'].print(e)
             window.Refresh()
                 
