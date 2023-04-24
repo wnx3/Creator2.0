@@ -265,6 +265,84 @@ def executar():
 #
     #SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
+    def vpn_avast():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print('SMS\nAlterando IP da Avast', text_color='red')
+        window.Refresh()
+        window['output'].print('Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        sms = True
+        try:
+            driver.start_activity("com.avast.android.vpn", ".app.wizard.WizardActivity")
+        except Exception as e:
+            print(e)
+
+        abc = False
+    def vpn_hotspotshield():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print('SMS\nAlterando IP da HotspotShield', text_color='red')
+        window.Refresh()
+        window['output'].print('Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        sms = True
+        try:
+            driver.start_activity("hotspotshield.android.vpn", "com.anchorfree.hotspotshield.ui.HssActivity")
+        except Exception as e:
+            print(e)
+        WebDriverWait(driver, 20).until(
+                EC.element_to_be_clickable((By.ID, 'hotspotshield.android.vpn:id/tryAgainButton'))).click()
+        time.sleep(5)
+        WebDriverWait(driver, 20).until(
+            EC.element_to_be_clickable((By.ID, 'hotspotshield.android.vpn:id/btnVpnConnect'))).click()
+        
+        #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        abc = False
+
+    def vpn_pia():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print('SMS\nAlterando IP da PiaVPN', text_color='red')
+        window.Refresh()
+        window['output'].print('Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        sms = True
+        try:
+            driver.start_activity("com.privateinternetaccess.android", ".ui.LauncherActivity")
+        except:
+            pass
+        #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        WebDriverWait(driver, 5).until(
+            EC.element_to_be_clickable((By.ID, 'com.privateinternetaccess.android:id/connection_background'))).click()
+        time.sleep(3)
+        WebDriverWait(driver, 5).until(
+        EC.element_to_be_clickable((By.ID, 'com.privateinternetaccess.android:id/connection_background'))).click()
+
+        abc = False
+
     def vpn_express():
         global nome
         global sobrenome
@@ -921,8 +999,34 @@ def executar():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 time.sleep(3)
+                error = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
+                if len(error) == 1:
+                    time.sleep(2)
+                    driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
+                    window['output'].print('Erro fechado.')
+                    error = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
+                    while len(error) == 1:
+                        driver.find_element(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
+                        error = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
+                    try:
+                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
+                        time.sleep(5)
+                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+                        time.sleep(3)
+                    except:
+                        pass
+                
+                    window.Refresh()
                 gerar_email_firts_reg()
             except Exception as e:
+                comando = f"adb connect 127.0.0.1:{porta}"
+                subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
                 window['output'].print('Erro não catalogado.')
                 window.Refresh()
             nome_completo = nome + ' ' + sobrenome
@@ -1025,6 +1129,9 @@ def executar():
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
             WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
+            time.sleep(10)
+            WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
+                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
             time.sleep(5)
             window['output'].print('Verificando...')
             window.Refresh()
@@ -1110,8 +1217,12 @@ def executar():
                     # Executa a função correspondente ao conteúdo do arquivo
                     if conteudo == "avg":
                         vpn_avg()
+                    elif conteudo == "avast":
+                        vpn_avast()
                     elif conteudo == "cyberghost":
                         vpn_cyberghost()
+                    elif conteudo == "pia":
+                        vpn_pia()
                     elif conteudo == "express":
                         vpn_express()
                     elif conteudo == "surf":
@@ -1120,6 +1231,8 @@ def executar():
                         vpn_better()
                     elif conteudo == "nord":
                         vpn_nord()
+                    elif conteudo == "hotspotshield":
+                        vpn_hotspotshield()
                     else:
                         window['output'].print(
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
@@ -1248,7 +1361,14 @@ def executar():
                 firts_reg()
 
             except Exception as e:
+                print(e)
                 sms = True
+                comando = f"adb connect 127.0.0.1:{porta}"
+                subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
                 window['output'].print('Erro não catalogado.')
                 window.Refresh()
                 with open("configuracoes/vpn/vpn.txt", "r") as arquivo:
@@ -1259,6 +1379,10 @@ def executar():
                     vpn_avg()
                 elif conteudo == "surf":
                     vpn_surf()
+                elif conteudo == "avast":
+                    vpn_avast()
+                elif conteudo == "pia":
+                    vpn_pia()
                 elif conteudo == "express":
                     vpn_express()
                 elif conteudo == "betternet":
@@ -1267,6 +1391,8 @@ def executar():
                     vpn_nord()
                 elif conteudo == "cyberghost":
                     vpn_cyberghost()
+                elif conteudo == "hotspotshield":
+                    vpn_hotspotshield()
                 else:
                     window['output'].print(
                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
@@ -1358,12 +1484,19 @@ def executar():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
                     # Clicar em adicionar email
+                    time.sleep(1)
+                    WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View')))
+                    time.sleep(2)
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
                     # Clicar em email, gerar e avançar
 
                     time.sleep(5)
                     gerar_email()
+                    WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
+                    time.sleep(10)
                     WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
@@ -1468,7 +1601,10 @@ def executar():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[5]/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
                         time.sleep(2)
                         # Clicar em privacidade da conta
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[11]/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
+                        try:
+                            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[11]/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
+                        except:
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[10]/android.view.ViewGroup/android.view.View'))).click()
                         time.sleep(0.5)
                         # Clicar no botão
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,'/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.ViewGroup'))).click()
@@ -1496,14 +1632,21 @@ def executar():
                                 vpn_avg()
                             elif conteudo == "surf":
                                 vpn_surf()
+                            elif conteudo == "avast":
+                                vpn_avast()
                             elif conteudo == "express":
                                 vpn_express()
+                            elif conteudo == "pia":
+                                vpn_pia()
                             elif conteudo == "betternet":
                                 vpn_better()
                             elif conteudo == "cyberghost":
                                 vpn_cyberghost()
                             elif conteudo == "nord":
                                 vpn_nord()
+                            elif conteudo == "hotspotshield":
+                                vpn_hotspotshield()
+                                break
                             else:
                                 window['output'].print(
                                     "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
@@ -1521,6 +1664,12 @@ def executar():
                         stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, shell=True)
+            comando = f"adb connect 127.0.0.1:{porta}"
+            subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
             window['output'].print('Erro não catalogado.')
