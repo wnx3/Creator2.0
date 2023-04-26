@@ -3539,7 +3539,8 @@ def executar_2nr():
                 android_id = gerar_id()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(10)
-                RANGE_NAME2nr = '2nr!A:A'
+                SHEET_NAME = config['2nr']
+                RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
                 SCOPES2nr = ['https://www.googleapis.com/auth/spreadsheets']
                 creds2nr = Credentials.from_authorized_user_file('token.json', SCOPES2nr)
                 service2nr = build('sheets', 'v4', credentials=creds2nr)
