@@ -3483,7 +3483,7 @@ def executar_2nr():
                 while num_rows2nr == 0:
                     window['output'].print('Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
-                    time.sleep(10)
+                    time.sleep(300)
                     result2nr = service2nr.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
                     values2nr = result2nr.get('values', [])
                     num_rows2nr = sum(len(regex2nr.findall(row[0])) for row in values2nr)
