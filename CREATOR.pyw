@@ -206,6 +206,7 @@ layout_configuracoes = [
     [sg.HorizontalSeparator()],
     [sg.Text("Nome da maquina: "), sg.InputText(key="maquina", default_text=config.get("maquina", ""))],
     [sg.Text("SpreadsheetID: "), sg.InputText(key="spreadsheet", default_text=config.get("spreadsheet", ""))],
+    [sg.Text("Planilha 2NR: "), sg.InputText(key="2nr", default_text=config.get("2nr", ""))],
     [sg.Button("Salvar")]
 ]
 
@@ -3492,7 +3493,7 @@ def executar_2nr():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
                 
 
-                SHEET_NAME = '2nr'
+                SHEET_NAME = config['2nr']
 
                 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
                 creds = Credentials.from_authorized_user_file('token.json', SCOPES)
@@ -4368,7 +4369,8 @@ while True:
                     "email": email,
                     "app": app,
                     "maquina": valores['maquina'],
-                    "spreadsheet": valores['spreadsheet']
+                    "spreadsheet": valores['spreadsheet'],
+                    "2nr": valores['2nr']
                 }
                 with open("config.json", "w") as f:
                     json.dump(config, f)
@@ -4380,7 +4382,7 @@ while True:
                 layout_configuracoes[4][0].update(value=config.get("app", ""))
                 layout_configuracoes[5][0].update(value=config.get("maquina", ""))
                 layout_configuracoes[6][0].update(value=config.get("spreadsheet", ""))
-                print(email)
+                layout_configuracoes[7][0].update(value=config.get("2nr", ""))
 
             janela_configuracoes.close()
 
