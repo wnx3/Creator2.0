@@ -4387,6 +4387,10 @@ while True:
             window['output'].print('Configure o bot primeiro.')
             window.Refresh()
             time.sleep(200)
+        if '2nr' not in config or config['maquina'] == '':
+            window['output'].print('Configure o bot primeiro.')
+            window.Refresh()
+            time.sleep(200)
         if config['email'] == '-mailtm-':
             window['output'].print('Email selecionado: Mail.TM')
             window.Refresh()
