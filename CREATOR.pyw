@@ -182,10 +182,16 @@ sg.SetOptions(font=('Open Sans', 10))
 check_img = 'storage\\img\\total.png'
 #config_img = 'storage/img/config.png'
 layout = [
-    [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)],
-    [sg.Button('Executar'), sg.Button('Reiniciar', key='clear', disabled=True),
-     sg.Button('Configurações', key='-config-'),
-     sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')]
+    [
+        sg.Frame('WNx3 CREATOR', [
+            [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
+        ], border_width=10, title_location='n')
+    ],
+    [
+        sg.Button('Executar'), sg.Button('Reiniciar', key='clear', disabled=True),
+        sg.Button('Configurações', key='-config-'),
+        sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')
+    ]
 ]
 
 window = sg.Window(f'CREATOR WNx3 | Porta: {porta}', layout)
@@ -3077,15 +3083,18 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da Avast', text_color='red')
+        window['output'].print('Alterando IP da Avast', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             driver.start_activity("com.avast.android.vpn", ".app.wizard.WizardActivity")
@@ -3099,15 +3108,18 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da HotspotShield', text_color='red')
+        window['output'].print('Alterando IP da HotspotShield', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             driver.start_activity("hotspotshield.android.vpn", "com.anchorfree.hotspotshield.ui.HssActivity")
@@ -3128,15 +3140,18 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da PiaVPN', text_color='red')
+        window['output'].print('Alterando IP da PiaVPN', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             driver.start_activity("com.privateinternetaccess.android", ".ui.LauncherActivity")
@@ -3157,15 +3172,18 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da ExpressVPN', text_color='red')
+        window['output'].print('Alterando IP da ExpressVPN', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             driver.start_activity("com.expressvpn.vpn", ".ui.SplashActivity")
@@ -3186,7 +3204,7 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da NordVPN', text_color='red')
+        window['output'].print('Alterando IP da NordVPN', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
@@ -3224,15 +3242,18 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da SurfShark', text_color='red')
+        window['output'].print('Alterando IP da SurfShark', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
 
         try:
             driver.start_activity("com.surfshark.vpnclient.android", ".StartActivity")
@@ -3258,7 +3279,7 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da BetterNet', text_color='red')
+        window['output'].print('Alterando IP da BetterNet', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
@@ -3319,15 +3340,18 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da CyberGhost', text_color='red')
+        window['output'].print('Alterando IP da CyberGhost', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
 
         try:
             driver.start_activity("de.mobileconcepts.cyberghost", ".view.app.AppActivity filter")
@@ -3352,22 +3376,24 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da AVG', text_color='red')
+        window['output'].print('Alterando IP da AVG', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             driver.start_activity("com.avg.android.vpn", "com.avast.android.vpn.app.wizard.WizardActivity")
         except:
             pass
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #               stderr=subprocess.DEVNULL, check=True, shell=True)
 
         # time.sleep(10)
         WebDriverWait(driver, 1).until(
@@ -3409,6 +3435,47 @@ def executar_2nr():
     time.sleep(2)
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
+    
+    desired_caps = {}
+    desired_caps['udid'] = '127.0.0.1:' + porta
+    desired_caps['newCommandTimeout'] = '500'
+    desired_caps['platformName'] = 'Android'
+    desired_caps['automationName'] = 'UiAutomator2'
+    desired_caps['systemPort'] = random.randint(6000, 8299)
+    desired_caps['noReset'] = True
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+    
+    window['output'].print('Efetuando troca de IP.')
+    window.Refresh()
+    try:
+        conteudo = config['vpn']
+        if conteudo == "AVG":
+            vpn_avg()
+        elif conteudo == "SurfShark":
+            vpn_surf()
+        elif conteudo == "Avast":
+            vpn_avast()
+        elif conteudo == "ExpressVPN":
+            vpn_express()
+        elif conteudo == "PiaVPN":
+            vpn_pia()
+        elif conteudo == "BetterNet":
+            vpn_better()
+        elif conteudo == "CyberGhost":
+            vpn_cyberghost()
+        elif conteudo == "NordVPN":
+            vpn_nord()
+        elif conteudo == "HotspotShield":
+            vpn_hotspotshield()
+        else:
+            window['output'].print(
+                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+            window.Refresh()
+
+    except Exception as e:
+        print(e)
+        pass
+
     window.Refresh()
     window['output'].print('Iniciando criação.\n')
     window.Refresh()
@@ -3437,9 +3504,13 @@ def executar_2nr():
             try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
+                
+                
+            except:
+                pass
+            try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
-                
             except:
                 pass
                 
@@ -3463,7 +3534,7 @@ def executar_2nr():
                 desired_caps['noReset'] = True
             
                 driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-
+                
                 gerar_id()
                 android_id = gerar_id()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
@@ -3490,6 +3561,7 @@ def executar_2nr():
                     num_rows2nr = sum(len(regex2nr.findall(row[0])) for row in values2nr)
                 window['output'].print(f'{num_rows2nr} contas encontrada.')
                 window.Refresh()
+                time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
                 
 
@@ -4344,8 +4416,30 @@ while True:
             time.sleep(200)
     if event == '-config-':
 
-        # Abre a GUI de configuração
+        layout_configuracoes = [
+        [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
+        sg.InputText(key="-senha-", default_text=config.get("senha", ""))],
+        [sg.Text('VPN: ', font=('Open Sans', 12)),
+        sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
+        #sg.OptionMenu(vpn_list, size=(7, 19), key="-vpn-", default_value=config.get("vpn", ""))],
+        [sg.Text('Email ou número: ', font=('Open Sans', 12)),
+        sg.Radio('Mail.TM', 'RADIO1', key='-mailtm-', default=config.get("email", "") == "-mailtm-"),
+        sg.Radio('MinuteInBox', 'RADIO1', key='-minuteinbox-', default=config.get("email", "") == "-minuteinbox-"),
+        sg.Radio('2NR', 'RADIO1', key='-2nr-', default=config.get("email", "") == "-2nr-")],
+        [sg.Radio('Instagram Lite', 'RADIO2', key='-instalite-', default=config.get("app", "") == "-instalite-"),
+        sg.Radio('Instagram', 'RADIO2', key='-insta-', default=config.get("app", "") == "-insta-")],
+        [sg.HorizontalSeparator()],
+        [sg.Text("Nome da maquina: "), sg.InputText(key="maquina", default_text=config.get("maquina", ""))],
+        [sg.Text("SpreadsheetID: "), sg.InputText(key="spreadsheet", default_text=config.get("spreadsheet", ""))],
+        [sg.Text("Planilha 2NR: "), sg.InputText(key="2nr", default_text=config.get("2nr", ""))],
+        [sg.Button("Salvar")]
+        ]
+
+        # Criar a janela da GUI de configuração
+        janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
+
         while True:
+            #janela_configuracoes = sg.Window('Configurações', layout_configuracoes)
             evento, valores = janela_configuracoes.read()
 
             if evento == sg.WINDOW_CLOSED:
@@ -4385,5 +4479,4 @@ while True:
                 layout_configuracoes[7][0].update(value=config.get("2nr", ""))
 
             janela_configuracoes.close()
-
 window.close()
