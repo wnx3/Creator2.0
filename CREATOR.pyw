@@ -70,8 +70,7 @@ except ModuleNotFoundError:
 
 base_url = 'https://raw.githubusercontent.com/wnx3/Creator2.0/main/'
 
-# Lista de arquivos que você deseja verificar e atualizar
-# file_list = ['relatorio.json', 'requirements.txt']
+#Lista de arquivos que você deseja verificar e atualizar
 file_list = ['relatorio.json', 'requirements.txt', 'CREATOR.pyw']
 for file_name in file_list:
     # Caminho local do seu arquivo Python
@@ -2266,51 +2265,6 @@ def executar_minuteinbox():
                                                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
 
         time.sleep(5)
-        codigo_invalido = driver.find_elements(By.XPATH,
-                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[5]')
-        continua_na_tela = driver.find_elements(By.XPATH,
-                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.View')
-        if len(codigo_invalido) and len(continua_na_tela) == 1:
-            window['output'].print('Erro encontrado.')
-            window.Refresh()
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
-            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]'))).click()
-            # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, ''))).click()
-            # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, ''))).click()
-            # WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, ''))).click()
-
-            time.sleep(2)
-            codigo = None
-            try:
-                test.start(listener, interval=5)
-                codigo = 0
-                while codigo != 20:
-                    time.sleep(1.5)
-                    codigo = codigo + 1
-                codigo = cod
-            except Exception as e:
-                if "Too Many Requests" in str(e):
-                    pass
-                else:
-                    window['output'].print(e)
-                    window.Refresh()
-            window['output'].print(f"Código recebido: {codigo}")
-            window.Refresh()
-            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
-                                                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
-                codigo)
-            try:
-                driver.find_element(By.XPATH,
-                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]').click()
-
-            except:
-                driver.find_element(By.XPATH,
-                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]').click()
-
-            test.stop()
-            time.sleep(3)
 
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[8]')))
@@ -4055,7 +4009,9 @@ def executar_2nr():
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]/android.view.View')))
                 except:
                     continue
+                print('tst')
                 while sms is False:
+                    print('passou aq')
                     try:
                         pular_erro = driver.find_elements(By.XPATH,
                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
