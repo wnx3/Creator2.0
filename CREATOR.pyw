@@ -3540,7 +3540,7 @@ def executar_2nr():
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(10)
                 SHEET_NAME = config['2nr']
-                RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
+                RANGE_NAME2nr = f'{SHEET_NAME}!A:A'
                 SCOPES2nr = ['https://www.googleapis.com/auth/spreadsheets']
                 creds2nr = Credentials.from_authorized_user_file('token.json', SCOPES2nr)
                 service2nr = build('sheets', 'v4', credentials=creds2nr)
@@ -3627,7 +3627,7 @@ def executar_2nr():
                 qtd_num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                 window['output'].print(f'{len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
-                    SHEET_NAME = '2nr'
+                    SHEET_NAME = config['2nr']
 
                     SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
                     creds = Credentials.from_authorized_user_file('token.json', SCOPES)
