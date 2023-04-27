@@ -2456,57 +2456,57 @@ def executar_minuteinbox():
                 if len(verificar) == 1:
                     window['output'].print('Conta criada com sucesso.', text_color='green')
                     window.Refresh()
-                    now = datetime.now()
-                    timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
-                    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                    service = build('sheets', 'v4', credentials=creds)
+                    #now = datetime.now()
+                    #timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
+                    #creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+                    #service = build('sheets', 'v4', credentials=creds)
                     # Get values of columns A and B
-                    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
+                    #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                                  range=RANGE_NAME).execute()
-                    values = result.get('values', [])
+                    #values = result.get('values', [])
                     # Find first empty row
-                    first_empty_row_index = len(values) + 1
+                    #first_empty_row_index = len(values) + 1
                     # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                    value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    result = service.spreadsheets().values().update(
-                        spreadsheetId=SPREADSHEET_ID,
-                        range=range_to_update,
-                        valueInputOption=value_input_option,
-                        body=value_range_body).execute()
+                    #range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
+                    #value_input_option = 'USER_ENTERED'
+                    #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
+                    #result = service.spreadsheets().values().update(
+                        #spreadsheetId=SPREADSHEET_ID,
+                        #range=range_to_update,
+                        #valueInputOption=value_input_option,
+                        #body=value_range_body).execute()
 
-                    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
+                    #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                                  range=RANGE_NAME).execute()
-                    values = result.get('values', [])
-
+                    #values = result.get('values', [])
+#
                     # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                    regex = re.compile(r'^.*\.\d{3}\s.*$')
+                    #regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                    num_rows = sum(1 for row in values if regex.match(row[0]))
-                    window['total'].update(num_rows)
+                    #num_rows = sum(1 for row in values if regex.match(row[0]))
+                    #window['total'].update(num_rows)
 
-                    creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                    service = build('sheets', 'v4', credentials=creds)
+                    #creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
+                    #service = build('sheets', 'v4', credentials=creds)
                     # Get values of columns A and B
-                    result = service.spreadsheets().values().get(
-                        spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        range='relatorio_geral!A:D').execute()
-                    values = result.get('values', [])
+                    #result = service.spreadsheets().values().get(
+                        #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
+                        #range='relatorio_geral!A:D').execute()
+                    #values = result.get('values', [])
                     # Find first empty row
-                    first_empty_row_index = len(values) + 1
+                    #first_empty_row_index = len(values) + 1
                     # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                    value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    result = service.spreadsheets().values().update(
-                        spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        range=range_to_update,
-                        valueInputOption=value_input_option,
-                        body=value_range_body).execute()
+                    #range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
+                    #value_input_option = 'USER_ENTERED'
+                    #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
+                    #result = service.spreadsheets().values().update(
+                        #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
+                        #range=range_to_update,
+                        #valueInputOption=value_input_option,
+                        #body=value_range_body).execute()
 
-                    window.Refresh()
+                    #window.Refresh()
                     arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
                     # Escreva mais conteúdo no arquivo
                     arquivo.write(user_completo + ' ' + senha + "\n")
@@ -2827,59 +2827,57 @@ def executar_minuteinbox():
                             pass
                         window['output'].print('Conta criada com sucesso.', text_color='green')
                         conteudo = config['vpn']
-                        window.Refresh()
-                        now = datetime.now()
-                        timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
+                        #window.Refresh()
+                        #now = datetime.now()
+                        #timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
 
-                        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
+                        #creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+                        #service = build('sheets', 'v4', credentials=creds)
                         # Get values of columns A and B
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
+                        #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                                      range=RANGE_NAME).execute()
-                        values = result.get('values', [])
+                        #values = result.get('values', [])
                         # Find first empty row
-                        first_empty_row_index = len(values) + 1
+                        #first_empty_row_index = len(values) + 1
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {
-                            'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId=SPREADSHEET_ID,
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        #range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
+                        #value_input_option = 'USER_ENTERED'
+                        #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
+                        #result = service.spreadsheets().values().update(
+                            #spreadsheetId=SPREADSHEET_ID,
+                            #range=range_to_update,
+                            #valueInputOption=value_input_option,
+                            #body=value_range_body).execute()
 
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
+                        #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
                                                                      range=RANGE_NAME).execute()
-                        values = result.get('values', [])
+                        #values = result.get('values', [])
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                        regex = re.compile(r'^.*\.\d{3}\s.*$')
+                        #regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in values if regex.match(row[0]))
-                        window['total'].update(num_rows)
+                        #num_rows = sum(1 for row in values if regex.match(row[0]))
+                        #window['total'].update(num_rows)
 
-                        creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
+                        #creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
+                        #service = build('sheets', 'v4', credentials=creds)
                         # Get values of columns A and B
-                        result = service.spreadsheets().values().get(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range='relatorio_geral!A:D').execute()
-                        values = result.get('values', [])
+                        #result = service.spreadsheets().values().get(
+                            #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
+                            #range='relatorio_geral!A:D').execute()
+                        #values = result.get('values', [])
                         # Find first empty row
-                        first_empty_row_index = len(values) + 1
+                        #first_empty_row_index = len(values) + 1
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {
-                            'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        #range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
+                        #value_input_option = 'USER_ENTERED'
+                        #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
+                        #result = service.spreadsheets().values().update(
+                            #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
+                            #range=range_to_update,
+                            #valueInputOption=value_input_option,
+                            #body=value_range_body).execute()
                         window.Refresh()
                         arquivo = open('configuracoes/contas/contas_criadas.txt',
                                        'a')  # Escreva mais conteúdo no arquivo
