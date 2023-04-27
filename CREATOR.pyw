@@ -2850,7 +2850,7 @@ def executar_minuteinbox():
                             #body=value_range_body).execute()
 
                         #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                     range=RANGE_NAME).execute()
+                                                                    # range=RANGE_NAME).execute()
                         #values = result.get('values', [])
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
