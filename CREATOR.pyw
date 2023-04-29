@@ -32,6 +32,48 @@ except ModuleNotFoundError:
     window = sg.Window("Atualização", layout)
     event, values = window.read()
     window.close()
+try:
+    import pytz
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'pytz'])
+    subprocess.run(['deactivate'], shell=True)
+    import pytz
+
+    sg.theme('Dark')
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Atualização", layout)
+    event, values = window.read()
+    window.close()
+tz = pytz.timezone('America/Sao_Paulo')
+try:
+    import gspread
+    from oauth2client.service_account import ServiceAccountCredentials
+except ModuleNotFoundError:
+    import subprocess
+    import sys
+
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'gspread'])
+    subprocess.run(['deactivate'], shell=True)
+    subprocess.run(['venv/scripts/activate.bat'], shell=True)
+    subprocess.run(['pip', 'install', 'oauth2client'])
+    subprocess.run(['deactivate'], shell=True)
+    import gspread
+    from oauth2client.service_account import ServiceAccountCredentials
+
+    sg.theme('Dark')
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
+              [sg.Button("OK")]]
+    window = sg.Window("Atualização", layout)
+    event, values = window.read()
+    window.close()
 
 from datetime import datetime
 import time
@@ -140,13 +182,13 @@ import PySimpleGUI as sg
 
 # Tenta abrir o arquivo token.json
 try:
-    with open("token.json", "r") as f:
+    with open("credentials.json", "r") as f:
         # Se o arquivo existir, lê o conteúdo
         content = f.read()
 except FileNotFoundError:
     # Se o arquivo não existir, abre uma GUI para informar o usuário
     sg.theme('Dark')
-    layout = [[sg.Text("Arquivo token.json não encontrado.", font=('Open Sans', 10))],
+    layout = [[sg.Text("Arquivo credentials.json não encontrado.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
     window = sg.Window("Erro", layout)
     event, values = window.read()
@@ -180,6 +222,7 @@ sg.theme('Dark')
 sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 check_img = 'storage\\img\\total.png'
+criada_img = 'storage\\img\\check.png'
 #config_img = 'storage/img/config.png'
 layout = [
     [
@@ -190,7 +233,8 @@ layout = [
     [
         sg.Button('Executar'), sg.Button('Reiniciar', key='clear', disabled=True),
         sg.Button('Configurações', key='-config-'),
-        sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total')
+        sg.Image(filename=check_img, pad=((0, 0), 0)), sg.Text('0', key='total'),
+        sg.Image(filename=criada_img, pad=((0, 0), 0)), sg.Text('0', key='criadas')
     ]
 ]
 
@@ -219,7 +263,7 @@ layout_configuracoes = [
 # Criar a janela da GUI de configuração
 janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
 
-
+contagem = 0
 def contagem():
     global nome
     global sobrenome
@@ -1099,57 +1143,56 @@ def executar_mailtm():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color='green')
+                    window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                    window.Refresh()
+                    contagem += 1
+                    window['criadas'].update(contagem)
                     window.Refresh()
                     now = datetime.now()
-                    timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
-                    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                    service = build('sheets', 'v4', credentials=creds)
-                    # Get values of columns A and B
-                    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                 range=RANGE_NAME).execute()
-                    values = result.get('values', [])
-                    # Find first empty row
-                    first_empty_row_index = len(values) + 1
-                    # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                    value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    result = service.spreadsheets().values().update(
-                        spreadsheetId=SPREADSHEET_ID,
-                        range=range_to_update,
-                        valueInputOption=value_input_option,
-                        body=value_range_body).execute()
+                    now_brasilia = tz.localize(now)
+                    timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                    
+                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                    client = gspread.authorize(creds)
 
-                    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                 range=RANGE_NAME).execute()
-                    values = result.get('values', [])
+                    spreadsheet_id = config['spreadsheet']
+                    sheet_name = 'contas'
+                    # Insert user, password, and timestamp into first empty row
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+                    last_row = len(values)
+                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                    cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                    for i, val in enumerate(values):
+                        cell_list[i].value = val
+                    sheet.update_cells(cell_list)
+                    
+
+                    rows = sheet.get_all_values()
 
                     # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                     regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                    num_rows = sum(1 for row in values if regex.match(row[0]))
+                    num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
 
-                    creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                    service = build('sheets', 'v4', credentials=creds)
-                    # Get values of columns A and B
-                    result = service.spreadsheets().values().get(
-                        spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        range='relatorio_geral!A:D').execute()
-                    values = result.get('values', [])
-                    # Find first empty row
-                    first_empty_row_index = len(values) + 1
+                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                    client = gspread.authorize(creds)
+
+                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                    sheet_name = 'relatorio_geral'
                     # Insert user, password, and timestamp into first empty row
-                    range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                    value_input_option = 'USER_ENTERED'
-                    value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    result = service.spreadsheets().values().update(
-                        spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        range=range_to_update,
-                        valueInputOption=value_input_option,
-                        body=value_range_body).execute()
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+                    last_row = len(values)
+                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                    cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                    for i, val in enumerate(values):
+                        cell_list[i].value = val
+                    sheet.update_cells(cell_list)
 
                     window.Refresh()
                     arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
@@ -1231,20 +1274,24 @@ def executar_mailtm():
         window.Refresh()
         window['output'].print('Abrindo Instagram')
 
-        RANGE_NAME = 'contas!A:E'
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-        service = build('sheets', 'v4', credentials=creds)
+        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+        client = gspread.authorize(creds)
 
-        # Obter os valores da página 'teste' da planilha
-        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-        values = result.get('values', [])
+        spreadsheet_id = config['spreadsheet']
+        sheet_name = 'contas'
+        # Insert user, password, and timestamp into first empty row
+        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+        values = sheet.col_values(1)
+
+        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+        rows = sheet.get_all_values()
 
         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
         regex = re.compile(r'^.*\.\d{3}\s.*$')
 
         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-        num_rows = sum(1 for row in values if regex.match(row[0]))
+        num_rows = sum(1 for row in rows if regex.match(row[0]))
         window['total'].update(num_rows)
 
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
@@ -1470,65 +1517,64 @@ def executar_mailtm():
                                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                         except:
                             pass
-                        window['output'].print('Conta criada com sucesso.', text_color='green')
-                        conteudo = config['vpn']
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        contagem += 1
+                        window['criadas'].update(contagem)
+                        window.Refresh()
                         window.Refresh()
                         now = datetime.now()
-                        timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
+                        now_brasilia = tz.localize(now)
+                        timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                        
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
 
-                        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                     range=RANGE_NAME).execute()
-                        values = result.get('values', [])
-                        # Find first empty row
-                        first_empty_row_index = len(values) + 1
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = 'contas'
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {
-                            'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId=SPREADSHEET_ID,
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
+                        
 
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                     range=RANGE_NAME).execute()
-                        values = result.get('values', [])
+                        rows = sheet.get_all_values()
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                         regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in values if regex.match(row[0]))
+                        num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        result = service.spreadsheets().values().get(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range='relatorio_geral!A:D').execute()
-                        values = result.get('values', [])
-                        # Find first empty row
-                        first_empty_row_index = len(values) + 1
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                        client = gspread.authorize(creds)
+
+                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                        sheet_name = 'relatorio_geral'
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {
-                            'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
+
                         window.Refresh()
-                        arquivo = open('configuracoes/contas/contas_criadas.txt',
-                                       'a')  # Escreva mais conteúdo no arquivo
+                        arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
                         arquivo.write(user_completo + ' ' + senha + "\n")
+                        arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
+                        arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                         time.sleep(4)
                         arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
                         arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
@@ -2454,59 +2500,58 @@ def executar_minuteinbox():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color='green')
+                    window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                    contagem += 1
+                    window['criadas'].update(contagem)
                     window.Refresh()
-                    #now = datetime.now()
-                    #timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
-                    #creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                    #service = build('sheets', 'v4', credentials=creds)
-                    # Get values of columns A and B
-                    #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                 #range=RANGE_NAME).execute()
-                    #values = result.get('values', [])
-                    # Find first empty row
-                    #first_empty_row_index = len(values) + 1
-                    # Insert user, password, and timestamp into first empty row
-                    #range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                    #value_input_option = 'USER_ENTERED'
-                    #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    #result = service.spreadsheets().values().update(
-                        #spreadsheetId=SPREADSHEET_ID,
-                        #range=range_to_update,
-                        #valueInputOption=value_input_option,
-                        #body=value_range_body).execute()
+                    window.Refresh()
+                    now = datetime.now()
+                    now_brasilia = tz.localize(now)
+                    timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                    
+                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                    client = gspread.authorize(creds)
 
-                    #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                 #range=RANGE_NAME).execute()
-                    #values = result.get('values', [])
-#
+                    spreadsheet_id = config['spreadsheet']
+                    sheet_name = 'contas'
+                    # Insert user, password, and timestamp into first empty row
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+                    last_row = len(values)
+                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                    cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                    for i, val in enumerate(values):
+                        cell_list[i].value = val
+                    sheet.update_cells(cell_list)
+                    
+
+                    rows = sheet.get_all_values()
+
                     # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                    #regex = re.compile(r'^.*\.\d{3}\s.*$')
+                    regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                    #num_rows = sum(1 for row in values if regex.match(row[0]))
-                    #window['total'].update(num_rows)
+                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                    window['total'].update(num_rows)
 
-                    #creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                    #service = build('sheets', 'v4', credentials=creds)
-                    # Get values of columns A and B
-                    #result = service.spreadsheets().values().get(
-                        #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        #range='relatorio_geral!A:D').execute()
-                    #values = result.get('values', [])
-                    # Find first empty row
-                    #first_empty_row_index = len(values) + 1
+                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                    client = gspread.authorize(creds)
+
+                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                    sheet_name = 'relatorio_geral'
                     # Insert user, password, and timestamp into first empty row
-                    #range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                    #value_input_option = 'USER_ENTERED'
-                    #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                    #result = service.spreadsheets().values().update(
-                        #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                        #range=range_to_update,
-                        #valueInputOption=value_input_option,
-                        #body=value_range_body).execute()
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+                    last_row = len(values)
+                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                    cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                    for i, val in enumerate(values):
+                        cell_list[i].value = val
+                    sheet.update_cells(cell_list)
 
-                    #window.Refresh()
+                    window.Refresh()
                     arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
                     # Escreva mais conteúdo no arquivo
                     arquivo.write(user_completo + ' ' + senha + "\n")
@@ -2586,20 +2631,24 @@ def executar_minuteinbox():
         window.Refresh()
         window['output'].print('Abrindo Instagram')
 
-        RANGE_NAME = 'contas!A:E'
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-        service = build('sheets', 'v4', credentials=creds)
+        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+        client = gspread.authorize(creds)
 
-        # Obter os valores da página 'teste' da planilha
-        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-        values = result.get('values', [])
+        spreadsheet_id = config['spreadsheet']
+        sheet_name = 'contas'
+        # Insert user, password, and timestamp into first empty row
+        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+        values = sheet.col_values(1)
+
+        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+        rows = sheet.get_all_values()
 
         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
         regex = re.compile(r'^.*\.\d{3}\s.*$')
 
         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-        num_rows = sum(1 for row in values if regex.match(row[0]))
+        num_rows = sum(1 for row in rows if regex.match(row[0]))
         window['total'].update(num_rows)
 
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
@@ -2825,65 +2874,64 @@ def executar_minuteinbox():
                                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                         except:
                             pass
-                        window['output'].print('Conta criada com sucesso.', text_color='green')
                         conteudo = config['vpn']
-                        #window.Refresh()
-                        #now = datetime.now()
-                        #timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        contagem += 1
+                        window['criadas'].update(contagem)
+                        window.Refresh()
+                        window.Refresh()
+                        now = datetime.now()
+                        now_brasilia = tz.localize(now)
+                        timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                        
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
 
-                        #creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                        #service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                     #range=RANGE_NAME).execute()
-                        #values = result.get('values', [])
-                        # Find first empty row
-                        #first_empty_row_index = len(values) + 1
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = 'contas'
                         # Insert user, password, and timestamp into first empty row
-                        #range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                        #value_input_option = 'USER_ENTERED'
-                        #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        #result = service.spreadsheets().values().update(
-                            #spreadsheetId=SPREADSHEET_ID,
-                            #range=range_to_update,
-                            #valueInputOption=value_input_option,
-                            #body=value_range_body).execute()
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
+                        
 
-                        #result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                    # range=RANGE_NAME).execute()
-                        #values = result.get('values', [])
+                        rows = sheet.get_all_values()
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                        #regex = re.compile(r'^.*\.\d{3}\s.*$')
+                        regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        #num_rows = sum(1 for row in values if regex.match(row[0]))
-                        #window['total'].update(num_rows)
+                        num_rows = sum(1 for row in rows if regex.match(row[0]))
+                        window['total'].update(num_rows)
 
-                        #creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                        #service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        #result = service.spreadsheets().values().get(
-                            #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            #range='relatorio_geral!A:D').execute()
-                        #values = result.get('values', [])
-                        # Find first empty row
-                        #first_empty_row_index = len(values) + 1
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                        client = gspread.authorize(creds)
+
+                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                        sheet_name = 'relatorio_geral'
                         # Insert user, password, and timestamp into first empty row
-                        #range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                        #value_input_option = 'USER_ENTERED'
-                        #value_range_body = {'values': [[user_completo + ' ' + senha, email, timestamp, maquina, conteudo]]}
-                        #result = service.spreadsheets().values().update(
-                            #spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            #range=range_to_update,
-                            #valueInputOption=value_input_option,
-                            #body=value_range_body).execute()
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
+
                         window.Refresh()
-                        arquivo = open('configuracoes/contas/contas_criadas.txt',
-                                       'a')  # Escreva mais conteúdo no arquivo
+                        arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
                         arquivo.write(user_completo + ' ' + senha + "\n")
-                        time.sleep(4)
                         arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
                         arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
@@ -3484,20 +3532,24 @@ def executar_2nr():
             window.Refresh()
             window['output'].print('Abrindo 2NR')
 
-            RANGE_NAME = 'contas!A:E'
-            SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-            service = build('sheets', 'v4', credentials=creds)
+            scope = ['https://www.googleapis.com/auth/spreadsheets']
+            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+            client = gspread.authorize(creds)
 
-            # Obter os valores da página 'teste' da planilha
-            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
-            values = result.get('values', [])
+            spreadsheet_id = config['spreadsheet']
+            sheet_name = 'contas'
+            # Insert user, password, and timestamp into first empty row
+            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+            values = sheet.col_values(1)
+
+            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+            rows = sheet.get_all_values()
 
             # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
             regex = re.compile(r'^.*\.\d{3}\s.*$')
 
             # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-            num_rows = sum(1 for row in values if regex.match(row[0]))
+            num_rows = sum(1 for row in rows if regex.match(row[0]))
             window['total'].update(num_rows)
             try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
@@ -3537,58 +3589,46 @@ def executar_2nr():
                 android_id = gerar_id()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(10)
-                SHEET_NAME = config['2nr']
-                RANGE_NAME2nr = f'{SHEET_NAME}!A:A'
-                SCOPES2nr = ['https://www.googleapis.com/auth/spreadsheets']
-                creds2nr = Credentials.from_authorized_user_file('token.json', SCOPES2nr)
-                service2nr = build('sheets', 'v4', credentials=creds2nr)
+                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                client = gspread.authorize(creds)
 
-                # Obter os valores da página 'teste' da planilha
-                result2nr = service2nr.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                values2nr = result2nr.get('values', [])
+                spreadsheet_id = config['spreadsheet']
+                sheet_name = config['2nr']
 
-                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                regex2nr = re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b')
-                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                num_rows2nr = sum(len(regex2nr.findall(row[0])) for row in values2nr)
-                while num_rows2nr == 0:
+                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                # Obtém todas as células
+                cells = sheet.get_all_values()
+
+                # Armazena as células que correspondem à condição
+                matches = [cell for row in cells for cell in row if re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', cell)]
+
+                # Armazena a lista de células correspondentes à condição em uma variável
+                regex2nr = matches
+                while len(regex2nr) == 0:
                     window['output'].print('Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
                     time.sleep(300)
-                    result2nr = service2nr.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                    values2nr = result2nr.get('values', [])
-                    num_rows2nr = sum(len(regex2nr.findall(row[0])) for row in values2nr)
-                window['output'].print(f'{num_rows2nr} contas encontrada.')
+                    cells = sheet.get_all_values()
+
+                    # Armazena as células que correspondem à condição
+                    matches = [cell for row in cells for cell in row if re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', cell)]
+
+                    # Armazena a lista de células correspondentes à condição em uma variável
+                    regex2nr = matches
+                window['output'].print(f'{len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
                 
 
-                SHEET_NAME = config['2nr']
-
-                SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-                creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-
-                # Conecta à API
-                service = build('sheets', 'v4', credentials=creds)
-
-                # Obtém o ID da aba
-                sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-                sheet_id = None
-                for sheet in sheet_metadata['sheets']:
-                    if sheet['properties']['title'] == SHEET_NAME:
-                        sheet_id = sheet['properties']['sheetId']
-                        break
-                if sheet_id is None:
-                    raise Exception(f"Aba '{SHEET_NAME}' não encontrada na planilha")
+                spreadsheet_id = config['spreadsheet']
+                sheet_name = config['2nr']
+                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                # Obtém todas as células
 
                 # Define a faixa de células para leitura
-                RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
-
-                # Lê o valor da célula A1
-                result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                values = result.get('values', [])
-                first_linha = values[0][0]
+                first_linha = sheet.cell(1, 1).value
 
                 # Divide a string em duas partes separadas por um espaço em branco
                 partes = first_linha.split(' ')
@@ -3606,6 +3646,10 @@ def executar_2nr():
                 time.sleep(0.5)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonLogin'))).click()
                 time.sleep(3)
+                try:
+                    WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')))
+                except:
+                    pass
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'Aceitando permissões.')
@@ -3627,75 +3671,24 @@ def executar_2nr():
                 if len(qtd_num) == 0:
                     SHEET_NAME = config['2nr']
 
-                    SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-                    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                    client = gspread.authorize(creds)
+                    # Abre a planilha e a planilha de uma determinada aba
+                    spreadsheet_id = config['spreadsheet']
+                    sheet_name = SHEET_NAME
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
 
-                    # Conecta à API
-                    service = build('sheets', 'v4', credentials=creds)
-
-                    # Obtém o ID da aba
-                    sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-                    sheet_id = None
-                    for sheet in sheet_metadata['sheets']:
-                        if sheet['properties']['title'] == SHEET_NAME:
-                            sheet_id = sheet['properties']['sheetId']
-                            break
-                    if sheet_id is None:
-                        raise Exception(f"Aba '{SHEET_NAME}' não encontrada na planilha")
-
-                    # Define a faixa de células para leitura
-                    RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
-
-                    # Lê o valor da célula A1
-                    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                    values = result.get('values', [])
-
-                    # Apaga a primeira linha
-                    request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                        'requests': [
-                            {
-                                'deleteDimension': {
-                                    'range': {
-                                        'sheetId': sheet_id,
-                                        'dimension': 'ROWS',
-                                        'startIndex': 0,
-                                        'endIndex': 1
-                                    }
-                                }
-                            }
-                        ]
-                    })
-
-                    # Adicione o objeto updateSheetPropertiesRequest envolvendo o objeto deleteDimension
-                    request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                        'requests': [
-                            {
-                                'updateSheetProperties': {
-                                    'properties': {
-                                        'sheetId': sheet_id,
-                                    },
-                                    'fields': 'gridProperties(frozenRowCount)',
-                                }
-                            },
-                            {
-                                'deleteDimension': {
-                                    'range': {
-                                        'sheetId': sheet_id,
-                                        'dimension': 'ROWS',
-                                        'startIndex': 0,
-                                        'endIndex': 1
-                                    }
-                                }
-                            },
-                        ]
-                    })
-                    response = request.execute()
+                    # Apaga a primeira célula da coluna A e desloca as células abaixo
+                    sheet.delete_rows(1, 1)
+                    
                     continue
                 window.Refresh()
                 num = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]'))).text
                 num = num.replace(' ', '')
                 window['output'].print(f'Número: {num}')
                 window.Refresh()
+                email = num
                 window['output'].print(f'Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
@@ -3724,6 +3717,18 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                     window['output'].print(f'Número excluído.')
                     window.Refresh()
+                    try:
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+                        
+                        
+                    except:
+                        pass
+                    try:
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+                    except:
+                        pass
 
                     conteudo = config['vpn']
                     if conteudo == "AVG":
@@ -3922,55 +3927,56 @@ def executar_2nr():
                 try:
                     if len(verificar) == 1:
                         
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        window.Refresh()
+                        contagem += 1
+                        window['criadas'].update(contagem)
+                        window.Refresh()
                         now = datetime.now()
-                        timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
-                        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                    range=RANGE_NAME).execute()
-                        values = result.get('values', [])
-                        # Find first empty row
-                        first_empty_row_index = len(values) + 1
-                        # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {'values': [[user_completo + ' ' + senha, num, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId=SPREADSHEET_ID,
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        now_brasilia = tz.localize(now)
+                        timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                        
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
 
-                        result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                    range=RANGE_NAME).execute()
-                        values = result.get('values', [])
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = 'contas'
+                        # Insert user, password, and timestamp into first empty row
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
+                        
+
+                        rows = sheet.get_all_values()
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                         regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in values if regex.match(row[0]))
+                        num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                        service = build('sheets', 'v4', credentials=creds)
-                        # Get values of columns A and B
-                        result = service.spreadsheets().values().get(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range='relatorio_geral!A:D').execute()
-                        values = result.get('values', [])
-                        # Find first empty row
-                        first_empty_row_index = len(values) + 1
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                        client = gspread.authorize(creds)
+
+                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                        sheet_name = 'relatorio_geral'
                         # Insert user, password, and timestamp into first empty row
-                        range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                        value_input_option = 'USER_ENTERED'
-                        value_range_body = {'values': [[user_completo + ' ' + senha, num, timestamp, maquina, conteudo]]}
-                        result = service.spreadsheets().values().update(
-                            spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                            range=range_to_update,
-                            valueInputOption=value_input_option,
-                            body=value_range_body).execute()
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                        values = sheet.col_values(1)
+                        last_row = len(values)
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                        for i, val in enumerate(values):
+                            cell_list[i].value = val
+                        sheet.update_cells(cell_list)
 
                         window.Refresh()
                         arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
@@ -3978,17 +3984,16 @@ def executar_2nr():
                         arquivo.write(user_completo + ' ' + senha + "\n")
                         arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
                         # Escreva mais conteúdo no arquivo
-                        arquivo.write(num + '\n' + user_completo + '\n' + senha + "\n\n")
+                        arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]/android.view.View'))).click()
-                        window['output'].print('Conta criada com sucesso.', text_color='green')
-                        window.Refresh()
+
                         sms = False
                     else:
                         try:
                             conteudo = config['vpn']
 
-                            SHEET_NAME = '2nr'
+                            SHEET_NAME = config['2nr']
                             SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
                             creds = Credentials.from_authorized_user_file('token.json', SCOPES)
                             # Conecta à API
@@ -4081,9 +4086,7 @@ def executar_2nr():
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]/android.view.View')))
                 except:
                     continue
-                print('tst')
                 while sms is False:
-                    print('passou aq')
                     try:
                         pular_erro = driver.find_elements(By.XPATH,
                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
@@ -4194,68 +4197,65 @@ def executar_2nr():
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                             except:
                                 pass
-                            window['output'].print('Conta criada com sucesso.', text_color='green')
                             conteudo = config['vpn']
+                            window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                            window.Refresh()
+                            contagem += 1
+                            window['criadas'].update(contagem)
                             window.Refresh()
                             now = datetime.now()
-                            timestamp = now.strftime("%d/%m/%Y %H:%M:%S")
+                            now_brasilia = tz.localize(now)
+                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                            
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
 
-                            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                            service = build('sheets', 'v4', credentials=creds)
-                            # Get values of columns A and B
-                            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                        range=RANGE_NAME).execute()
-                            values = result.get('values', [])
-                            # Find first empty row
-                            first_empty_row_index = len(values) + 1
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
                             # Insert user, password, and timestamp into first empty row
-                            range_to_update = f'contas!A{first_empty_row_index}:E{first_empty_row_index}'
-                            value_input_option = 'USER_ENTERED'
-                            value_range_body = {
-                                'values': [[user_completo + ' ' + senha, num, timestamp, maquina, conteudo]]}
-                            result = service.spreadsheets().values().update(
-                                spreadsheetId=SPREADSHEET_ID,
-                                range=range_to_update,
-                                valueInputOption=value_input_option,
-                                body=value_range_body).execute()
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                            
 
-                            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID,
-                                                                        range=RANGE_NAME).execute()
-                            values = result.get('values', [])
+                            rows = sheet.get_all_values()
 
                             # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                             regex = re.compile(r'^.*\.\d{3}\s.*$')
 
                             # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in values if regex.match(row[0]))
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
 
-                            creds = Credentials.from_authorized_user_file('relatorio.json', SCOPES)
-                            service = build('sheets', 'v4', credentials=creds)
-                            # Get values of columns A and B
-                            result = service.spreadsheets().values().get(
-                                spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                                range='relatorio_geral!A:D').execute()
-                            values = result.get('values', [])
-                            # Find first empty row
-                            first_empty_row_index = len(values) + 1
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                            client = gspread.authorize(creds)
+
+                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                            sheet_name = 'relatorio_geral'
                             # Insert user, password, and timestamp into first empty row
-                            range_to_update = f'relatorio_geral!A{first_empty_row_index}:E{first_empty_row_index}'
-                            value_input_option = 'USER_ENTERED'
-                            value_range_body = {
-                                'values': [[user_completo + ' ' + senha, num, timestamp, maquina, conteudo]]}
-                            result = service.spreadsheets().values().update(
-                                spreadsheetId='1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4',
-                                range=range_to_update,
-                                valueInputOption=value_input_option,
-                                body=value_range_body).execute()
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+
                             window.Refresh()
-                            arquivo = open('configuracoes/contas/contas_criadas.txt',
-                                        'a')  # Escreva mais conteúdo no arquivo
+                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                            # Escreva mais conteúdo no arquivo
                             arquivo.write(user_completo + ' ' + senha + "\n")
-                            time.sleep(4)
                             arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                            arquivo.write(num + '\n' + user_completo + '\n' + senha + "\n\n")
+                            # Escreva mais conteúdo no arquivo
+                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                             window.Refresh()
@@ -4368,9 +4368,10 @@ while True:
 
     # Executa o código e atualiza a saída na Multiline em tempo real
     if event == 'Executar':
-        if not os.path.exists("token.json"):
+        contagem = 0
+        if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print('Nenhum token.json encontrado.')
+            window['output'].print('Nenhum credentials.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
@@ -4406,9 +4407,9 @@ while True:
             minha_thread.start()
     if event == 'clear':
         window['output'].update('')
-        if not os.path.exists("token.json"):
+        if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print('Nenhum token.json encontrado.')
+            window['output'].print('Nenhum credentials.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
