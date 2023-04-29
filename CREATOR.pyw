@@ -216,7 +216,15 @@ while True:
     if dialog_event == 'Avançar':
         porta = dialog_values['port']
         break
-
+port = porta
+comando = f"adb connect 127.0.0.1:{porta}"
+subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+               stdout=subprocess.DEVNULL,
+               stderr=subprocess.DEVNULL, shell=True)
+subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+               stdout=subprocess.DEVNULL,
+               stderr=subprocess.DEVNULL, shell=True)
 dialog_window.close()
 sg.theme('Dark')
 sg.SetOptions(font=('Open Sans', 10))
