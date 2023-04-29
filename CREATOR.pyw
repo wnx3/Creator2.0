@@ -3493,7 +3493,8 @@ def executar_2nr():
     try:
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
-    except:
+    except Exception as e:
+        print(e)
         pass
     
     window['output'].print('Efetuando troca de IP.')
@@ -3566,7 +3567,8 @@ def executar_2nr():
             try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
-            except:
+            except Exception as e:
+                print(e)
                 pass
                 
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
