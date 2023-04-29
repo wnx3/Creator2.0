@@ -1143,7 +1143,7 @@ def executar_mailtm():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                    window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                     window.Refresh()
                     contagem += 1
                     window['criadas'].update(contagem)
@@ -1517,7 +1517,7 @@ def executar_mailtm():
                                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                         except:
                             pass
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -2500,7 +2500,7 @@ def executar_minuteinbox():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                    window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                     contagem += 1
                     window['criadas'].update(contagem)
                     window.Refresh()
@@ -2875,7 +2875,7 @@ def executar_minuteinbox():
                         except:
                             pass
                         conteudo = config['vpn']
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -3927,7 +3927,7 @@ def executar_2nr():
                 try:
                     if len(verificar) == 1:
                         
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                         window.Refresh()
                         contagem += 1
                         window['criadas'].update(contagem)
@@ -4198,7 +4198,7 @@ def executar_2nr():
                             except:
                                 pass
                             conteudo = config['vpn']
-                            window['output'].print('Conta criada com sucesso.', text_color=('lime')))
+                            window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                             window.Refresh()
                             contagem += 1
                             window['criadas'].update(contagem)
