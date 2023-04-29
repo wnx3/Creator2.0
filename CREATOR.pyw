@@ -3490,6 +3490,11 @@ def executar_2nr():
     desired_caps['systemPort'] = random.randint(6000, 8299)
     desired_caps['noReset'] = True
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+    try:
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+    except:
+        pass
     
     window['output'].print('Efetuando troca de IP.')
     window.Refresh()
