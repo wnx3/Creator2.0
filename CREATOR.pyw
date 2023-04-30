@@ -374,7 +374,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -396,7 +396,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -425,7 +425,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -454,7 +454,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -483,7 +483,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -521,7 +521,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -555,7 +555,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -616,7 +616,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -649,7 +649,7 @@ def executar_mailtm():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -862,25 +862,28 @@ def executar_mailtm():
         global numeros_concatenados
         global user_completo
         lista_user = random.choices(range(1, 9), k=3)
-        with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
-            nomes = nomes_arquivo.readlines()
+        try:
+            with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
+                nomes = nomes_arquivo.readlines()
 
-        with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
-            sobrenomes = sobrenomes_arquivo.readlines()
+            with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
+                sobrenomes = sobrenomes_arquivo.readlines()
 
-        nome = random.choice(nomes).strip()
-        sobrenome = random.choice(sobrenomes).strip()
-        nome_completo = nome + ' ' + sobrenome
-        nome_completo_s = nome + sobrenome
-        numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-        user_completo = nome_completo_s + '.' + str(numeros_concatenados)
+            nome = random.choice(nomes).strip()
+            sobrenome = random.choice(sobrenomes).strip()
+            nome_completo = nome + ' ' + sobrenome
+            nome_completo_s = nome + sobrenome
+            numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+            user_completo = nome_completo_s + '.' + str(numeros_concatenados)
 
-        test = Email()
-        arquivo = open('configuracoes/contas/senha_perfis.txt')
-        senha = arquivo.read()
-        test.register(username=user_completo, password=senha)
-        window['output'].print("Email: " + str(test.address))
-        window.Refresh()
+            test = Email()
+            arquivo = open('configuracoes/contas/senha_perfis.txt')
+            senha = arquivo.read()
+            test.register(username=user_completo, password=senha)
+            window['output'].print("Email: " + str(test.address))
+        except Exception as e:
+            print(e)
+            window.Refresh()
         time.sleep(2)
         email = str(test.address)
         time.sleep(2)
@@ -1024,6 +1027,7 @@ def executar_mailtm():
                     window.Refresh()
                 gerar_email_firts_reg()
             except Exception as e:
+                print(e)
                 comando = f"adb connect 127.0.0.1:{porta}"
                 subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
@@ -1034,6 +1038,7 @@ def executar_mailtm():
                                stderr=subprocess.DEVNULL, shell=True)
 
                 window.Refresh()
+                
                 break
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
@@ -1242,7 +1247,8 @@ def executar_mailtm():
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
 
-            except:
+            except Exception as e:
+                print(e)
                 sms = True
                 break
 
@@ -1279,11 +1285,16 @@ def executar_mailtm():
     window.Refresh()
     cont = True
     while cont is True:
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
 
         window['output'].print(linha_ret)
         window.Refresh()
         window['output'].print('Abrindo Instagram')
-
+        
         scope = ['https://www.googleapis.com/auth/spreadsheets']
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
@@ -1303,18 +1314,20 @@ def executar_mailtm():
         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
         num_rows = sum(1 for row in rows if regex.match(row[0]))
         window['total'].update(num_rows)
-
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, shell=True)
+        except:
+            pass
         window.Refresh()
         # try:
-        #    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        #    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
         #                   stderr=subprocess.DEVNULL, check=True, shell=True)
         # except:
         #    pass
@@ -1328,14 +1341,15 @@ def executar_mailtm():
             desired_caps['newCommandTimeout'] = '500'
             desired_caps['platformName'] = 'Android'
             desired_caps['automationName'] = 'UiAutomator2'
-            desired_caps['appPackage'] = 'com.instagram.lite'
-            desired_caps['appActivity'] = 'com.facebook.lite.MainActivity'
+            #desired_caps['app'] = appinsta
+            #desired_caps['appPackage'] = 'com.instagram.lite'
+            #desired_caps['appActivity'] = 'com.facebook.lite.MainActivity'
             desired_caps['systemPort'] = random.randint(6000, 8299)
             desired_caps['noReset'] = True
-            desired_caps['app'] = appinsta
+            
 
             driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-
+            driver.activate_app('com.instagram.lite')
             gerar_id()
             android_id = gerar_id()
             # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}',
@@ -1681,7 +1695,7 @@ def executar_mailtm():
             logger.error('Ocorreu um erro: %s', e)
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
@@ -1792,7 +1806,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -1814,7 +1828,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -1843,7 +1857,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -1872,7 +1886,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -1901,7 +1915,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -1939,7 +1953,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -1973,7 +1987,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -2034,7 +2048,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
@@ -2067,7 +2081,7 @@ def executar_minuteinbox():
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         sms = True
         try:
@@ -2282,14 +2296,16 @@ def executar_minuteinbox():
         nome_completo_s = nome + sobrenome
         numeros_concatenados = ''.join(str(numero) for numero in lista_user)
         user_completo = nome_completo_s + '.' + str(numeros_concatenados)
-
-        inbox = Inbox(
-            address="",
-            token="",
-        )
-        email = inbox.address
-        window['output'].print("Email: " + email)
-        window.Refresh()
+        try:
+            inbox = Inbox(
+                address="",
+                token="",
+            )
+            email = inbox.address
+            window['output'].print("Email: " + email)
+            window.Refresh()
+        except Exception as e:
+            print(e)
         time.sleep(2)
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -2636,7 +2652,11 @@ def executar_minuteinbox():
     window.Refresh()
     cont = True
     while cont is True:
-
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         window['output'].print(linha_ret)
         window.Refresh()
         window['output'].print('Abrindo Instagram')
@@ -2663,7 +2683,7 @@ def executar_minuteinbox():
 
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
@@ -2671,7 +2691,7 @@ def executar_minuteinbox():
                        stderr=subprocess.DEVNULL, shell=True)
         window.Refresh()
         # try:
-        #    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+        #    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
         #                   stderr=subprocess.DEVNULL, check=True, shell=True)
         # except:
         #    pass
@@ -2685,14 +2705,14 @@ def executar_minuteinbox():
             desired_caps['newCommandTimeout'] = '500'
             desired_caps['platformName'] = 'Android'
             desired_caps['automationName'] = 'UiAutomator2'
-            desired_caps['appPackage'] = 'com.instagram.lite'
-            desired_caps['appActivity'] = 'com.facebook.lite.MainActivity'
+            #desired_caps['appPackage'] = 'com.instagram.lite'
+            #desired_caps['appActivity'] = 'com.facebook.lite.MainActivity'
             desired_caps['systemPort'] = random.randint(6000, 8299)
             desired_caps['noReset'] = True
-            desired_caps['app'] = appinsta
+            #desired_caps['app'] = appinsta
 
             driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-
+            driver.activate_app('com.instagram.lite')
             gerar_id()
             android_id = gerar_id()
             # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}',
@@ -3036,7 +3056,7 @@ def executar_minuteinbox():
             logger.error('Ocorreu um erro: %s', e)
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
