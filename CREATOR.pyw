@@ -1149,13 +1149,7 @@ def executar_mailtm():
             time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
-            # time.sleep(10)
-
-            conta_criada = driver.find_elements(By.XPATH,
-                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
-            conta_sms = driver.find_elements(By.XPATH,
-                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.View[4]')
-
+           
             try:
                 if len(verificar) == 1:
                     window['output'].print('Conta criada com sucesso.', text_color=('lime'))
@@ -1249,7 +1243,32 @@ def executar_mailtm():
 
             except Exception as e:
                 print(e)
+
                 sms = True
+                conteudo = config['vpn']
+                # Executa a função correspondente ao conteúdo do arquivo
+                if conteudo == "AVG":
+                    vpn_avg()
+                elif conteudo == "Avast":
+                    vpn_avast()
+                elif conteudo == "CyberGhost":
+                    vpn_cyberghost()
+                elif conteudo == "PiaVPN":
+                    vpn_pia()
+                elif conteudo == "ExpressVPN":
+                    vpn_express()
+                elif conteudo == "SurfShark":
+                    vpn_surf()
+                elif conteudo == "BetterNet":
+                    vpn_better()
+                elif conteudo == "NordVPN":
+                    vpn_nord()
+                elif conteudo == "HotspotShield":
+                    vpn_hotspotshield()
+                else:
+                    window['output'].print(
+                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                    window.Refresh()
                 break
 
     options = Options()
