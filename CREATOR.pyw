@@ -266,7 +266,14 @@ janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
 contagem = 0
 import subprocess
 port = porta
-
+comando = f"adb connect 127.0.0.1:{porta}"
+subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+               stdout=subprocess.DEVNULL,
+               stderr=subprocess.DEVNULL, shell=True)
+subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+               stdout=subprocess.DEVNULL,
+               stderr=subprocess.DEVNULL, shell=True)
 def contagem():
     global nome
     global sobrenome
@@ -3721,9 +3728,9 @@ def executar_2nr():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonLogin'))).click()
                 time.sleep(3)
                 try:
-                    WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')))
+                    WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')))
                 except:
-                    pass
+                    break
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'Aceitando permissões.')
@@ -4494,17 +4501,7 @@ while True:
     # Executa o código e atualiza a saída na Multiline em tempo real
     if event == 'Executar':
         contagem = 0
-        comando = f"adb connect 127.0.0.1:{porta}"
-        try:
-            subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, shell=True)
-        except:
-            pass
+        #tentativa = False
         if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
             window['output'].print('Nenhum credentials.json encontrado.')
