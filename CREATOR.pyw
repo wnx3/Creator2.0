@@ -266,17 +266,7 @@ janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
 contagem = 0
 import subprocess
 port = porta
-try:
-    comando = f"adb connect 127.0.0.1:{porta}"
-    subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL, shell=True)
-except:
-    pass
+
 def contagem():
     global nome
     global sobrenome
@@ -4504,7 +4494,17 @@ while True:
     # Executa o código e atualiza a saída na Multiline em tempo real
     if event == 'Executar':
         contagem = 0
-        #tentativa = False
+        comando = f"adb connect 127.0.0.1:{porta}"
+        try:
+            subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, shell=True)
+            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, shell=True)
+        except:
+            pass
         if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
             window['output'].print('Nenhum credentials.json encontrado.')
