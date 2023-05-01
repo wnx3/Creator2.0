@@ -3784,13 +3784,7 @@ def executar_2nr():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(num)
                 time.sleep(1)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
-                #vzs = 1
-                if tentativa is False:
-                    print('False')
-                    pass
-                elif tentativa is True:
-                    print('True')
-                    pass
+                
                 time.sleep(4)
                 restricao = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 if len(restricao) == 1 and tentativa is True:
@@ -3895,7 +3889,7 @@ def executar_2nr():
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
-                time.sleep(15)
+                time.sleep(20)
                 cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'Codigo recebido: {codigo}')
