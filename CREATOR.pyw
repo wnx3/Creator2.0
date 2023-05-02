@@ -1146,8 +1146,7 @@ def executar_mailtm():
             time.sleep(5)
             window['output'].print('Verificando...')
             window.Refresh()
-            time.sleep(4)
-
+            time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
            
@@ -1245,7 +1244,7 @@ def executar_mailtm():
             except Exception as e:
                 print(e)
 
-                
+                sms = True
                 conteudo = config['vpn']
                 # Executa a função correspondente ao conteúdo do arquivo
                 if conteudo == "AVG":
@@ -1270,7 +1269,6 @@ def executar_mailtm():
                     window['output'].print(
                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                     window.Refresh()
-                sms = True
                 break
 
     options = Options()
@@ -4061,7 +4059,7 @@ def executar_2nr():
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
-                time.sleep(10)
+                time.sleep(20)
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 time.sleep(5)
@@ -4232,6 +4230,28 @@ def executar_2nr():
                             sms = True
                 except Exception as e:
                     print(e)
+                    if conteudo == "AVG":
+                        vpn_avg()
+                    elif conteudo == "Avast":
+                        vpn_avast()
+                    elif conteudo == "CyberGhost":
+                        vpn_cyberghost()
+                    elif conteudo == "PiaVPN":
+                        vpn_pia()
+                    elif conteudo == "ExpressVPN":
+                        vpn_express()
+                    elif conteudo == "SurfShark":
+                        vpn_surf()
+                    elif conteudo == "BetterNet":
+                        vpn_better()
+                    elif conteudo == "NordVPN":
+                        vpn_nord()
+                    elif conteudo == "HotspotShield":
+                        vpn_hotspotshield()
+                    else:
+                        window['output'].print(
+                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                        window.Refresh()
                     sms = True
                     break
                 try:
