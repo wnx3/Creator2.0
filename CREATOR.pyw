@@ -1147,6 +1147,7 @@ def executar_mailtm():
             window['output'].print('Verificando...')
             window.Refresh()
             time.sleep(4)
+
             verificar = driver.find_elements(By.XPATH,
                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
            
@@ -1244,7 +1245,7 @@ def executar_mailtm():
             except Exception as e:
                 print(e)
 
-                sms = True
+                
                 conteudo = config['vpn']
                 # Executa a função correspondente ao conteúdo do arquivo
                 if conteudo == "AVG":
@@ -1269,6 +1270,7 @@ def executar_mailtm():
                     window['output'].print(
                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                     window.Refresh()
+                sms = True
                 break
 
     options = Options()
