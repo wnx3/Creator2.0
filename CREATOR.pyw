@@ -3794,7 +3794,7 @@ def executar_2nr():
                     client = gspread.authorize(creds)
                     # Abre a planilha e a planilha de uma determinada aba
                     spreadsheet_id = config['spreadsheet']
-                    sheet_name = SHEET_NAME
+                    sheet_name = config['2nr']
                     sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
 
                     # Apaga a primeira célula da coluna A e desloca as células abaixo
@@ -5230,19 +5230,19 @@ def executar_2nr_insta():
                 qtd_num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                 window['output'].print(f'{len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
-                    SHEET_NAME = config['2nr']
+                    try:
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
+                        # Abre a planilha e a planilha de uma determinada aba
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = config['2nr']
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
-                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                    client = gspread.authorize(creds)
-                    # Abre a planilha e a planilha de uma determinada aba
-                    spreadsheet_id = config['spreadsheet']
-                    sheet_name = SHEET_NAME
-                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-
-                    # Apaga a primeira célula da coluna A e desloca as células abaixo
-                    sheet.delete_rows(1, 1)
-                    
+                        # Apaga a primeira célula da coluna A e desloca as células abaixo
+                        sheet.delete_rows(1, 1)
+                    except Exception as e:
+                        print(e)
                     continue
                 window.Refresh()
                 num = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]'))).text
