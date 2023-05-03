@@ -3121,6 +3121,7 @@ def executar_2nr():
     maquina = config['maquina']
     sheet_name = config['2nr']
     tentativa = False
+    seguido = False
     global sms
     global nomes
     global sobrenomes
@@ -4130,7 +4131,7 @@ def executar_2nr():
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
-                time.sleep(2)
+                time.sleep(10)
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 
@@ -4212,6 +4213,18 @@ def executar_2nr():
 
                         sms = False
                     else:
+                        if seguido is True:
+                            window['output'].print(f'SMS seguidos, Trocando de número.')
+                            window.Refresh()
+                            driver.activate_app('pl.rs.sip.softphone.newapp')
+                            time.sleep(4)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
+                            window['output'].print(f'Número excluído.')
+                            window.Refresh()
+                            sms = True
+                        seguido = True
                         try:
                             conteudo = config['vpn']
 
@@ -4273,6 +4286,7 @@ def executar_2nr():
                 except:
                     continue
                 while sms is False:
+                    seguido = False
                     try:
                         pular_erro = driver.find_elements(By.XPATH,
                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
@@ -4361,7 +4375,7 @@ def executar_2nr():
 
                         WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
-                        time.sleep(10)
+                        time.sleep(20)
                         WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
@@ -4383,6 +4397,7 @@ def executar_2nr():
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                             except:
                                 pass
+                            seguido = False
                             conteudo = config['vpn']
                             window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                             window.Refresh()
