@@ -5454,7 +5454,10 @@ def executar_2nr_insta():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
                 time.sleep(2)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'android:id/button2'))).click()
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Alterar nome de usuário"]'))).click()
+                try:
+                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Alterar nome de usuário"]'))).click()
+                except:
+                    pass
                 window['output'].print(f'Usuário: {user_completo}')
                 window.Refresh()
                 time.sleep(3)
