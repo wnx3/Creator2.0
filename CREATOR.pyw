@@ -5079,7 +5079,6 @@ def executar_2nr_insta():
             window.Refresh()
 
     except Exception as e:
-        print(e)
         pass
 
     window.Refresh()
@@ -5547,7 +5546,7 @@ def executar_2nr_insta():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
                         time.sleep(1)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                        time.sleep(1)
+                        time.sleep(4)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
                         time.sleep(1)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
@@ -5558,66 +5557,6 @@ def executar_2nr_insta():
                     else:
                         try:
                             conteudo = config['vpn']
-
-                            SHEET_NAME = config['2nr']
-                            SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                            # Conecta à API
-                            service = build('sheets', 'v4', credentials=creds)
-                            # Obtém o ID da aba
-                            sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-                            sheet_id = None
-                            for sheet in sheet_metadata['sheets']:
-                                if sheet['properties']['title'] == SHEET_NAME:
-                                    sheet_id = sheet['properties']['sheetId']
-                                    break
-                            if sheet_id is None:
-                                raise Exception(f"Aba '{SHEET_NAME}' não encontrada na planilha")
-                            # Define a faixa de células para leitura
-                            RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
-                            # Lê o valor da célula A1
-                            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                            values = result.get('values', [])
-                            # Apaga a primeira linha
-                            request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                                'requests': [
-                                    {
-                                        'deleteDimension': {
-                                            'range': {
-                                                'sheetId': sheet_id,
-                                                'dimension': 'ROWS',
-                                                'startIndex': 0,
-                                                'endIndex': 1
-                                            }
-                                        }
-                                    }
-                                ]
-                            })
-                            # Adicione o objeto updateSheetPropertiesRequest envolvendo o objeto deleteDimension
-                            request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                                'requests': [
-                                    {
-                                        'updateSheetProperties': {
-                                            'properties': {
-                                                'sheetId': sheet_id,
-                                            },
-                                            'fields': 'gridProperties(frozenRowCount)',
-                                        }
-                                    },
-                                    {
-                                        'deleteDimension': {
-                                            'range': {
-                                                'sheetId': sheet_id,
-                                                'dimension': 'ROWS',
-                                                'startIndex': 0,
-                                                'endIndex': 1
-                                            }
-                                        }
-                                    },
-                                ]
-                            })
-
-
                             # Executa a função correspondente ao conteúdo do arquivo
                             if conteudo == "AVG":
                                 vpn_avg()
