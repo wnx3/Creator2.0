@@ -3119,6 +3119,7 @@ def executar_2nr():
     conteudo = config['vpn']
     senha = config['senha']
     maquina = config['maquina']
+    sheet_name = config['2nr']
     tentativa = False
     global sms
     global nomes
@@ -3713,7 +3714,7 @@ def executar_2nr():
                 client = gspread.authorize(creds)
 
                 spreadsheet_id = config['spreadsheet']
-                sheet_name = config['2nr']
+                
 
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                 # Obtém todas as células
@@ -3742,7 +3743,6 @@ def executar_2nr():
                 
 
                 spreadsheet_id = config['spreadsheet']
-                sheet_name = config['2nr']
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                 # Obtém todas as células
 
@@ -3788,7 +3788,6 @@ def executar_2nr():
                 qtd_num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                 window['output'].print(f'{len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
-                    SHEET_NAME = config['2nr']
 
                     scope = ['https://www.googleapis.com/auth/spreadsheets']
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
