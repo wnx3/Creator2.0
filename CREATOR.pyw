@@ -3562,12 +3562,15 @@ def executar_2nr():
     device = [
         {'name': 'Bluestacks1', 'port': porta, 'udid': f'127.0.0.1:{porta}'},
     ]
-    comando = f"adb connect 127.0.0.1:{porta}"
-    subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, shell=True)
+    try:
+        comando = f"adb connect 127.0.0.1:{porta}"
+        subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, shell=True)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, shell=True)
+    except:
+        pass
 
     gerar_id()
     android_id = gerar_id()
@@ -3621,7 +3624,6 @@ def executar_2nr():
             window.Refresh()
 
     except Exception as e:
-        print(e)
         pass
 
     window.Refresh()
@@ -3676,7 +3678,7 @@ def executar_2nr():
             with open("storage/apk/caminho.txt", "r") as arquivo:
                 app = arquivo.read().strip()
             try:
-                time.sleep(10)
+                #time.sleep(10)
                 quantidade = 0
                 desired_caps = {}
                 desired_caps['udid'] = '127.0.0.1:' + porta
@@ -4553,7 +4555,6 @@ def executar_2nr():
                 window['output'].print(
                     "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                 window.Refresh()
-            print('Erro')
             
 def executar_2nr_insta():
     SPREADSHEET_ID = config['spreadsheet']
