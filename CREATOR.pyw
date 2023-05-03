@@ -517,15 +517,23 @@ def executar_mailtm():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da SurfShark', text_color='red')
+        window['output'].print('Alterando IP da SurfShark', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
 
         try:
             driver.start_activity("com.surfshark.vpnclient.android", ".StartActivity")
@@ -1968,15 +1976,23 @@ def executar_minuteinbox():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da SurfShark', text_color='red')
+        window['output'].print('Alterando IP da SurfShark', text_color='red')
         window.Refresh()
         window['output'].print('Limpando dados.')
         window.Refresh()
         gerar_id()
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
 
         try:
             driver.start_activity("com.surfshark.vpnclient.android", ".StartActivity")
@@ -4149,64 +4165,6 @@ def executar_2nr():
                         try:
                             conteudo = config['vpn']
 
-                            SHEET_NAME = config['2nr']
-                            SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-                            # Conecta à API
-                            service = build('sheets', 'v4', credentials=creds)
-                            # Obtém o ID da aba
-                            sheet_metadata = service.spreadsheets().get(spreadsheetId=SPREADSHEET_ID).execute()
-                            sheet_id = None
-                            for sheet in sheet_metadata['sheets']:
-                                if sheet['properties']['title'] == SHEET_NAME:
-                                    sheet_id = sheet['properties']['sheetId']
-                                    break
-                            if sheet_id is None:
-                                raise Exception(f"Aba '{SHEET_NAME}' não encontrada na planilha")
-                            # Define a faixa de células para leitura
-                            RANGE_NAME2nr = f'{SHEET_NAME}!A1:A1'
-                            # Lê o valor da célula A1
-                            result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME2nr).execute()
-                            values = result.get('values', [])
-                            # Apaga a primeira linha
-                            request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                                'requests': [
-                                    {
-                                        'deleteDimension': {
-                                            'range': {
-                                                'sheetId': sheet_id,
-                                                'dimension': 'ROWS',
-                                                'startIndex': 0,
-                                                'endIndex': 1
-                                            }
-                                        }
-                                    }
-                                ]
-                            })
-                            # Adicione o objeto updateSheetPropertiesRequest envolvendo o objeto deleteDimension
-                            request = service.spreadsheets().batchUpdate(spreadsheetId=SPREADSHEET_ID, body={
-                                'requests': [
-                                    {
-                                        'updateSheetProperties': {
-                                            'properties': {
-                                                'sheetId': sheet_id,
-                                            },
-                                            'fields': 'gridProperties(frozenRowCount)',
-                                        }
-                                    },
-                                    {
-                                        'deleteDimension': {
-                                            'range': {
-                                                'sheetId': sheet_id,
-                                                'dimension': 'ROWS',
-                                                'startIndex': 0,
-                                                'endIndex': 1
-                                            }
-                                        }
-                                    },
-                                ]
-                            })
-
 
                             # Executa a função correspondente ao conteúdo do arquivo
                             if conteudo == "AVG":
@@ -4835,7 +4793,7 @@ def executar_2nr_insta():
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
@@ -5540,19 +5498,29 @@ def executar_2nr_insta():
                         # Escreva mais conteúdo no arquivo
                         arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Pular"]'))).click()
-                        time.sleep(1)
+                        time.sleep(2)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                        time.sleep(1)
+                        time.sleep(2)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
-                        time.sleep(1)
+                        time.sleep(2)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
                         time.sleep(4)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                        try:
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                        except:
+                            time.sleep(2)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
                         time.sleep(1)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                        try:
+                            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                        except:
+                            pass
                         time.sleep(3)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-
+                        try:
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                        except:
+                            time.sleep(2)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
                         sms = False
                     else:
                         try:
@@ -5610,6 +5578,9 @@ def executar_2nr_insta():
                     break
                 while sms is False:
                     try:
+                        time.sleep(3)
+                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+
                         window['output'].print(linha_ret)
                         window.Refresh()
                         window['output'].print('Criação de outro perfil.')
@@ -5797,8 +5768,6 @@ def executar_2nr_insta():
 
             
             except Exception as e:
-                print(e)
-                print('finalizado')
                 pass
                 
         except Exception as e:
