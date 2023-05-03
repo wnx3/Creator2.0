@@ -3810,6 +3810,11 @@ def executar_2nr():
                 window['output'].print(f'Número: {num}')
                 window.Refresh()
                 email = num
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonSettings'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                
                 window['output'].print(f'Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
@@ -3930,6 +3935,7 @@ def executar_2nr():
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
                 time.sleep(20)
+                WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'Codigo recebido: {codigo}')
