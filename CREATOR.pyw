@@ -3668,7 +3668,7 @@ def executar_2nr():
 
             # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
             regex = re.compile(r'^.*\.\d{3}\s.*$')
-
+            sheet_name = config['2nr']
             # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
             num_rows = sum(1 for row in rows if regex.match(row[0]))
             window['total'].update(num_rows)
@@ -3715,7 +3715,7 @@ def executar_2nr():
 
                 spreadsheet_id = config['spreadsheet']
                 
-
+                sheet_name = config['2nr']
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                 # Obtém todas as células
                 cells = sheet.get_all_values()
@@ -4131,7 +4131,7 @@ def executar_2nr():
 
                         # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                         regex = re.compile(r'^.*\.\d{3}\s.*$')
-
+                        
                         # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
