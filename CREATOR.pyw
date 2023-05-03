@@ -3931,7 +3931,7 @@ def executar_2nr():
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
-                WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+                WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'Codigo recebido: {codigo}')
