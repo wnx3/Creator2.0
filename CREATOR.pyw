@@ -25,7 +25,7 @@ except ModuleNotFoundError:
     subprocess.run(['deactivate'], shell=True)
     import requests
 
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
@@ -43,7 +43,7 @@ except ModuleNotFoundError:
     subprocess.run(['deactivate'], shell=True)
     import pytz
 
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
@@ -67,7 +67,7 @@ except ModuleNotFoundError:
     import gspread
     from oauth2client.service_account import ServiceAccountCredentials
 
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
@@ -102,7 +102,7 @@ except ModuleNotFoundError:
     subprocess.run(['deactivate'], shell=True)
     import PySimpleGUI as sg
 
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
@@ -132,7 +132,7 @@ for file_name in file_list:
         # Baixe a nova versão do GitHub e salve-a localmente
         with open(local_path, 'w', encoding='utf-8') as f:
             f.write(github_version)
-        sg.theme('Dark')
+        sg.theme('DarkGrey14')
         layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
                   [sg.Text("Abra novamente.", font=('Open Sans', 10))],
                   [sg.Button("OK")]]
@@ -150,7 +150,7 @@ except ModuleNotFoundError:
     subprocess.run(['pip', 'install', 'minuteinbox'])
     subprocess.run(['deactivate'], shell=True)
 
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
               [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
@@ -187,14 +187,14 @@ try:
         content = f.read()
 except FileNotFoundError:
     # Se o arquivo não existir, abre uma GUI para informar o usuário
-    sg.theme('Dark')
+    sg.theme('DarkGrey14')
     layout = [[sg.Text("Arquivo credentials.json não encontrado.", font=('Open Sans', 10))],
               [sg.Button("OK")]]
     window = sg.Window("Erro", layout)
     event, values = window.read()
     window.close()
 
-sg.theme('Dark')
+sg.theme('DarkGrey14')
 # Define a janela de diálogo com um input e um botão
 dialog_layout = [
     [sg.Text('Digite a porta:', font=('Open Sans', 10))],
@@ -218,7 +218,7 @@ while True:
         break
 
 dialog_window.close()
-sg.theme('Dark')
+sg.theme('DarkGrey14')
 sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 check_img = 'storage\\img\\total.png'
