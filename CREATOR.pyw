@@ -3682,11 +3682,13 @@ def executar_2nr():
             except Exception as e:
                 print(e)
                 pass
-                
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, shell=True)
+            try:
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
+            except:
+                pass
             window.Refresh()
             try:
                 #time.sleep(10)
@@ -3706,7 +3708,7 @@ def executar_2nr():
                 android_id = gerar_id()
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
                 driver.activate_app('pl.rs.sip.softphone.newapp')
-                time.sleep(10)
+                time.sleep(3)
                 scope = ['https://www.googleapis.com/auth/spreadsheets']
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
