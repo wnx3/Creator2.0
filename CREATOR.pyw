@@ -3693,17 +3693,6 @@ def executar_2nr():
                         stderr=subprocess.DEVNULL, shell=True)
             window.Refresh()
             try:
-                #time.sleep(10)
-                quantidade = 0
-                desired_caps = {}
-                desired_caps['udid'] = '127.0.0.1:' + porta
-                desired_caps['newCommandTimeout'] = '500'
-                desired_caps['platformName'] = 'Android'
-                desired_caps['automationName'] = 'UiAutomator2'
-                desired_caps['systemPort'] = random.randint(6000, 8299)
-                desired_caps['noReset'] = True
-            
-                driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
                 
                 gerar_id()
                 android_id = gerar_id()
