@@ -228,7 +228,7 @@ layout = [
     [
         sg.Frame('WNx3 CREATOR', [
             [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
-        ], border_width=10, title_location='n')
+        ], border_width=5, title_location='n')
     ],
     [
         sg.Button('Executar'), sg.Button('Reiniciar', key='clear', disabled=True),
