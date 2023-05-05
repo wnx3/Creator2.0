@@ -3883,6 +3883,7 @@ def executar_2nr():
                         window['output'].print(
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
+                    break
                 
                 elif len(restricao) == 1 and tentativa is False:
                     window['output'].print(f'Restrição.')
@@ -3928,7 +3929,7 @@ def executar_2nr():
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
 
-                tentativa = False
+                
                 window['output'].print(f'Aguardando código...')
                 window.Refresh()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
@@ -3986,6 +3987,7 @@ def executar_2nr():
 
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'Codigo recebido: {codigo}')
+                tentativa = False
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
                 time.sleep(5)
