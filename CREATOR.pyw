@@ -3192,10 +3192,6 @@ def executar_2nr():
 
     logger.addHandler(handler)
 
-    # RANGE_NAME = 'contas!A:D'
-    #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
     def vpn_avast():
         global nome
         global sobrenome
@@ -3223,7 +3219,6 @@ def executar_2nr():
             time.sleep(10)
         except Exception as e:
             print(e)
-
         abc = False
 
     def vpn_hotspotshield():
@@ -3858,32 +3853,33 @@ def executar_2nr():
                                     stderr=subprocess.DEVNULL, check=True, shell=True)
                     except:
                         pass
-
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-                    break
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    except:
+                        pass
                 
                 elif len(restricao) == 1 and tentativa is False:
                     window['output'].print(f'Restrição.')
@@ -3903,32 +3899,33 @@ def executar_2nr():
                                     stderr=subprocess.DEVNULL, check=True, shell=True)
                     except:
                         pass
-
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-                    break
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    except:
+                        continue
 
                 
                 window['output'].print(f'Aguardando código...')
@@ -3961,31 +3958,33 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                     window['output'].print(f'Número excluído.')
                     window.Refresh()
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    except:
+                        pass
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'Codigo recebido: {codigo}')
                 tentativa = False
@@ -4011,30 +4010,33 @@ def executar_2nr():
                     window['output'].print(f'Número excluído.')
                     window.Refresh()
 
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    except:
+                        pass
                 ######################################################################
                 lista_user = random.choices(range(1, 9), k=3)
                 with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
@@ -4157,6 +4159,7 @@ def executar_2nr():
                         
                         window['output'].print('Conta criada com sucesso.', text_color=('lime'))
                         window.Refresh()
+                        seguido = False
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -4260,6 +4263,7 @@ def executar_2nr():
                                 window.Refresh()
                         except:
                             sms = True
+                            continue
                 except Exception as e:
                     print(e)
                     if conteudo == "AVG":
@@ -4292,7 +4296,7 @@ def executar_2nr():
                 except:
                     continue
                 while sms is False:
-                    seguido = False
+                    
                     try:
                         pular_erro = driver.find_elements(By.XPATH,
                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
@@ -4553,15 +4557,16 @@ def executar_2nr():
                                 sms = True
                     except:
                         sms = True
+                        continue
 
             
             except Exception as e:
                 print(e)
-                print('finalizado')
-                pass
+                print('______________________________________________________')
+                continue
                 
         except Exception as e:
-            print(e)
+            continue
             if conteudo == "AVG":
                 vpn_avg()
             elif conteudo == "Avast":
