@@ -4567,28 +4567,6 @@ def executar_2nr():
                 
         except Exception as e:
             continue
-            if conteudo == "AVG":
-                vpn_avg()
-            elif conteudo == "Avast":
-                vpn_avast()
-            elif conteudo == "CyberGhost":
-                vpn_cyberghost()
-            elif conteudo == "PiaVPN":
-                vpn_pia()
-            elif conteudo == "ExpressVPN":
-                vpn_express()
-            elif conteudo == "SurfShark":
-                vpn_surf()
-            elif conteudo == "BetterNet":
-                vpn_better()
-            elif conteudo == "NordVPN":
-                vpn_nord()
-            elif conteudo == "HotspotShield":
-                vpn_hotspotshield()
-            else:
-                window['output'].print(
-                    "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                window.Refresh()
             
 def executar_2nr_insta():
     SPREADSHEET_ID = config['spreadsheet']
