@@ -3928,6 +3928,7 @@ def executar_2nr():
                         window['output'].print(
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
+                    break
 
                 
                 window['output'].print(f'Aguardando código...')
@@ -4222,6 +4223,7 @@ def executar_2nr():
                             window.Refresh()
                             driver.activate_app('pl.rs.sip.softphone.newapp')
                             time.sleep(4)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
