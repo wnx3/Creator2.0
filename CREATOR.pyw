@@ -3639,7 +3639,7 @@ def executar_2nr():
         pass
 
     window.Refresh()
-    window['output'].print('Aguardando sistema inicializar.\n')
+    window['output'].print('Aguardando sistema inicializar.')
     window.Refresh()
     desired_caps = {}
     desired_caps['udid'] = '127.0.0.1:' + porta
