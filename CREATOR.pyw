@@ -4552,6 +4552,8 @@ def executar_2nr():
                 continue
                 
         except Exception as e:
+            print(e)
+            print('______________________________________________________')
             continue
             
 def executar_2nr_insta():
