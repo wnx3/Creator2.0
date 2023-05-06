@@ -3593,16 +3593,14 @@ def executar_2nr():
     time.sleep(2)
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
+    try:
+        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, shell=True)
+    except:
+        pass
     
-    desired_caps = {}
-    desired_caps['udid'] = '127.0.0.1:' + porta
-    desired_caps['newCommandTimeout'] = '500'
-    desired_caps['platformName'] = 'Android'
-    desired_caps['automationName'] = 'UiAutomator2'
-    desired_caps['systemPort'] = random.randint(6000, 8299)
-    desired_caps['uiautomator2ServerInstallTimeout'] = 60000
-    desired_caps['noReset'] = True
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
     try:
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -3643,6 +3641,15 @@ def executar_2nr():
     window.Refresh()
     window['output'].print('Iniciando criação.\n')
     window.Refresh()
+    desired_caps = {}
+    desired_caps['udid'] = '127.0.0.1:' + porta
+    desired_caps['newCommandTimeout'] = '500'
+    desired_caps['platformName'] = 'Android'
+    desired_caps['automationName'] = 'UiAutomator2'
+    desired_caps['systemPort'] = random.randint(6000, 8299)
+    desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+    desired_caps['noReset'] = True
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
     while True:
         try:
 
@@ -3682,27 +3689,11 @@ def executar_2nr():
             except Exception as e:
                 print(e)
                 pass
-            try:
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL, shell=True)
-            except:
-                pass
+            
             window.Refresh()
             try:
-                #time.sleep(10)
                 quantidade = 0
-                desired_caps = {}
-                desired_caps['udid'] = '127.0.0.1:' + porta
-                desired_caps['newCommandTimeout'] = '500'
-                desired_caps['platformName'] = 'Android'
-                desired_caps['automationName'] = 'UiAutomator2'
-                desired_caps['systemPort'] = random.randint(6000, 8299)
-                desired_caps['uiautomator2ServerInstallTimeout'] = 60000
-                desired_caps['noReset'] = True
-            
-                driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+                
                 
                 gerar_id()
                 android_id = gerar_id()
