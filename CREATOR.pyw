@@ -4553,6 +4553,8 @@ def executar_2nr():
                 
         except Exception as e:
             print(e)
+            window['output'].print(e)
+            window.Refresh()
             print('______________________________________________________')
             continue
             
