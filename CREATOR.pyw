@@ -218,6 +218,18 @@ while True:
         break
 
 dialog_window.close()
+check_img = 'storage\\img\\total.png'
+criada_img = 'storage\\img\\check.png'
+button_color = sg.theme_background_color()
+inicio = [
+    [sg.Frame('WNx3 CREATOR', [
+        [sg.Button("CREATOR", font='opensans 9', border_width=0, size=(35, 1))],
+        [sg.Button("DIVISOR", font='opensans 9', border_width=0, size=(35, 1))]
+], border_width=3, title_location='n')
+    ]]
+
+inicio = sg.Window(f'WNx3 CREATOR', inicio)
+
 sg.theme('DarkGrey14')
 sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
@@ -5821,135 +5833,238 @@ def executar_2nr_insta():
 
 pool = concurrent.futures.ThreadPoolExecutor()
 while True:
-    event, values = window.read()
+    event, values = inicio.read()
 
-    # Finaliza a janela se o usuário fechar a janela
     if event == sg.WINDOW_CLOSED:
         break
-
-    # Executa o código e atualiza a saída na Multiline em tempo real
-    if event == 'Executar':
-        contagem = 0
-        #tentativa = False
-        if not os.path.exists("credentials.json"):
-            # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
-            window.Refresh()
-            time.sleep(200)
-        else:
-            pass
-        try:
-            with open("config.json", "r") as f:
-                config = json.load(f)
-        except FileNotFoundError:
-            config = {}
-
-        if 'senha' not in config or config['maquina'] == '':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
-            window.Refresh()
-            time.sleep(200)
-        if '2nr' not in config or config['maquina'] == '':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
-            window.Refresh()
-            time.sleep(200)
-        if config['email'] == '-mailtm-':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: Mail.TM')
-            window.Refresh()
-            minha_thread = threading.Thread(target=executar_mailtm)
-            minha_thread.start()
-        elif config['email'] == '-minuteinbox-':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: MinuteInBox')
-            window.Refresh()
-            minha_thread = threading.Thread(target=executar_minuteinbox)
-            minha_thread.start()
-        elif config['email'] == '-2nr-' and config['app'] == '-instalite-':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram Lite selecionado.')
-            window.Refresh()
-            minha_thread = threading.Thread(target=executar_2nr)
-            minha_thread.start()
-        elif config['email'] == '-2nr-' and config['app'] == '-insta-':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram selecionado.')
-            window.Refresh()
-            minha_thread = threading.Thread(target=executar_2nr_insta)
-            minha_thread.start()
-    if event == 'clear':
-        window['output'].update('')
-        if not os.path.exists("credentials.json"):
-            # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
-            window.Refresh()
-            time.sleep(200)
-        else:
-            pass
-        if 'senha' not in config or config['maquina'] == '':
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
-            window.Refresh()
-            time.sleep(200)
-    if event == '-config-':
-
-        layout_configuracoes = [
-        [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
-        sg.InputText(key="-senha-", default_text=config.get("senha", ""))],
-        [sg.Text('VPN: ', font=('Open Sans', 12)),
-        sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
-        #sg.OptionMenu(vpn_list, size=(7, 19), key="-vpn-", default_value=config.get("vpn", ""))],
-        [sg.Text('Email ou número: ', font=('Open Sans', 12)),
-        sg.Radio('Mail.TM', 'RADIO1', key='-mailtm-', default=config.get("email", "") == "-mailtm-"),
-        sg.Radio('MinuteInBox', 'RADIO1', key='-minuteinbox-', default=config.get("email", "") == "-minuteinbox-"),
-        sg.Radio('2NR', 'RADIO1', key='-2nr-', default=config.get("email", "") == "-2nr-")],
-        [sg.Radio('Instagram Lite', 'RADIO2', key='-instalite-', default=config.get("app", "") == "-instalite-"),
-        sg.Radio('Instagram', 'RADIO2', key='-insta-', default=config.get("app", "") == "-insta-")],
-        [sg.HorizontalSeparator()],
-        [sg.Text("Nome da maquina: "), sg.InputText(key="maquina", default_text=config.get("maquina", ""))],
-        [sg.Text("SpreadsheetID: "), sg.InputText(key="spreadsheet", default_text=config.get("spreadsheet", ""))],
-        [sg.Text("Planilha 2NR: "), sg.InputText(key="2nr", default_text=config.get("2nr", ""))],
-        [sg.Button("Salvar")]
-        ]
-
-        # Criar a janela da GUI de configuração
-        janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
-
+    
+    if event == 'CREATOR':
+        inicio.close()
         while True:
-            #janela_configuracoes = sg.Window('Configurações', layout_configuracoes)
-            evento, valores = janela_configuracoes.read()
+            event, values = window.read()
 
-            if evento == sg.WINDOW_CLOSED:
+            # Finaliza a janela se o usuário fechar a janela
+            if event == sg.WINDOW_CLOSED:
                 break
 
-            if evento == "Salvar":
-                if valores["-instalite-"]:
-                    app = '-instalite-'
-                elif valores["-insta-"]:
-                    app = '-insta-'
-                if valores["-mailtm-"]:
-                    email = '-mailtm-'
-                elif valores['-minuteinbox-']:
-                    email = '-minuteinbox-'
-                elif valores['-2nr-']:
-                    email = '-2nr-'
-                # Salvar as configurações em um arquivo JSON
-                config = {
-                    "senha": valores["-senha-"],
-                    "vpn": valores["-vpn-"],
-                    "email": email,
-                    "app": app,
-                    "maquina": valores['maquina'],
-                    "spreadsheet": valores['spreadsheet'],
-                    "2nr": valores['2nr']
-                }
-                with open("config.json", "w") as f:
-                    json.dump(config, f)
+            # Executa o código e atualiza a saída na Multiline em tempo real
+            if event == 'Executar':
+                contagem = 0
+                #tentativa = False
+                if not os.path.exists("credentials.json"):
+                    # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
+                    window.Refresh()
+                    time.sleep(200)
+                else:
+                    pass
+                try:
+                    with open("config.json", "r") as f:
+                        config = json.load(f)
+                except FileNotFoundError:
+                    config = {}
 
-                # Atualizar os valores padrão dos campos na GUI de configuração
-                layout_configuracoes[1][0].update(value=config.get("senha", ""))
-                layout_configuracoes[2][0].update(value=config.get("vpn", ""))
-                layout_configuracoes[3][0].update(value=config.get("email", ""))
-                layout_configuracoes[4][0].update(value=config.get("app", ""))
-                layout_configuracoes[5][0].update(value=config.get("maquina", ""))
-                layout_configuracoes[6][0].update(value=config.get("spreadsheet", ""))
-                layout_configuracoes[7][0].update(value=config.get("2nr", ""))
+                if 'senha' not in config or config['maquina'] == '':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
+                    window.Refresh()
+                    time.sleep(200)
+                if '2nr' not in config or config['maquina'] == '':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
+                    window.Refresh()
+                    time.sleep(200)
+                if config['email'] == '-mailtm-':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: Mail.TM')
+                    window.Refresh()
+                    minha_thread = threading.Thread(target=executar_mailtm)
+                    minha_thread.start()
+                elif config['email'] == '-minuteinbox-':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: MinuteInBox')
+                    window.Refresh()
+                    minha_thread = threading.Thread(target=executar_minuteinbox)
+                    minha_thread.start()
+                elif config['email'] == '-2nr-' and config['app'] == '-instalite-':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram Lite selecionado.')
+                    window.Refresh()
+                    minha_thread = threading.Thread(target=executar_2nr)
+                    minha_thread.start()
+                elif config['email'] == '-2nr-' and config['app'] == '-insta-':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram selecionado.')
+                    window.Refresh()
+                    minha_thread = threading.Thread(target=executar_2nr_insta)
+                    minha_thread.start()
+            if event == 'clear':
+                window['output'].update('')
+                if not os.path.exists("credentials.json"):
+                    # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
+                    window.Refresh()
+                    time.sleep(200)
+                else:
+                    pass
+                if 'senha' not in config or config['maquina'] == '':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
+                    window.Refresh()
+                    time.sleep(200)
+            if event == '-config-':
 
-            janela_configuracoes.close()
-window.close()
+                layout_configuracoes = [
+                [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
+                sg.InputText(key="-senha-", default_text=config.get("senha", ""))],
+                [sg.Text('VPN: ', font=('Open Sans', 12)),
+                sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
+                #sg.OptionMenu(vpn_list, size=(7, 19), key="-vpn-", default_value=config.get("vpn", ""))],
+                [sg.Text('Email ou número: ', font=('Open Sans', 12)),
+                sg.Radio('Mail.TM', 'RADIO1', key='-mailtm-', default=config.get("email", "") == "-mailtm-"),
+                sg.Radio('MinuteInBox', 'RADIO1', key='-minuteinbox-', default=config.get("email", "") == "-minuteinbox-"),
+                sg.Radio('2NR', 'RADIO1', key='-2nr-', default=config.get("email", "") == "-2nr-")],
+                [sg.Radio('Instagram Lite', 'RADIO2', key='-instalite-', default=config.get("app", "") == "-instalite-"),
+                sg.Radio('Instagram', 'RADIO2', key='-insta-', default=config.get("app", "") == "-insta-")],
+                [sg.HorizontalSeparator()],
+                [sg.Text("Nome da maquina: "), sg.InputText(key="maquina", default_text=config.get("maquina", ""))],
+                [sg.Text("SpreadsheetID: "), sg.InputText(key="spreadsheet", default_text=config.get("spreadsheet", ""))],
+                [sg.Text("Planilha 2NR: "), sg.InputText(key="2nr", default_text=config.get("2nr", ""))],
+                [sg.Button("Salvar")]
+                ]
+
+                # Criar a janela da GUI de configuração
+                janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
+
+                while True:
+                    #janela_configuracoes = sg.Window('Configurações', layout_configuracoes)
+                    evento, valores = janela_configuracoes.read()
+
+                    if evento == sg.WINDOW_CLOSED:
+                        break
+
+                    if evento == "Salvar":
+                        if valores["-instalite-"]:
+                            app = '-instalite-'
+                        elif valores["-insta-"]:
+                            app = '-insta-'
+                        if valores["-mailtm-"]:
+                            email = '-mailtm-'
+                        elif valores['-minuteinbox-']:
+                            email = '-minuteinbox-'
+                        elif valores['-2nr-']:
+                            email = '-2nr-'
+                        # Salvar as configurações em um arquivo JSON
+                        config = {
+                            "senha": valores["-senha-"],
+                            "vpn": valores["-vpn-"],
+                            "email": email,
+                            "app": app,
+                            "maquina": valores['maquina'],
+                            "spreadsheet": valores['spreadsheet'],
+                            "2nr": valores['2nr']
+                        }
+                        with open("config.json", "w") as f:
+                            json.dump(config, f)
+
+                        # Atualizar os valores padrão dos campos na GUI de configuração
+                        layout_configuracoes[1][0].update(value=config.get("senha", ""))
+                        layout_configuracoes[2][0].update(value=config.get("vpn", ""))
+                        layout_configuracoes[3][0].update(value=config.get("email", ""))
+                        layout_configuracoes[4][0].update(value=config.get("app", ""))
+                        layout_configuracoes[5][0].update(value=config.get("maquina", ""))
+                        layout_configuracoes[6][0].update(value=config.get("spreadsheet", ""))
+                        layout_configuracoes[7][0].update(value=config.get("2nr", ""))
+
+                    janela_configuracoes.close()
+    if event == 'DIVISOR':
+        inicio.close()
+        import PySimpleGUI as sg
+        try:
+            import pyperclip
+        except ModuleNotFoundError:
+            import subprocess
+            import sys
+
+            subprocess.run(['venv/scripts/activate.bat'], shell=True)
+            subprocess.run(['pip', 'install', 'pyperclip'])
+            subprocess.run(['deactivate'], shell=True)
+            from google.oauth2.credentials import Credentials
+            from googleapiclient.discovery import build
+            from googleapiclient.errors import HttpError
+            import pyperclip
+
+        def dividir_lista(lista, num_partes):
+            tam_parte = len(lista) // num_partes
+            resto = len(lista) % num_partes
+            partes = []
+            inicio = 0
+            for i in range(num_partes):
+                tam = tam_parte + 1 if i < resto else tam_parte
+                partes.append(lista[inicio:inicio + tam])
+                inicio += tam
+            return partes
+
+        sg.theme("DarkGrey14")
+
+        layout = [
+            [sg.Text("Insira as contas:")],
+            [sg.Multiline(size=(50, 10), key="-CONTA_INPUT-")],
+            [sg.Radio('SC', 'RADIO1', key='-sc-'), sg.Radio('NextGen', 'RADIO1', key='-next-')],
+            [sg.Text("Insira quantas abas:")],
+            [sg.Slider(range=(1, 10), orientation="h", size=(40, 15), default_value=1, key="-NUM_PARTES-")],
+            [sg.Button("Dividir")],
+        ]
+
+        janela = sg.Window("Divisor", layout)
+
+        while True:
+            evento, valores = janela.read()
+            if evento == sg.WINDOW_CLOSED:
+                break
+            if evento == "Dividir" and valores['-sc-'] is True:
+                lista_contas = valores["-CONTA_INPUT-"].strip().split("\n")
+                num_partes = int(valores["-NUM_PARTES-"])
+                partes = dividir_lista(lista_contas, num_partes)
+                for i in range(num_partes):
+                    partes[i] = "\n".join(partes[i]).replace(" ", "\n")
+                layout_resultado = []
+                for i in range(num_partes):
+                    layout_resultado.append([
+                        sg.Multiline(size=(50, 5), key=f"-CONTA_OUTPUT{i+1}-", disabled=True),
+                        sg.Button("Copiar", key=f"-COPY{i+1}-")
+                    ])
+                window_resultado = sg.Window("Resultado", layout_resultado)
+                window_resultado.finalize()
+                for i in range(num_partes):
+                    window_resultado[f"-CONTA_OUTPUT{i+1}-"].update(value=partes[i])
+                while True:
+                    evento_resultado, valores_resultado = window_resultado.read()
+                    if evento_resultado == sg.WINDOW_CLOSED:
+                        break
+                    for i in range(num_partes):
+                        if evento_resultado == f"-COPY{i+1}-":
+                            pyperclip.copy(partes[i])
+                window_resultado.close()
+            elif evento == "Dividir" and valores['-next-'] is True:
+                lista_contas = valores["-CONTA_INPUT-"].strip().split("\n")
+                num_partes = int(valores["-NUM_PARTES-"])
+                partes = dividir_lista(lista_contas, num_partes)
+                for i in range(num_partes):
+                    partes[i] = "\n".join(partes[i])
+                layout_resultado = []
+                for i in range(num_partes):
+                    layout_resultado.append([
+                        sg.Multiline(size=(50, 5), key=f"-CONTA_OUTPUT{i+1}-", disabled=True),
+                        sg.Button("Copiar", key=f"-COPY{i+1}-")
+                    ])
+                window_resultado = sg.Window("Resultado", layout_resultado)
+                window_resultado.finalize()
+                for i in range(num_partes):
+                    window_resultado[f"-CONTA_OUTPUT{i+1}-"].update(value=partes[i])
+                while True:
+                    evento_resultado, valores_resultado = window_resultado.read()
+                    if evento_resultado == sg.WINDOW_CLOSED:
+                        break
+                    for i in range(num_partes):
+                        if evento_resultado == f"-COPY{i+1}-":
+                            pyperclip.copy(partes[i])
+                window_resultado.close()
+
+    janela.close()
+inicio.close()
