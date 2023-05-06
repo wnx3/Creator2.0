@@ -3751,8 +3751,19 @@ def executar_2nr():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
-                
+                try:
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
+                except:
+                    desired_caps = {}
+                    desired_caps['udid'] = '127.0.0.1:' + porta
+                    desired_caps['newCommandTimeout'] = '500'
+                    desired_caps['platformName'] = 'Android'
+                    desired_caps['automationName'] = 'UiAutomator2'
+                    desired_caps['systemPort'] = random.randint(6000, 8299)
+                    desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+                    desired_caps['noReset'] = True
+                    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
 
                 spreadsheet_id = config['spreadsheet']
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
@@ -3893,7 +3904,7 @@ def executar_2nr():
                                 "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                             window.Refresh()
                     except:
-                        pass
+                        break
                 
                 elif len(restricao) == 1 and tentativa is False:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
@@ -3939,7 +3950,7 @@ def executar_2nr():
                                 "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                             window.Refresh()
                     except:
-                        pass
+                        break
 
                 
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
@@ -4523,15 +4534,15 @@ def executar_2nr():
             except Exception as e:
                 print(e)
                 print('______________________________________________________')
-                desired_caps = {}
-                desired_caps['udid'] = '127.0.0.1:' + porta
-                desired_caps['newCommandTimeout'] = '500'
-                desired_caps['platformName'] = 'Android'
-                desired_caps['automationName'] = 'UiAutomator2'
-                desired_caps['systemPort'] = random.randint(6000, 8299)
-                desired_caps['uiautomator2ServerInstallTimeout'] = 120000
-                desired_caps['noReset'] = True
-                driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+                #desired_caps = {}
+                #desired_caps['udid'] = '127.0.0.1:' + porta
+                #desired_caps['newCommandTimeout'] = '500'
+                #desired_caps['platformName'] = 'Android'
+                #desired_caps['automationName'] = 'UiAutomator2'
+                #desired_caps['systemPort'] = random.randint(6000, 8299)
+                #desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+                #desired_caps['noReset'] = True
+                #driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
                 continue
                 
         except Exception as e:
