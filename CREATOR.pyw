@@ -79,7 +79,7 @@ from datetime import datetime
 import time
 
 now = datetime.now()
-hora = now.strftime("[%H:%M:%S] ")
+agora = datetime.now().strftime("[%H:%M:%S] ")
 
 import hashlib
 import os
@@ -269,10 +269,10 @@ port = porta
 try:
     comando = f"adb connect 127.0.0.1:{porta}"
     subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL, shell=True)
 except:
@@ -318,7 +318,7 @@ def executar_mailtm():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print('Instalando dependências...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
@@ -370,9 +370,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da Avast', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da Avast', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -392,9 +392,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da HotspotShield', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da HotspotShield', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -421,9 +421,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da PiaVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da PiaVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -450,9 +450,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da ExpressVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da ExpressVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -479,9 +479,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da NordVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da NordVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -517,9 +517,9 @@ def executar_mailtm():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da SurfShark', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da SurfShark', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -559,9 +559,9 @@ def executar_mailtm():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da BetterNet', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da BetterNet', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -620,9 +620,9 @@ def executar_mailtm():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da CyberGhost', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da CyberGhost', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -653,9 +653,9 @@ def executar_mailtm():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da AVG', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da AVG', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -731,7 +731,7 @@ def executar_mailtm():
                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 time.sleep(3)
             except Exception as e:
-                window['output'].print('Erro.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro.')
                 window.Refresh()
 
         test.register(username=user_completo, password=senha)
@@ -747,7 +747,7 @@ def executar_mailtm():
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
         # driver.find_element(By.XPATH,
         #                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]').click()
-        window['output'].print('Aguardando codigo...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando codigo...')
         window.Refresh()
         # fetch all emails in the inbox
         codigo = None
@@ -770,7 +770,7 @@ def executar_mailtm():
                                                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                 codigo)
         except:
-            window['output'].print('Instagram fechou')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram fechou')
             window.Refresh()
         time.sleep(2)
         try:
@@ -849,7 +849,7 @@ def executar_mailtm():
         # reenv_cod = driver.find_elements(By.XPATH,
         #                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
         # if len(reenv_cod) == 1:
-        #    window['output'].print('Enviando um novo codigo.')
+        #    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Enviando um novo codigo.')
         #    window.Refresh()
         #    driver.find_element(By.XPATH,
         #                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
@@ -905,7 +905,7 @@ def executar_mailtm():
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
 
-        window['output'].print('Aguardando codigo...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando codigo...')
         window.Refresh()
         codigo = None
         try:
@@ -928,7 +928,7 @@ def executar_mailtm():
                 codigo)
             time.sleep(2)
         except:
-            window['output'].print('Erro encontrado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro encontrado.')
             window.Refresh()
             time.sleep(5)
         time.sleep(2)
@@ -945,7 +945,7 @@ def executar_mailtm():
         continua_na_tela = driver.find_elements(By.XPATH,
                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.View')
         if len(codigo_invalido) and len(continua_na_tela) == 1:
-            window['output'].print('Erro encontrado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro encontrado.')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
@@ -1017,7 +1017,7 @@ def executar_mailtm():
                     time.sleep(2)
                     driver.find_element(By.XPATH,
                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-                    window['output'].print('Erro fechado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro fechado.')
                     error = driver.find_elements(By.XPATH,
                                                  '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                     while len(error) == 1:
@@ -1041,10 +1041,10 @@ def executar_mailtm():
                 print(e)
                 comando = f"adb connect 127.0.0.1:{porta}"
                 subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
 
@@ -1056,7 +1056,7 @@ def executar_mailtm():
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
             user_completo = nome_completo_s + '.' + str(numeros_concatenados)
             window.Refresh()
-            window['output'].print('Nome escolhido: ' + nome_completo)
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: ' + nome_completo)
             window.Refresh()
             try:
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -1064,7 +1064,7 @@ def executar_mailtm():
                     nome_completo)
             except:
                 cont = False
-                window['output'].print('Erro encontrado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro encontrado.')
                 window.Refresh()
                 pass
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -1079,7 +1079,7 @@ def executar_mailtm():
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[6]'))).click()
             idade_aleatoria = random.randint(18, 35)
-            window['output'].print(f'Idade escolhida: {idade_aleatoria}')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -1105,7 +1105,7 @@ def executar_mailtm():
                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View').click()
 
                 except:
-                    window['output'].print('Erro ao criar')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro ao criar')
                     window.Refresh()
                     sms = True
                     continue
@@ -1118,7 +1118,7 @@ def executar_mailtm():
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                   '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                     user_completo)
-                window['output'].print(f'Usuário: {user_completo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
@@ -1129,7 +1129,7 @@ def executar_mailtm():
                 erro_1 = driver.find_elements(By.XPATH,
                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 if len(erro_2) == 1:
-                    window['output'].print('Tentando gerar novamente')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando gerar novamente')
                     window.Refresh()
                     time.sleep(5)
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -1155,7 +1155,7 @@ def executar_mailtm():
             WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
             time.sleep(5)
-            window['output'].print('Verificando...')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
             window.Refresh()
             time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
@@ -1163,7 +1163,7 @@ def executar_mailtm():
            
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                     window.Refresh()
                     contagem += 1
                     window['criadas'].update(contagem)
@@ -1287,7 +1287,7 @@ def executar_mailtm():
     options.page_load_strategy = 'none'
     options.add_experimental_option("prefs", prefs)
 
-    window['output'].print(f'Senha sendo utilizada: {senha}')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Senha sendo utilizada: {senha}')
     window.Refresh()
 
     console = Console()
@@ -1297,9 +1297,9 @@ def executar_mailtm():
     ]
     comando = f"adb connect 127.0.0.1:{porta}"
     subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
 
     gerar_id()
@@ -1311,7 +1311,7 @@ def executar_mailtm():
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     window.Refresh()
-    window['output'].print('Iniciando criação.\n')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     cont = True
     while cont is True:
@@ -1323,7 +1323,7 @@ def executar_mailtm():
 
         window['output'].print(linha_ret)
         window.Refresh()
-        window['output'].print('Abrindo Instagram')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Instagram')
         
         scope = ['https://www.googleapis.com/auth/spreadsheets']
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -1349,9 +1349,9 @@ def executar_mailtm():
                         stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
         except:
             pass
@@ -1394,7 +1394,7 @@ def executar_mailtm():
                 time.sleep(2)
                 driver.find_element(By.XPATH,
                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-                window['output'].print('Erro fechado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro fechado.')
                 error = driver.find_elements(By.XPATH,
                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 while len(error) == 1:
@@ -1410,7 +1410,7 @@ def executar_mailtm():
                 if len(cookies) == 1:
                     WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
                         (By.ID, 'com.android.packageinstaller:id/permission_deny_button'))).click()
-                    window['output'].print('Pop-up fechado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Pop-up fechado.')
                     window.Refresh()
                     time.sleep(1)
                 firts_reg()
@@ -1420,13 +1420,13 @@ def executar_mailtm():
                 sms = True
                 comando = f"adb connect 127.0.0.1:{porta}"
                 subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                window['output'].print('Erro não catalogado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro não catalogado.')
                 window.Refresh()
                 conteudo = config['vpn']
 
@@ -1474,7 +1474,7 @@ def executar_mailtm():
                             continue
                     window['output'].print(linha_ret)
                     window.Refresh()
-                    window['output'].print('Criação de outro perfil.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
                     window.Refresh()
                     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                     # Clicar no botão de perfil
@@ -1521,7 +1521,7 @@ def executar_mailtm():
                     nome_completo = nome + sobrenome
                     numeros_concatenados = ''.join(str(numero) for numero in lista_user)
                     user_completo = nome_completo + '.' + str(numeros_concatenados)
-                    window['output'].print('Usuário: ' + user_completo)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                     window.Refresh()
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                       '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -1553,7 +1553,7 @@ def executar_mailtm():
                     WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
-                    window['output'].print('Verificando...')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                     window.Refresh()
                     # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                     #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
@@ -1571,7 +1571,7 @@ def executar_mailtm():
                                                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]'))).click()
                         except:
                             pass
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -1635,7 +1635,7 @@ def executar_mailtm():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                         window.Refresh()
-                        window['output'].print('Alterando perfil para publico.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando perfil para publico.')
                         window.Refresh()
 
                         # Clicar nas 3 barras
@@ -1672,7 +1672,7 @@ def executar_mailtm():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.ViewGroup'))).click()
                         time.sleep(0.5)
-                        window['output'].print('Alterado para publico.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterado para publico.')
                         window.Refresh()
                         time.sleep(0.5)
                         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK',
@@ -1727,20 +1727,20 @@ def executar_mailtm():
                            stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
             comando = f"adb connect 127.0.0.1:{porta}"
             subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
-            window['output'].print('Erro não catalogado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro não catalogado.')
             print(e)
             # window['output'].print(e)
             window.Refresh()
@@ -1778,7 +1778,7 @@ def executar_minuteinbox():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print('Instalando dependências...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
@@ -1829,9 +1829,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da Avast', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da Avast', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -1851,9 +1851,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da HotspotShield', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da HotspotShield', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -1880,9 +1880,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da PiaVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da PiaVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -1909,9 +1909,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da ExpressVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da ExpressVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -1938,9 +1938,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da NordVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da NordVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -1976,9 +1976,9 @@ def executar_minuteinbox():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da SurfShark', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da SurfShark', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -2018,9 +2018,9 @@ def executar_minuteinbox():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da BetterNet', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da BetterNet', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -2079,9 +2079,9 @@ def executar_minuteinbox():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('SMS\nAlterando IP da CyberGhost', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da CyberGhost', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -2112,9 +2112,9 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global sms
-        window['output'].print('SMS\nAlterando IP da AVG', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS\nAlterando IP da AVG', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -2187,7 +2187,7 @@ def executar_minuteinbox():
                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 time.sleep(3)
             except Exception as e:
-                window['output'].print('Erro.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro.')
                 window.Refresh()
 
         email = inbox.address
@@ -2202,7 +2202,7 @@ def executar_minuteinbox():
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
         # driver.find_element(By.XPATH,
         #                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]').click()
-        window['output'].print('Aguardando codigo...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando codigo...')
         window.Refresh()
         subject = False
         while subject == False:
@@ -2219,7 +2219,7 @@ def executar_minuteinbox():
                                                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                 codigo)
         except:
-            window['output'].print('Instagram fechou')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram fechou')
             window.Refresh()
         time.sleep(2)
         try:
@@ -2298,7 +2298,7 @@ def executar_minuteinbox():
         # reenv_cod = driver.find_elements(By.XPATH,
         #                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
         # if len(reenv_cod) == 1:
-        #    window['output'].print('Enviando um novo codigo.')
+        #    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Enviando um novo codigo.')
         #    window.Refresh()
         #    driver.find_element(By.XPATH,
         #                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
@@ -2352,7 +2352,7 @@ def executar_minuteinbox():
         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                           '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[4]'))).click()
 
-        window['output'].print('Aguardando codigo...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando codigo...')
         window.Refresh()
         subject = False
         while subject == False:
@@ -2370,7 +2370,7 @@ def executar_minuteinbox():
                 codigo)
             time.sleep(2)
         except:
-            window['output'].print('Erro encontrado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro encontrado.')
             window.Refresh()
             time.sleep(5)
         time.sleep(2)
@@ -2414,7 +2414,7 @@ def executar_minuteinbox():
                     time.sleep(2)
                     driver.find_element(By.XPATH,
                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-                    window['output'].print('Erro fechado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro fechado.')
                     error = driver.find_elements(By.XPATH,
                                                  '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                     while len(error) == 1:
@@ -2437,10 +2437,10 @@ def executar_minuteinbox():
             except Exception as e:
                 comando = f"adb connect 127.0.0.1:{porta}"
                 subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
 
@@ -2451,7 +2451,7 @@ def executar_minuteinbox():
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
             user_completo = nome_completo_s + '.' + str(numeros_concatenados)
             window.Refresh()
-            window['output'].print('Nome escolhido: ' + nome_completo)
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: ' + nome_completo)
             window.Refresh()
             try:
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -2459,7 +2459,7 @@ def executar_minuteinbox():
                     nome_completo)
             except:
                 cont = False
-                window['output'].print('Erro encontrado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro encontrado.')
                 window.Refresh()
                 pass
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -2474,7 +2474,7 @@ def executar_minuteinbox():
             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[6]'))).click()
             idade_aleatoria = random.randint(18, 35)
-            window['output'].print(f'Idade escolhida: {idade_aleatoria}')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
             window.Refresh()
             WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -2500,7 +2500,7 @@ def executar_minuteinbox():
                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View').click()
 
                 except:
-                    window['output'].print('Erro ao criar')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro ao criar')
                     window.Refresh()
                     sms = True
                     continue
@@ -2513,7 +2513,7 @@ def executar_minuteinbox():
                 WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                   '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                     user_completo)
-                window['output'].print(f'Usuário: {user_completo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
@@ -2524,7 +2524,7 @@ def executar_minuteinbox():
                 erro_1 = driver.find_elements(By.XPATH,
                                               '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 if len(erro_2) == 1:
-                    window['output'].print('Tentando gerar novamente')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando gerar novamente')
                     window.Refresh()
                     time.sleep(5)
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -2550,7 +2550,7 @@ def executar_minuteinbox():
             WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
             time.sleep(5)
-            window['output'].print('Verificando...')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
             window.Refresh()
             time.sleep(10)
             verificar = driver.find_elements(By.XPATH,
@@ -2564,7 +2564,7 @@ def executar_minuteinbox():
 
             try:
                 if len(verificar) == 1:
-                    window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                     contagem += 1
                     window['criadas'].update(contagem)
                     window.Refresh()
@@ -2662,7 +2662,7 @@ def executar_minuteinbox():
     options.page_load_strategy = 'none'
     options.add_experimental_option("prefs", prefs)
 
-    window['output'].print(f'Senha sendo utilizada: {senha}')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Senha sendo utilizada: {senha}')
     window.Refresh()
 
     console = Console()
@@ -2672,9 +2672,9 @@ def executar_minuteinbox():
     ]
     comando = f"adb connect 127.0.0.1:{porta}"
     subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
 
     gerar_id()
@@ -2686,7 +2686,7 @@ def executar_minuteinbox():
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     window.Refresh()
-    window['output'].print('Iniciando criação.\n')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     cont = True
     while cont is True:
@@ -2697,7 +2697,7 @@ def executar_minuteinbox():
             pass
         window['output'].print(linha_ret)
         window.Refresh()
-        window['output'].print('Abrindo Instagram')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Instagram')
 
         scope = ['https://www.googleapis.com/auth/spreadsheets']
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -2723,9 +2723,9 @@ def executar_minuteinbox():
                        stderr=subprocess.DEVNULL, check=True, shell=True)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, shell=True)
         window.Refresh()
         # try:
@@ -2765,7 +2765,7 @@ def executar_minuteinbox():
                 time.sleep(2)
                 driver.find_element(By.XPATH,
                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup').click()
-                window['output'].print('Erro fechado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro fechado.')
                 error = driver.find_elements(By.XPATH,
                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 while len(error) == 1:
@@ -2781,7 +2781,7 @@ def executar_minuteinbox():
                 if len(cookies) == 1:
                     WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
                         (By.ID, 'com.android.packageinstaller:id/permission_deny_button'))).click()
-                    window['output'].print('Pop-up fechado.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Pop-up fechado.')
                     window.Refresh()
                     time.sleep(1)
                 firts_reg()
@@ -2791,13 +2791,13 @@ def executar_minuteinbox():
                 sms = True
                 comando = f"adb connect 127.0.0.1:{porta}"
                 subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                                stdout=subprocess.DEVNULL,
                                stderr=subprocess.DEVNULL, shell=True)
-                window['output'].print('Erro não catalogado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro não catalogado.')
                 window.Refresh()
                 conteudo = config['vpn']
 
@@ -2845,7 +2845,7 @@ def executar_minuteinbox():
                             continue
                     window['output'].print(linha_ret)
                     window.Refresh()
-                    window['output'].print('Criação de outro perfil.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
                     window.Refresh()
                     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                     # Clicar no botão de perfil
@@ -2892,7 +2892,7 @@ def executar_minuteinbox():
                     nome_completo = nome + sobrenome
                     numeros_concatenados = ''.join(str(numero) for numero in lista_user)
                     user_completo = nome_completo + '.' + str(numeros_concatenados)
-                    window['output'].print('Usuário: ' + user_completo)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                     window.Refresh()
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                       '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -2924,7 +2924,7 @@ def executar_minuteinbox():
                     WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
-                    window['output'].print('Verificando...')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                     window.Refresh()
                     # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                     #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
@@ -2943,7 +2943,7 @@ def executar_minuteinbox():
                         except:
                             pass
                         conteudo = config['vpn']
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -3004,7 +3004,7 @@ def executar_minuteinbox():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                         window.Refresh()
-                        window['output'].print('Alterando perfil para publico.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando perfil para publico.')
                         window.Refresh()
 
                         # Clicar nas 3 barras
@@ -3041,7 +3041,7 @@ def executar_minuteinbox():
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.ViewGroup'))).click()
                         time.sleep(0.5)
-                        window['output'].print('Alterado para publico.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterado para publico.')
                         window.Refresh()
                         time.sleep(0.5)
                         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK',
@@ -3096,20 +3096,20 @@ def executar_minuteinbox():
                            stderr=subprocess.DEVNULL, check=True, shell=True)
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
             comando = f"adb connect 127.0.0.1:{porta}"
             subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server',
                            stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, shell=True)
-            window['output'].print('Erro não catalogado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro não catalogado.')
             print(e)
             # window['output'].print(e)
             window.Refresh()
@@ -3148,7 +3148,7 @@ def executar_2nr():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print('Instalando dependências...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
@@ -3196,9 +3196,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da Avast', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da Avast', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3225,9 +3225,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da HotspotShield', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da HotspotShield', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3262,9 +3262,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da PiaVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da PiaVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -3298,9 +3298,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da ExpressVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da ExpressVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -3334,9 +3334,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da NordVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da NordVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3377,9 +3377,9 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da SurfShark', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da SurfShark', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3419,9 +3419,9 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da BetterNet', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da BetterNet', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3485,9 +3485,9 @@ def executar_2nr():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da CyberGhost', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da CyberGhost', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3526,9 +3526,9 @@ def executar_2nr():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da AVG', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da AVG', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -3567,7 +3567,7 @@ def executar_2nr():
     options.page_load_strategy = 'none'
     options.add_experimental_option("prefs", prefs)
 
-    window['output'].print(f'Senha sendo utilizada: {senha}')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Senha sendo utilizada: {senha}')
     window.Refresh()
 
     console = Console()
@@ -3578,9 +3578,9 @@ def executar_2nr():
     try:
         comando = f"adb connect 127.0.0.1:{porta}"
         subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL, shell=True)
     except:
         pass
@@ -3594,9 +3594,9 @@ def executar_2nr():
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     try:
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-        subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL, shell=True)
     except:
         pass
@@ -3608,7 +3608,7 @@ def executar_2nr():
         print(e)
         pass
     
-    window['output'].print('Efetuando troca de IP.')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Efetuando troca de IP.')
     window.Refresh()
     try:
         conteudo = config['vpn']
@@ -3639,7 +3639,7 @@ def executar_2nr():
         pass
 
     window.Refresh()
-    window['output'].print('Aguardando sistema inicializar.')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando sistema inicializar.')
     window.Refresh()
     desired_caps = {}
     desired_caps['udid'] = '127.0.0.1:' + porta
@@ -3650,14 +3650,14 @@ def executar_2nr():
     desired_caps['uiautomator2ServerInstallTimeout'] = 120000
     desired_caps['noReset'] = True
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-    window['output'].print('Iniciando criação.\n')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     while True:
         try:
 
             window['output'].print(linha_ret)
             window.Refresh()
-            window['output'].print('Abrindo 2NR')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
 
             scope = ['https://www.googleapis.com/auth/spreadsheets']
             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -3719,8 +3719,27 @@ def executar_2nr():
                 # Armazena a lista de células correspondentes à condição em uma variável
                 regex2nr = matches
                 while len(regex2nr) == 0:
-                    window['output'].print('Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
+                    cope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                    client = gspread.authorize(creds)
+
+                    spreadsheet_id = config['spreadsheet']
+                    sheet_name = 'contas'
+                    # Insert user, password, and timestamp into first empty row
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+
+                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                    rows = sheet.get_all_values()
+
+                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                    regex = re.compile(r'^.*\.\d{3}\s.*$')
+                    sheet_name = config['2nr']
+                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                    window['total'].update(num_rows)
                     time.sleep(300)
                     cells = sheet.get_all_values()
 
@@ -3729,7 +3748,7 @@ def executar_2nr():
 
                     # Armazena a lista de células correspondentes à condição em uma variável
                     regex2nr = matches
-                window['output'].print(f'{len(regex2nr)} conta(s) encontrada.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
@@ -3750,7 +3769,7 @@ def executar_2nr():
 
                 # Atribui a segunda parte (texto) à variável senha2nr
                 senha2nr = partes[1]
-                window['output'].print(f'Email sendo usado: {email2nr}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email 2NR: {email2nr}')
                 window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/emailEdiText'))).send_keys(email2nr)
                 time.sleep(0.5)
@@ -3764,7 +3783,7 @@ def executar_2nr():
                     break
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
-                    window['output'].print(f'Aceitando permissões.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
                     window.Refresh()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/androidx.appcompat.widget.LinearLayoutCompat/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView'))).click()
@@ -3779,7 +3798,7 @@ def executar_2nr():
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 
                 qtd_num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
-                window['output'].print(f'{len(qtd_num)} número(s) encontrado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
 
                     scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -3797,7 +3816,7 @@ def executar_2nr():
                 window.Refresh()
                 num = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]'))).text
                 num = num.replace(' ', '')
-                window['output'].print(f'Número: {num}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número: {num}')
                 window.Refresh()
                 email = num
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
@@ -3805,7 +3824,7 @@ def executar_2nr():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
                 
-                window['output'].print(f'Abrindo instagram.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
@@ -3823,9 +3842,9 @@ def executar_2nr():
                 time.sleep(7)
                 restricao = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                 if len(restricao) == 1 and tentativa is True:
-                    window['output'].print(f'Restrição.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
                     window.Refresh()
-                    window['output'].print(f'Já foi feita uma tentativa.\nApagando número.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Já foi feita uma tentativa.\nApagando número.')
                     window.Refresh()
                     tentativa = False
                     
@@ -3834,7 +3853,7 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'Número excluído.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                     window.Refresh()
                     try:
                         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
@@ -3877,9 +3896,9 @@ def executar_2nr():
                         pass
                 
                 elif len(restricao) == 1 and tentativa is False:
-                    window['output'].print(f'Restrição.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
                     window.Refresh()
-                    window['output'].print(f'Tentando mais uma vez.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando mais uma vez.')
                     window.Refresh()
                     tentativa = True
                     try:
@@ -3923,7 +3942,7 @@ def executar_2nr():
                         pass
 
                 
-                window['output'].print(f'Aguardando código...')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
                 window.Refresh()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
@@ -3932,7 +3951,7 @@ def executar_2nr():
                 try:
                     WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 except:
-                    window['output'].print(f'Reenviando código.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Reenviando código.')
                     window.Refresh()
                     driver.activate_app('com.instagram.lite')
                     time.sleep(3)
@@ -3942,7 +3961,7 @@ def executar_2nr():
                     WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                     cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 except:
-                    window['output'].print(f'Código não recebido.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
                     window.Refresh()
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
@@ -3951,7 +3970,7 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'Número excluído.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                     window.Refresh()
                     try:
                         conteudo = config['vpn']
@@ -3981,7 +4000,7 @@ def executar_2nr():
                     except:
                         pass
                 codigo = re.sub('[^0-9]', '', cod)
-                window['output'].print(f'Codigo recebido: {codigo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 tentativa = False
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
@@ -3993,7 +4012,7 @@ def executar_2nr():
 
                 codigo_invalido = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView[2]')
                 if len(codigo_invalido) == 0:
-                    window['output'].print(f'Código inválido.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código inválido.')
                     window.Refresh()
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
@@ -4002,7 +4021,7 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'Número excluído.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                     window.Refresh()
 
                     try:
@@ -4062,7 +4081,7 @@ def executar_2nr():
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.View[6]'))).click()
                 time.sleep(2)
                 idade_aleatoria = random.randint(18, 35)
-                window['output'].print(f'Idade escolhida: {idade_aleatoria}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
                 window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(idade_aleatoria)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
@@ -4085,7 +4104,7 @@ def executar_2nr():
                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View').click()
 
                     except:
-                        window['output'].print('Erro ao criar')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Erro ao criar')
                         window.Refresh()
                         sms = True
                         continue
@@ -4096,7 +4115,7 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
                         user_completo)
-                    window['output'].print(f'Usuário: {user_completo}')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
                     window.Refresh()
                     time.sleep(3)
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
@@ -4111,7 +4130,7 @@ def executar_2nr():
                     erro_1 = driver.find_elements(By.XPATH,
                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup')
                     if len(erro_2) == 1:
-                        window['output'].print('Tentando gerar novamente')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando gerar novamente')
                         window.Refresh()
                         time.sleep(5)
                         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
@@ -4137,7 +4156,7 @@ def executar_2nr():
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 
-                window['output'].print('Verificando...')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                 window.Refresh()
                 time.sleep(5)
                 verificar = driver.find_elements(By.XPATH,
@@ -4152,7 +4171,7 @@ def executar_2nr():
                 try:
                     if len(verificar) == 1:
                         
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                         window.Refresh()
                         seguido = False
                         contagem += 1
@@ -4217,7 +4236,7 @@ def executar_2nr():
                         sms = False
                     else:
                         if seguido is True:
-                            window['output'].print(f'SMS seguidos, Trocando de número.')
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
                             window.Refresh()
                             driver.activate_app('pl.rs.sip.softphone.newapp')
                             time.sleep(4)
@@ -4225,7 +4244,7 @@ def executar_2nr():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                            window['output'].print(f'Número excluído.')
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                             window.Refresh()
                             sms = True
                         seguido = True
@@ -4304,7 +4323,7 @@ def executar_2nr():
                                 continue
                         window['output'].print(linha_ret)
                         window.Refresh()
-                        window['output'].print('Criação de outro perfil.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
                         window.Refresh()
                         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                         # Clicar no botão de perfil
@@ -4351,7 +4370,7 @@ def executar_2nr():
                         nome_completo = nome + sobrenome
                         numeros_concatenados = ''.join(str(numero) for numero in lista_user)
                         user_completo = nome_completo + '.' + str(numeros_concatenados)
-                        window['output'].print('Usuário: ' + user_completo)
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                         window.Refresh()
                         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(
@@ -4384,7 +4403,7 @@ def executar_2nr():
                         WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
 
-                        window['output'].print('Verificando...')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                         window.Refresh()
                         # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                         #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
@@ -4404,7 +4423,7 @@ def executar_2nr():
                                 pass
                             seguido = False
                             conteudo = config['vpn']
-                            window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                             window.Refresh()
                             contagem += 1
                             window['criadas'].update(contagem)
@@ -4465,60 +4484,6 @@ def executar_2nr():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]'))).click()
                             window.Refresh()
-                            ################################################################
-                            #window['output'].print('Alterando perfil para publico.')
-                            #window.Refresh()
-
-                            ## Clicar nas 3 barras
-                            #try:
-                            #    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[2]/android.view.ViewGroup[5]'))).click()
-                            #except:
-                            #    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[5]'))).click()
-
-                            #time.sleep(0.5)
-
-                            ## Clicar em configurações
-                            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.View'))).click()
-                            #time.sleep(0.5)
-                            ## Clicar em privacidade
-                            #try:
-                            #    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[7]/android.view.ViewGroup/android.view.View'))).click()
-                            #except:
-                            #    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[5]/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
-                            #time.sleep(2)
-                            ## Clicar em privacidade da conta
-                            #try:
-                            #    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[11]/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
-                            #except:
-                            #    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.ViewGroup[10]/android.view.ViewGroup/android.view.View'))).click()
-                            #time.sleep(0.5)
-                            ## Clicar no botão
-                            #WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                            #                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]/android.view.ViewGroup'))).click()
-                            #time.sleep(0.5)
-                            #window['output'].print('Alterado para publico.')
-                            #window.Refresh()
-                            #time.sleep(0.5)
-                            #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK',
-                            #            stdout=subprocess.DEVNULL,
-                            #            stderr=subprocess.DEVNULL, check=True, shell=True)
-                            #time.sleep(0.5)
-                            #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK',
-                            #            stdout=subprocess.DEVNULL,
-                            #            stderr=subprocess.DEVNULL, check=True, shell=True)
-                            #time.sleep(0.5)
-                            #subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK',
-                            #            stdout=subprocess.DEVNULL,
-                            #            stderr=subprocess.DEVNULL, check=True, shell=True)
-                            #time.sleep(0.5)
-                            ################################################################
                             sms = False
 
                         else:
@@ -4558,6 +4523,15 @@ def executar_2nr():
             except Exception as e:
                 print(e)
                 print('______________________________________________________')
+                desired_caps = {}
+                desired_caps['udid'] = '127.0.0.1:' + porta
+                desired_caps['newCommandTimeout'] = '500'
+                desired_caps['platformName'] = 'Android'
+                desired_caps['automationName'] = 'UiAutomator2'
+                desired_caps['systemPort'] = random.randint(6000, 8299)
+                desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+                desired_caps['noReset'] = True
+                driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
                 continue
                 
         except Exception as e:
@@ -4595,7 +4569,7 @@ def executar_2nr_insta():
 
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window.Refresh()
-        window['output'].print('Instalando dependências...')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
         subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
         subprocess.run(['deactivate'], shell=True)
@@ -4647,9 +4621,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da Avast', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da Avast', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4677,9 +4651,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da HotspotShield', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da HotspotShield', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4714,9 +4688,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da PiaVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da PiaVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -4750,9 +4724,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da ExpressVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da ExpressVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
@@ -4786,9 +4760,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da NordVPN', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da NordVPN', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4829,9 +4803,9 @@ def executar_2nr_insta():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da SurfShark', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da SurfShark', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4871,9 +4845,9 @@ def executar_2nr_insta():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da BetterNet', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da BetterNet', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4937,9 +4911,9 @@ def executar_2nr_insta():
         global sobrenome
         global sms
         sms = True
-        window['output'].print('Alterando IP da CyberGhost', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da CyberGhost', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -4978,9 +4952,9 @@ def executar_2nr_insta():
         global nome
         global sobrenome
         global sms
-        window['output'].print('Alterando IP da AVG', text_color='red')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da AVG', text_color='red')
         window.Refresh()
-        window['output'].print('Limpando dados.')
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
         try:
@@ -5019,7 +4993,7 @@ def executar_2nr_insta():
     options.page_load_strategy = 'none'
     options.add_experimental_option("prefs", prefs)
 
-    window['output'].print(f'Senha sendo utilizada: {senha}')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Senha sendo utilizada: {senha}')
     window.Refresh()
 
     console = Console()
@@ -5029,9 +5003,9 @@ def executar_2nr_insta():
     ]
     comando = f"adb connect 127.0.0.1:{porta}"
     subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                    stderr=subprocess.DEVNULL, shell=True)
 
     gerar_id()
@@ -5058,7 +5032,7 @@ def executar_2nr_insta():
         print(e)
         pass
     
-    window['output'].print('Efetuando troca de IP.')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Efetuando troca de IP.')
     window.Refresh()
     try:
         conteudo = config['vpn']
@@ -5089,14 +5063,14 @@ def executar_2nr_insta():
         pass
 
     window.Refresh()
-    window['output'].print('Iniciando criação.\n')
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     while True:
         try:
 
             window['output'].print(linha_ret)
             window.Refresh()
-            window['output'].print('Abrindo 2NR')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
 
             scope = ['https://www.googleapis.com/auth/spreadsheets']
             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -5131,9 +5105,9 @@ def executar_2nr_insta():
                 print(e)
                 pass
                 
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server.test',
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} uninstall io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, shell=True)
             window.Refresh()
             
@@ -5166,7 +5140,7 @@ def executar_2nr_insta():
                 # Armazena a lista de células correspondentes à condição em uma variável
                 regex2nr = matches
                 while len(regex2nr) == 0:
-                    window['output'].print('Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
                     time.sleep(300)
                     cells = sheet.get_all_values()
@@ -5176,7 +5150,7 @@ def executar_2nr_insta():
 
                     # Armazena a lista de células correspondentes à condição em uma variável
                     regex2nr = matches
-                window['output'].print(f'{len(regex2nr)} conta(s) encontrada.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
@@ -5198,7 +5172,7 @@ def executar_2nr_insta():
 
                 # Atribui a segunda parte (texto) à variável senha2nr
                 senha2nr = partes[1]
-                window['output'].print(f'Email sendo usado: {email2nr}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email 2NR: {email2nr}')
                 window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/emailEdiText'))).send_keys(email2nr)
                 time.sleep(0.5)
@@ -5212,7 +5186,7 @@ def executar_2nr_insta():
                     break
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
-                    window['output'].print(f'Aceitando permissões.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
                     window.Refresh()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/androidx.appcompat.widget.LinearLayoutCompat/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView'))).click()
@@ -5227,7 +5201,7 @@ def executar_2nr_insta():
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 
                 qtd_num = driver.find_elements(By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
-                window['output'].print(f'{len(qtd_num)} número(s) encontrado.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
                     try:
                         scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -5246,10 +5220,10 @@ def executar_2nr_insta():
                 window.Refresh()
                 num = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]'))).text
                 num = num.replace(' ', '')
-                window['output'].print(f'Número: +48{num}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número: +48{num}')
                 window.Refresh()
                 email = num
-                window['output'].print(f'Abrindo instagram.')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.android')
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
@@ -5261,9 +5235,9 @@ def executar_2nr_insta():
                 time.sleep(4)
                 restricao = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Cadastrar-se com o email"]')
                 if len(restricao) == 1 and tentativa is True:
-                    window['output'].print(f'Restrição.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
                     window.Refresh()
-                    window['output'].print(f'Já foi feita uma tentativa.\nApagando número.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Já foi feita uma tentativa.\nApagando número.')
                     window.Refresh()
                     
                     
@@ -5272,7 +5246,7 @@ def executar_2nr_insta():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'Número excluído.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                     window.Refresh()
                     try:
                         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
@@ -5313,9 +5287,9 @@ def executar_2nr_insta():
                         window.Refresh()
                 
                 elif len(restricao) == 1 and tentativa is False:
-                    window['output'].print(f'Restrição.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
                     window.Refresh()
-                    window['output'].print(f'Tentando mais uma vez.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando mais uma vez.')
                     window.Refresh()
                     tentativa = True
                     try:
@@ -5357,7 +5331,7 @@ def executar_2nr_insta():
                         window.Refresh()
 
                 tentativa = False
-                window['output'].print(f'Aguardando código...')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
                 window.Refresh()
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
@@ -5365,7 +5339,7 @@ def executar_2nr_insta():
                 time.sleep(20)
                 cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 codigo = re.sub('[^0-9]', '', cod)[:6]
-                window['output'].print(f'Codigo recebido: {codigo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 window.Refresh()
                 driver.activate_app('com.instagram.android')
                 time.sleep(5)
@@ -5376,7 +5350,7 @@ def executar_2nr_insta():
 
                 codigo_invalido = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Não recebi o código"]')
                 if len(codigo_invalido) == 1:
-                    window['output'].print(f'Código inválido.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código inválido.')
                     window.Refresh()
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
@@ -5385,7 +5359,7 @@ def executar_2nr_insta():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'Número excluído.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                     window.Refresh()
 #
                     conteudo = config['vpn']
@@ -5435,7 +5409,7 @@ def executar_2nr_insta():
                 senha = config['senha']
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(nome_completo)
                 time.sleep(1)
-                window['output'].print(f'Nome escolhido: {nome_completo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: {nome_completo}')
                 window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
                 time.sleep(4)
@@ -5455,7 +5429,7 @@ def executar_2nr_insta():
                 time.sleep(2)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
                 idade_aleatoria = random.randint(18, 35)
-                window['output'].print(f'Idade escolhida: {idade_aleatoria}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
                 window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(idade_aleatoria)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
@@ -5465,7 +5439,7 @@ def executar_2nr_insta():
                     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Alterar nome de usuário"]'))).click()
                 except:
                     pass
-                window['output'].print(f'Usuário: {user_completo}')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
                 window.Refresh()
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).clear()
@@ -5477,10 +5451,10 @@ def executar_2nr_insta():
                 time.sleep(3)
                 errodetec = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Concordo"]')
                 if len(errodetec) == 1:
-                    window['output'].print('Instagram não deixou avançar.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram não deixou avançar.')
                     window.Refresh()
                 
-                window['output'].print('Verificando...')
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                 window.Refresh()
                 time.sleep(20)
                 verificar = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Adicionar foto"]')
@@ -5488,7 +5462,7 @@ def executar_2nr_insta():
                 try:
                     if len(verificar) == 1:
                         
-                        window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                         window.Refresh()
                         contagem += 1
                         window['criadas'].update(contagem)
@@ -5632,7 +5606,7 @@ def executar_2nr_insta():
 
                         window['output'].print(linha_ret)
                         window.Refresh()
-                        window['output'].print('Criação de outro perfil.')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
                         window.Refresh()
                         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                         # Clicar no botão de perfil
@@ -5666,7 +5640,7 @@ def executar_2nr_insta():
                         nome_completo = nome + sobrenome
                         numeros_concatenados = ''.join(str(numero) for numero in lista_user)
                         user_completo = nome_completo + '.' + str(numeros_concatenados)
-                        window['output'].print('Usuário: ' + user_completo)
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                         window.Refresh()
                         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
                                                                                         'com.instagram.android:id/username'))).send_keys(
@@ -5691,7 +5665,7 @@ def executar_2nr_insta():
                         if len(feedback) == 1:
                             sms = True
 
-                        window['output'].print('Verificando...')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                         window.Refresh()
                         # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                         #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
@@ -5701,7 +5675,7 @@ def executar_2nr_insta():
 
                         if len(verificar) == 1:
                             conteudo = config['vpn']
-                            window['output'].print('Conta criada com sucesso.', text_color=('lime'))
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                             window.Refresh()
                             contagem += 1
                             window['criadas'].update(contagem)
@@ -5838,7 +5812,7 @@ while True:
         #tentativa = False
         if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print('Nenhum credentials.json encontrado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
@@ -5850,32 +5824,32 @@ while True:
             config = {}
 
         if 'senha' not in config or config['maquina'] == '':
-            window['output'].print('Configure o bot primeiro.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
             window.Refresh()
             time.sleep(200)
         if '2nr' not in config or config['maquina'] == '':
-            window['output'].print('Configure o bot primeiro.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
             window.Refresh()
             time.sleep(200)
         if config['email'] == '-mailtm-':
-            window['output'].print('Email selecionado: Mail.TM')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: Mail.TM')
             window.Refresh()
             minha_thread = threading.Thread(target=executar_mailtm)
             minha_thread.start()
         elif config['email'] == '-minuteinbox-':
-            window['output'].print('Email selecionado: MinuteInBox')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email selecionado: MinuteInBox')
             window.Refresh()
             minha_thread = threading.Thread(target=executar_minuteinbox)
             minha_thread.start()
         elif config['email'] == '-2nr-' and config['app'] == '-instalite-':
-            window['output'].print('2NR selecionado.')
-            window['output'].print('Instagram Lite selecionado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram Lite selecionado.')
             window.Refresh()
             minha_thread = threading.Thread(target=executar_2nr)
             minha_thread.start()
         elif config['email'] == '-2nr-' and config['app'] == '-insta-':
-            window['output'].print('2NR selecionado.')
-            window['output'].print('Instagram selecionado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR selecionado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram selecionado.')
             window.Refresh()
             minha_thread = threading.Thread(target=executar_2nr_insta)
             minha_thread.start()
@@ -5883,13 +5857,13 @@ while True:
         window['output'].update('')
         if not os.path.exists("credentials.json"):
             # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
-            window['output'].print('Nenhum credentials.json encontrado.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
             window.Refresh()
             time.sleep(200)
         else:
             pass
         if 'senha' not in config or config['maquina'] == '':
-            window['output'].print('Configure o bot primeiro.')
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
             window.Refresh()
             time.sleep(200)
     if event == '-config-':
