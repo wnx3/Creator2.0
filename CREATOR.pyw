@@ -3838,6 +3838,7 @@ def executar_2nr():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
+                time.sleep(5)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
                 time.sleep(6)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
@@ -3949,6 +3950,7 @@ def executar_2nr():
                             window['output'].print(
                                 "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                             window.Refresh()
+                        break
                     except:
                         break
 
@@ -4008,8 +4010,9 @@ def executar_2nr():
                             window['output'].print(
                                 "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                             window.Refresh()
+                        break
                     except:
-                        pass
+                        break
                 codigo = re.sub('[^0-9]', '', cod)
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 tentativa = False
