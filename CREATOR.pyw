@@ -3639,7 +3639,7 @@ def executar_2nr():
         pass
 
     window.Refresh()
-    window['output'].print('Iniciando criação.\n')
+    window['output'].print('Aguardando sistema inicializar.\n')
     window.Refresh()
     desired_caps = {}
     desired_caps['udid'] = '127.0.0.1:' + porta
@@ -3650,6 +3650,8 @@ def executar_2nr():
     desired_caps['uiautomator2ServerInstallTimeout'] = 120000
     desired_caps['noReset'] = True
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+    window['output'].print('Iniciando criação.\n')
+    window.Refresh()
     while True:
         try:
 
