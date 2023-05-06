@@ -3764,7 +3764,7 @@ def executar_2nr():
                     desired_caps['noReset'] = True
                     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
-
+                time.sleep(5)
                 spreadsheet_id = config['spreadsheet']
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                 # Obtém todas as células
