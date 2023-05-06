@@ -3920,7 +3920,7 @@ def executar_2nr():
                                 "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                             window.Refresh()
                     except:
-                        continue
+                        pass
 
                 
                 window['output'].print(f'Aguardando código...')
