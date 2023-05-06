@@ -3658,7 +3658,7 @@ def executar_2nr():
             window['output'].print(linha_ret)
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
-            tine.sleep(5)
+            time.sleep(5)
             scope = ['https://www.googleapis.com/auth/spreadsheets']
             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
             client = gspread.authorize(creds)
