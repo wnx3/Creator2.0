@@ -4583,7 +4583,7 @@ def executar_2nr():
                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
-                    time.sleep(300)
+                    
                     cells = sheet.get_all_values()
 
                     # Armazena as células que correspondem à condição
@@ -4591,6 +4591,7 @@ def executar_2nr():
 
                     # Armazena a lista de células correspondentes à condição em uma variável
                     regex2nr = matches
+                    time.sleep(300)
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
