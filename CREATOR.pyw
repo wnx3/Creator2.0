@@ -4700,7 +4700,7 @@ def executar_2nr():
                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
-                    
+
                     time.sleep(300)
                     cells = sheet.get_all_values()
 
@@ -4806,7 +4806,7 @@ def executar_2nr():
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
                     time.sleep(5)
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.widget.MultiAutoCompleteTextView'))).send_keys('48')
-                    time.sleep(3)
+                    time.sleep(6)
                 except:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Página estática.')
                     window.Refresh()
