@@ -4684,7 +4684,9 @@ def executar_2nr():
                     client = gspread.authorize(creds)
 
                     spreadsheet_id = config['spreadsheet']
-                    sheet_name = 'contas'
+                
+                    sheet_name = config['2nr']
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                     # Insert user, password, and timestamp into first empty row
                     sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                     values = sheet.col_values(1)
@@ -4699,6 +4701,7 @@ def executar_2nr():
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
                     
+                    time.sleep(300)
                     cells = sheet.get_all_values()
 
                     # Armazena as células que correspondem à condição
@@ -4706,7 +4709,6 @@ def executar_2nr():
 
                     # Armazena a lista de células correspondentes à condição em uma variável
                     regex2nr = matches
-                    time.sleep(300)
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
@@ -5154,8 +5156,6 @@ def executar_2nr():
                 except:
                     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,
                                                                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]/android.view.View'))).click()
-                WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')))
                 time.sleep(20)
                 WebDriverWait(driver, 60).until(EC.element_to_be_clickable((By.XPATH,
                                                                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
