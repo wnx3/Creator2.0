@@ -4808,33 +4808,29 @@ def executar_2nr():
                 except:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Página estática.')
                     window.Refresh()
-                    try:
-                        conteudo = config['vpn']
-                        if conteudo == "AVG":
-                            vpn_avg()
-                        elif conteudo == "SurfShark":
-                            vpn_surf()
-                        elif conteudo == "Avast":
-                            vpn_avast()
-                        elif conteudo == "ExpressVPN":
-                            vpn_express()
-                        elif conteudo == "PiaVPN":
-                            vpn_pia()
-                        elif conteudo == "BetterNet":
-                            vpn_better()
-                        elif conteudo == "CyberGhost":
-                            vpn_cyberghost()
-                        elif conteudo == "NordVPN":
-                            vpn_nord()
-                        elif conteudo == "HotspotShield":
-                            vpn_hotspotshield()
-                        else:
-                            window['output'].print(
-                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                            window.Refresh()
-
-                    except Exception as e:
-                        pass
+                    conteudo = config['vpn']
+                    if conteudo == "AVG":
+                        vpn_avg()
+                    elif conteudo == "SurfShark":
+                        vpn_surf()
+                    elif conteudo == "Avast":
+                        vpn_avast()
+                    elif conteudo == "ExpressVPN":
+                        vpn_express()
+                    elif conteudo == "PiaVPN":
+                        vpn_pia()
+                    elif conteudo == "BetterNet":
+                        vpn_better()
+                    elif conteudo == "CyberGhost":
+                        vpn_cyberghost()
+                    elif conteudo == "NordVPN":
+                        vpn_nord()
+                    elif conteudo == "HotspotShield":
+                        vpn_hotspotshield()
+                    else:
+                        window['output'].print(
+                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                        window.Refresh()
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup/android.view.ViewGroup/android.view.View'))).click()
                 time.sleep(1)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView'))).send_keys(num)
