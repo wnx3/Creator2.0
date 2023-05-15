@@ -246,7 +246,7 @@ inicio = [
     [sg.Frame('WNx3 CREATOR', [
         [sg.Button("CREATOR", font='opensans 9', button_color='#1c2024', border_width=0, size=(35, 1))],
         [sg.Button("DIVISOR", font='opensans 9', button_color='#1c2024', border_width=0, size=(35, 1))],
-        [sg.Button("CRIAR POR CIMA", font='opensans 9', disabled=True, button_color='#1c2024', border_width=0, size=(35, 1))]
+        [sg.Button("CRIAR POR CIMA", font='opensans 9', disabled=False, button_color='#1c2024', border_width=0, size=(35, 1))]
         
 ], border_width=3, title_location='n')
     ]]
@@ -4080,6 +4080,10 @@ def executar_2nr():
     sheet_name = config['2nr']
     tentativa = False
     seguido = False
+    if config['email'] == '-2nr-' and config['app'] == '-instalite-':
+        app = 'Lite'
+    elif config['email'] == '-2nr-' and config['app'] == '-insta-':
+        app = 'Normal'
     global sms
     global nomes
     global sobrenomes
@@ -5195,7 +5199,7 @@ def executar_2nr():
                         sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                         values = sheet.col_values(1)
                         last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
                         cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                         for i, val in enumerate(values):
                             cell_list[i].value = val
@@ -5454,7 +5458,7 @@ def executar_2nr():
                             sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                             values = sheet.col_values(1)
                             last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
                             cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                             for i, val in enumerate(values):
                                 cell_list[i].value = val
@@ -5559,6 +5563,11 @@ def executar_2nr_insta():
     senha = config['senha']
     maquina = config['maquina']
     tentativa = False
+    seguido = False
+    if config['email'] == '-2nr-' and config['app'] == '-instalite-':
+        app = 'Lite'
+    elif config['email'] == '-2nr-' and config['app'] == '-insta-':
+        app = 'Normal'
     global sms
     global nomes
     global sobrenomes
@@ -6017,13 +6026,15 @@ def executar_2nr_insta():
     device = [
         {'name': 'Bluestacks1', 'port': porta, 'udid': f'127.0.0.1:{porta}'},
     ]
-    comando = f"adb connect 127.0.0.1:{porta}"
-    subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, shell=True)
-    subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                   stderr=subprocess.DEVNULL, shell=True)
-
+    try:
+        comando = f"adb connect 127.0.0.1:{porta}"
+        subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, shell=True)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL, shell=True)
+    except:
+        pass
     gerar_id()
     android_id = gerar_id()
     subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}',
@@ -6033,19 +6044,10 @@ def executar_2nr_insta():
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     
-    desired_caps = {}
-    desired_caps['udid'] = '127.0.0.1:' + porta
-    desired_caps['newCommandTimeout'] = '500'
-    desired_caps['platformName'] = 'Android'
-    desired_caps['automationName'] = 'UiAutomator2'
-    desired_caps['systemPort'] = random.randint(6000, 8299)
-    desired_caps['noReset'] = True
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
     try:
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
     except Exception as e:
-        print(e)
         pass
     
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Efetuando troca de IP.')
@@ -6079,6 +6081,17 @@ def executar_2nr_insta():
         pass
 
     window.Refresh()
+    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando sistema inicializar.')
+    window.Refresh()
+    desired_caps = {}
+    desired_caps['udid'] = '127.0.0.1:' + porta
+    desired_caps['newCommandTimeout'] = '500'
+    desired_caps['platformName'] = 'Android'
+    desired_caps['automationName'] = 'UiAutomator2'
+    desired_caps['systemPort'] = random.randint(6000, 8299)
+    desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+    desired_caps['noReset'] = True
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     while True:
@@ -6120,25 +6133,27 @@ def executar_2nr_insta():
             except Exception as e:
                 print(e)
                 pass
-                
-            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
-                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL, shell=True)
+            try:
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server.test',
+                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
+                subprocess.run(f'adb -s 127.0.0.1:{porta} clear io.appium.uiautomator2.server', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, shell=True)
+            except:
+                pass
             window.Refresh()
             
-            with open("storage/apk/caminho.txt", "r") as arquivo:
-                app = arquivo.read().strip()
+            
             try:
                 #time.sleep(10)
                 
             
-                driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
                 
                 gerar_id()
                 android_id = gerar_id()
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
                 driver.activate_app('pl.rs.sip.softphone.newapp')
-                time.sleep(10)
+                time.sleep(3)
                 scope = ['https://www.googleapis.com/auth/spreadsheets']
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
@@ -6158,6 +6173,28 @@ def executar_2nr_insta():
                 while len(regex2nr) == 0:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
+                    cope = ['https://www.googleapis.com/auth/spreadsheets']
+                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                    client = gspread.authorize(creds)
+
+                    spreadsheet_id = config['spreadsheet']
+                
+                    sheet_name = config['2nr']
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    # Insert user, password, and timestamp into first empty row
+                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                    values = sheet.col_values(1)
+
+                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                    rows = sheet.get_all_values()
+
+                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                    regex = re.compile(r'\S+\s\S+')
+                    sheet_name = config['2nr']
+                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                    window['total'].update(num_rows)
+
                     time.sleep(300)
                     cells = sheet.get_all_values()
 
@@ -6169,9 +6206,20 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
-                
-
+                try:
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
+                except:
+                    desired_caps = {}
+                    desired_caps['udid'] = '127.0.0.1:' + porta
+                    desired_caps['newCommandTimeout'] = '500'
+                    desired_caps['platformName'] = 'Android'
+                    desired_caps['automationName'] = 'UiAutomator2'
+                    desired_caps['systemPort'] = random.randint(6000, 8299)
+                    desired_caps['uiautomator2ServerInstallTimeout'] = 120000
+                    desired_caps['noReset'] = True
+                    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/loginButton'))).click()
+                time.sleep(5)
                 spreadsheet_id = config['spreadsheet']
                 sheet_name = config['2nr']
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
@@ -6239,6 +6287,11 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número: +48{num}')
                 window.Refresh()
                 email = num
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonSettings'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.android')
@@ -6352,8 +6405,92 @@ def executar_2nr_insta():
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
-                time.sleep(20)
-                cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+
+                try:
+                    WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+                except:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
+                    window.Refresh()
+                    driver.activate_app('pl.rs.sip.softphone.newapp')
+                    time.sleep(4)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                    time.sleep(1)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
+                    window.Refresh()
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                        continue
+                    except:
+                        pass
+                try:
+                    WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+                    cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+                except:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
+                    window.Refresh()
+                    driver.activate_app('pl.rs.sip.softphone.newapp')
+                    time.sleep(4)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                    time.sleep(1)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
+                    window.Refresh()
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                        continue
+                    except:
+                        continue
                 codigo = re.sub('[^0-9]', '', cod)[:6]
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 window.Refresh()
@@ -6484,6 +6621,7 @@ def executar_2nr_insta():
                         
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
                         window.Refresh()
+                        seguido = False
                         contagem += 1
                         window['criadas'].update(contagem)
                         window.Refresh()
@@ -6501,7 +6639,7 @@ def executar_2nr_insta():
                         sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                         values = sheet.col_values(1)
                         last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
                         cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                         for i, val in enumerate(values):
                             cell_list[i].value = val
@@ -6566,8 +6704,23 @@ def executar_2nr_insta():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
                         sms = False
                     else:
+                        if seguido is True:
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
+                            window.Refresh()
+                            driver.activate_app('pl.rs.sip.softphone.newapp')
+                            time.sleep(4)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
+                            window.Refresh()
+                            sms = True
+                        seguido = True
                         try:
                             conteudo = config['vpn']
+
+
                             # Executa a função correspondente ao conteúdo do arquivo
                             if conteudo == "AVG":
                                 vpn_avg()
@@ -6593,6 +6746,7 @@ def executar_2nr_insta():
                                 window.Refresh()
                         except:
                             sms = True
+                            continue
                 except Exception as e:
                     print(e)
                     if conteudo == "AVG":
@@ -6628,6 +6782,7 @@ def executar_2nr_insta():
                         window.Refresh()
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
                         window.Refresh()
+                        seguido = False
                         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
                         # Clicar no botão de perfil
                         
@@ -6637,7 +6792,7 @@ def executar_2nr_insta():
                         time.sleep(2)
                         # Clicar em perfis
                         try:
-                            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[2]/android.widget.FrameLayout/android.widget.ImageView'))).click()
+                            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[last()]/android.widget.FrameLayout/android.widget.ImageView'))).click()
                         except Exception as e:
                             print(e)
                             print('Erro aq')
@@ -6719,7 +6874,7 @@ def executar_2nr_insta():
                             sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                             values = sheet.col_values(1)
                             last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
                             cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                             for i, val in enumerate(values):
                                 cell_list[i].value = val
@@ -6762,24 +6917,22 @@ def executar_2nr_insta():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
                             time.sleep(1)
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
-                            try:
-                                WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.RelativeLayout[2]/android.widget.RadioButton'))).click()
-                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
-                            except:
-                                subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                                time.sleep(2)
-                                WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ScrollView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.RelativeLayout[2]/android.widget.RadioButton'))).click()
-
-                            
+                            time.sleep(3)
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
                             time.sleep(1)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                            try:
+                                WebDriverWait(driver, 6).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                            except:
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+
                             time.sleep(1)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
                             time.sleep(3)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-
-
+                            try:
+                                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                            except:
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
                             sms = False
 
                         else:
