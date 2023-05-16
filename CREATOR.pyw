@@ -5243,7 +5243,6 @@ def executar_2nr():
 
                         sms = False
                     else:
-                        print(seguido)
                         if seguido is True:
                             seguido = False
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
@@ -5258,7 +5257,6 @@ def executar_2nr():
                             window.Refresh()
                             sms = True
                         elif seguido is False:
-                            print('seguido True')
                             seguido = True
                         try:
                             conteudo = config['vpn']
@@ -6722,6 +6720,8 @@ def executar_2nr_insta():
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                             window.Refresh()
                             sms = True
+                        elif seguido is False:
+                            seguido = True
                         try:
                             conteudo = config['vpn']
 
