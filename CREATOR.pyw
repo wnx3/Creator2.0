@@ -6308,7 +6308,7 @@ def executar_2nr_insta():
                     window.Refresh()
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Já foi feita uma tentativa.\nApagando número.')
                     window.Refresh()
-                    
+                    tentativa = False
                     
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
@@ -6373,31 +6373,33 @@ def executar_2nr_insta():
                                     stderr=subprocess.DEVNULL, check=True, shell=True)
                     except:
                         pass
-
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
+                    try:
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    except:
+                        pass
 
                 tentativa = False
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
