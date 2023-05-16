@@ -6681,31 +6681,34 @@ def executar_2nr_insta():
                         arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
                         # Escreva mais conteúdo no arquivo
                         arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Pular"]'))).click()
-                        time.sleep(2)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                        time.sleep(2)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
-                        time.sleep(2)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                        time.sleep(4)
                         try:
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-                        except:
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Pular"]'))).click()
                             time.sleep(2)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-                        time.sleep(1)
-                        try:
-                            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                            time.sleep(2)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
+                            time.sleep(2)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                            time.sleep(4)
+                            try:
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                            except:
+                                time.sleep(2)
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                            time.sleep(1)
+                            try:
+                                WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                            except:
+                                pass
+                            time.sleep(3)
+                            try:
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                            except:
+                                time.sleep(2)
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
+                            sms = False
                         except:
                             pass
-                        time.sleep(3)
-                        try:
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-                        except:
-                            time.sleep(2)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
-                        sms = False
                     else:
                         if seguido is True:
                             seguido = False
