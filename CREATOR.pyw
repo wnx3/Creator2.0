@@ -5244,6 +5244,7 @@ def executar_2nr():
                         sms = False
                     else:
                         if seguido is True:
+                            seguido = False
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
                             window.Refresh()
                             driver.activate_app('pl.rs.sip.softphone.newapp')
@@ -5255,7 +5256,8 @@ def executar_2nr():
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                             window.Refresh()
                             sms = True
-                        seguido = True
+                        elif seguido is False:
+                            seguido = True
                         try:
                             conteudo = config['vpn']
 
@@ -6707,6 +6709,7 @@ def executar_2nr_insta():
                         sms = False
                     else:
                         if seguido is True:
+                            seguido = False
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
                             window.Refresh()
                             driver.activate_app('pl.rs.sip.softphone.newapp')
@@ -6717,9 +6720,7 @@ def executar_2nr_insta():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                             window.Refresh()
-                            seguido = False
                             sms = True
-                        seguido = True
                         try:
                             conteudo = config['vpn']
 
