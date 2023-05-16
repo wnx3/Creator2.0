@@ -6403,13 +6403,12 @@ def executar_2nr_insta():
                     except:
                         pass
 
-                tentativa = False
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
-                window.Refresh()
+                
                 driver.activate_app('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
-
+                WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
+                window.Refresh()
                 try:
                     WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
                 except:
