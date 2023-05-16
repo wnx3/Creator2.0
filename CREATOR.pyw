@@ -6715,6 +6715,7 @@ def executar_2nr_insta():
                             WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
                             window.Refresh()
+                            seguido = False
                             sms = True
                         seguido = True
                         try:
