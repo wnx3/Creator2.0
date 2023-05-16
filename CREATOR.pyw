@@ -5258,6 +5258,7 @@ def executar_2nr():
                             window.Refresh()
                             sms = True
                         elif seguido is False:
+                            print('seguido True')
                             seguido = True
                         try:
                             conteudo = config['vpn']
