@@ -4968,6 +4968,7 @@ def executar_2nr():
                 except:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
                     window.Refresh()
+                    seguido = False
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
@@ -6457,6 +6458,7 @@ def executar_2nr_insta():
                 except:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
                     window.Refresh()
+                    seguido = False
                     driver.activate_app('pl.rs.sip.softphone.newapp')
                     time.sleep(4)
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
