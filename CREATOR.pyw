@@ -5243,6 +5243,7 @@ def executar_2nr():
 
                         sms = False
                     else:
+                        print(seguido)
                         if seguido is True:
                             seguido = False
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
