@@ -4771,6 +4771,7 @@ def executar_2nr():
                         sheet.delete_rows(1, 1)
                     except Exception as e:
                         print(e)
+                    continue
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
@@ -6279,6 +6280,7 @@ def executar_2nr_insta():
                         sheet.delete_rows(1, 1)
                     except Exception as e:
                         print(e)
+                    continue
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
