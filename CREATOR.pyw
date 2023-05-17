@@ -4756,7 +4756,21 @@ def executar_2nr():
                 try:
                     WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')))
                 except:
-                    break
+                    try:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
+                        window.Refresh()
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
+                        # Abre a planilha e a planilha de uma determinada aba
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = config['2nr']
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+
+                        # Apaga a primeira célula da coluna A e desloca as células abaixo
+                        sheet.delete_rows(1, 1)
+                    except Exception as e:
+                        print(e)
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
@@ -6250,7 +6264,21 @@ def executar_2nr_insta():
                 try:
                     WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')))
                 except:
-                    break
+                    try:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
+                        window.Refresh()
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
+                        # Abre a planilha e a planilha de uma determinada aba
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = config['2nr']
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+
+                        # Apaga a primeira célula da coluna A e desloca as células abaixo
+                        sheet.delete_rows(1, 1)
+                    except Exception as e:
+                        print(e)
                 perm = driver.find_elements(By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree')
                 if len(perm) == 1:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
