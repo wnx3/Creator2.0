@@ -6298,7 +6298,7 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 driver.activate_app('com.instagram.android')
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
+                WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
                 #time.sleep(6)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText'))).send_keys(f'+48{num}')
                 time.sleep(1)
