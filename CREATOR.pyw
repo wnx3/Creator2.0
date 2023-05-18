@@ -6436,9 +6436,11 @@ def executar_2nr_insta():
 
                 
                 driver.activate_app('pl.rs.sip.softphone.newapp')
-                time.sleep(3)
-                WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
+                window.Refresh()
+
+                time.sleep(10)
+                WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/messages'))).click()
                 window.Refresh()
                 try:
                     WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
@@ -6482,50 +6484,6 @@ def executar_2nr_insta():
                         continue
                     except:
                         pass
-                try:
-                    WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
-                    cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
-                except:
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
-                    window.Refresh()
-                    seguido = False
-                    driver.activate_app('pl.rs.sip.softphone.newapp')
-                    time.sleep(4)
-                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
-                    time.sleep(1)
-                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
-                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
-                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
-                    window.Refresh()
-                    try:
-                        conteudo = config['vpn']
-                        if conteudo == "AVG":
-                            vpn_avg()
-                        elif conteudo == "SurfShark":
-                            vpn_surf()
-                        elif conteudo == "Avast":
-                            vpn_avast()
-                        elif conteudo == "ExpressVPN":
-                            vpn_express()
-                        elif conteudo == "PiaVPN":
-                            vpn_pia()
-                        elif conteudo == "BetterNet":
-                            vpn_better()
-                        elif conteudo == "CyberGhost":
-                            vpn_cyberghost()
-                        elif conteudo == "NordVPN":
-                            vpn_nord()
-                        elif conteudo == "HotspotShield":
-                            vpn_hotspotshield()
-                            break
-                        else:
-                            window['output'].print(
-                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                            window.Refresh()
-                        continue
-                    except:
-                        continue
                 codigo = re.sub('[^0-9]', '', cod)[:6]
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 window.Refresh()
