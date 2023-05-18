@@ -5856,8 +5856,10 @@ def executar_2nr_insta():
                                     stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+        except:
+            pass
         try:
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -6577,6 +6579,11 @@ def executar_2nr_insta():
                 if len(salvar_senha) == 1:
                     driver.find_element(By.XPATH, '//android.view.View[@content-desc="Agora não"]').click()
                 
+                time.sleep(3)
+                new_acc = driver.find_elements(By.ID, 'android:id/button2')
+                if len(new_acc) == 1:
+                    driver.find_element(By.ID, 'android:id/button2').click()
+                    time.sleep(2)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
                 time.sleep(2)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
