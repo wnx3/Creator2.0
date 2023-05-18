@@ -6444,6 +6444,8 @@ def executar_2nr_insta():
                 window.Refresh()
                 try:
                     WebDriverWait(driver, 80).until(EC.visibility_of_element_located((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+                    cod = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/message'))).text
+
                 except:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código não recebido.')
                     window.Refresh()
