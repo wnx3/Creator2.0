@@ -6709,51 +6709,126 @@ def executar_2nr_insta():
                         except:
                             pass
                     else:
-                        if seguido is True:
+                        driver.close_app('com.instagram.android')
+                        time.sleep(3)
+                        driver.activate_app('com.instagram.android')
+                        time.sleep(10)
+                        verificar = driver.find_elements(By.ID, 'com.instagram.android:id/profile_tab')
+                        if len(verificar) == 1:
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
+                            window.Refresh()
                             seguido = False
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
+                            contagem += 1
+                            window['criadas'].update(contagem)
                             window.Refresh()
-                            driver.activate_app('pl.rs.sip.softphone.newapp')
-                            time.sleep(4)
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
+                            now = datetime.now()
+                            now_brasilia = tz.localize(now)
+                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                            
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
+
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                            
+
+                            rows = sheet.get_all_values()
+
+                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                            regex = re.compile(r'\S+\s\S+')
+
+                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            window['total'].update(num_rows)
+
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                            client = gspread.authorize(creds)
+
+                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                            sheet_name = 'relatorio_geral'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+
                             window.Refresh()
-                            sms = True
-                        elif seguido is False:
-                            seguido = True
-                        try:
-                            conteudo = config['vpn']
-
-
-                            # Executa a função correspondente ao conteúdo do arquivo
-                            if conteudo == "AVG":
-                                vpn_avg()
-                            elif conteudo == "Avast":
-                                vpn_avast()
-                            elif conteudo == "CyberGhost":
-                                vpn_cyberghost()
-                            elif conteudo == "PiaVPN":
-                                vpn_pia()
-                            elif conteudo == "ExpressVPN":
-                                vpn_express()
-                            elif conteudo == "SurfShark":
-                                vpn_surf()
-                            elif conteudo == "BetterNet":
-                                vpn_better()
-                            elif conteudo == "NordVPN":
-                                vpn_nord()
-                            elif conteudo == "HotspotShield":
-                                vpn_hotspotshield()
-                            else:
-                                window['output'].print(
-                                    "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                            # Escreva mais conteúdo no arquivo
+                            arquivo.write(user_completo + ' ' + senha + "\n")
+                            arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                            # Escreva mais conteúdo no arquivo
+                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                            try:
+                                try:
+                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                except:
+                                    time.sleep(2)
+                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
+                                sms = False
+                            except:
+                                pass
+                        else:
+                            if seguido is True:
+                                seguido = False
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] SMS seguidos, Trocando de número.')
                                 window.Refresh()
-                        except:
-                            sms = True
-                            continue
+                                driver.activate_app('pl.rs.sip.softphone.newapp')
+                                time.sleep(4)
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/numbers'))).click()
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat'))).click()
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonDelete'))).click()
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'pl.rs.sip.softphone.newapp:id/buttonAgree'))).click()
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número excluído.')
+                                window.Refresh()
+                                sms = True
+                            elif seguido is False:
+                                seguido = True
+                            try:
+                                conteudo = config['vpn']
+
+
+                                # Executa a função correspondente ao conteúdo do arquivo
+                                if conteudo == "AVG":
+                                    vpn_avg()
+                                elif conteudo == "Avast":
+                                    vpn_avast()
+                                elif conteudo == "CyberGhost":
+                                    vpn_cyberghost()
+                                elif conteudo == "PiaVPN":
+                                    vpn_pia()
+                                elif conteudo == "ExpressVPN":
+                                    vpn_express()
+                                elif conteudo == "SurfShark":
+                                    vpn_surf()
+                                elif conteudo == "BetterNet":
+                                    vpn_better()
+                                elif conteudo == "NordVPN":
+                                    vpn_nord()
+                                elif conteudo == "HotspotShield":
+                                    vpn_hotspotshield()
+                                else:
+                                    window['output'].print(
+                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                    window.Refresh()
+                            except:
+                                sms = True
+                                continue
                 except Exception as e:
                     print(e)
                     if conteudo == "AVG":
