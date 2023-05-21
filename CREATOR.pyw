@@ -6710,7 +6710,7 @@ def executar_2nr_insta():
                             pass
                     else:
                         print('teste')
-                        driver.close_app('com.instagram.android')
+                        driver.terminate_app('com.instagram.android')
                         print('teste2')
                         time.sleep(3)
                         driver.activate_app('com.instagram.android')
