@@ -6915,9 +6915,39 @@ def executar_2nr_insta():
                                                                                     'com.instagram.android:id/button_text'))).click()
                         # Digitar senha e avançar
                         time.sleep(3)
-                        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
-                                                                                        'com.instagram.android:id/password'))).send_keys(
-                            senha)
+                        try:
+                            WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
+                                                                                            'com.instagram.android:id/password'))).send_keys(
+                                senha)
+                        except:
+                            try:
+                                conteudo = config['vpn']
+                                if conteudo == "AVG":
+                                    vpn_avg()
+                                elif conteudo == "SurfShark":
+                                    vpn_surf()
+                                elif conteudo == "Avast":
+                                    vpn_avast()
+                                elif conteudo == "ExpressVPN":
+                                    vpn_express()
+                                elif conteudo == "PiaVPN":
+                                    vpn_pia()
+                                elif conteudo == "BetterNet":
+                                    vpn_better()
+                                elif conteudo == "CyberGhost":
+                                    vpn_cyberghost()
+                                elif conteudo == "NordVPN":
+                                    vpn_nord()
+                                elif conteudo == "HotspotShield":
+                                    vpn_hotspotshield()
+                                    break
+                                else:
+                                    window['output'].print(
+                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                    window.Refresh()
+
+                            except:
+                                sms = True
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,
                                                                                     'com.instagram.android:id/button_text'))).click()
                         # Clicar em concluir cadastro
