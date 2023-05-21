@@ -6709,12 +6709,12 @@ def executar_2nr_insta():
                         except:
                             pass
                     else:
-                        print('teste')
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando novamente.')
+                        window.Refresh()
                         try:
                             driver.terminate_app('com.instagram.android')
                         except:
                             pass
-                        print('teste2')
                         time.sleep(3)
                         driver.activate_app('com.instagram.android')
                         time.sleep(10)
