@@ -4819,7 +4819,35 @@ def executar_2nr():
                 window.Refresh()
                 driver.activate_app('com.instagram.lite')
                 time.sleep(5)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+                try:
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]'))).click()
+                except:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Página estática.')
+                    window.Refresh()
+                    conteudo = config['vpn']
+                    if conteudo == "AVG":
+                        vpn_avg()
+                    elif conteudo == "SurfShark":
+                        vpn_surf()
+                    elif conteudo == "Avast":
+                        vpn_avast()
+                    elif conteudo == "ExpressVPN":
+                        vpn_express()
+                    elif conteudo == "PiaVPN":
+                        vpn_pia()
+                    elif conteudo == "BetterNet":
+                        vpn_better()
+                    elif conteudo == "CyberGhost":
+                        vpn_cyberghost()
+                    elif conteudo == "NordVPN":
+                        vpn_nord()
+                    elif conteudo == "HotspotShield":
+                        vpn_hotspotshield()
+                    else:
+                        window['output'].print(
+                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                        window.Refresh()
+
                 time.sleep(6)
                 try:
                     WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]'))).click()
