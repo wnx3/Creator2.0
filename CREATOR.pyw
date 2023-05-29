@@ -5387,7 +5387,7 @@ def executar_2nr():
                         WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
                                                                                         '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]'))).click()
                         # Clicar em criar nova conta
-                        time.sleep(3)
+                        time.sleep(10)
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
                                                                                     '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]'))).click()
                         # Gerar nome de usuário, digitar no campo e clicar em avançae
