@@ -1127,6 +1127,7 @@ def criarporcima():
                         sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                         values = sheet.col_values(1)
                         last_row = len(values)
+                        email = 'POR CIMA'
                         values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo]
                         cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
                         for i, val in enumerate(values):
