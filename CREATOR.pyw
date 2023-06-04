@@ -3093,6 +3093,7 @@ def executar_minuteinbox():
         global nome
         global sobrenome
         global email
+        global lista_letras
         lista_user = random.choices(range(0, 9), k=2)
         lista_letras = random.choices(letras, k=1)
 
@@ -3271,6 +3272,7 @@ def executar_minuteinbox():
         global nome_completo_s
         global numeros_concatenados
         global user_completo
+        global lista_letras
         lista_user = random.choices(range(0, 9), k=2)
         lista_letras = random.choices(letras, k=1)
 
@@ -3400,6 +3402,7 @@ def executar_minuteinbox():
 
                 window.Refresh()
                 break
+            lista_letras = random.choices(letras, k=1)
             nome_completo = nome + ' ' + sobrenome
             nome_completo_s = nome + sobrenome
             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
