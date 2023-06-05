@@ -6349,6 +6349,8 @@ def executar_2nr_insta():
                 driver.activate_app('com.instagram.android')
                 WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
                 #time.sleep(6)
+                time.sleep(6)
+                novo_layout = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Qual é o seu nome?"]')
                 if len(novo_layout) == 1:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
                     window.Refresh()
