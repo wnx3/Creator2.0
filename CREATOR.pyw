@@ -6124,7 +6124,16 @@ def executar_2nr_insta():
     window.Refresh()
     while True:
         try:
-
+            try:
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+            
+            
+            except:
+                pass
+            gerar_id()
+            android_id = gerar_id()
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
             window['output'].print(linha_ret)
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
@@ -6340,6 +6349,10 @@ def executar_2nr_insta():
                 driver.activate_app('com.instagram.android')
                 WebDriverWait(driver, 80).until(EC.element_to_be_clickable((By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
                 #time.sleep(6)
+                if len(novo_layout) == 1:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
+                    window.Refresh()
+                    raise Exception("skip.")
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText'))).send_keys(f'+48{num}')
                 time.sleep(1)
                 WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
