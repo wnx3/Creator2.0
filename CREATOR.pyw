@@ -12531,13 +12531,13 @@ def insta_face_lite():
 
     # verifica se o arquivo existe na pasta do bo
     try:
-        from fake_useragent import UserAgent
+        from py_random_useragent import UserAgent
     except:
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
-        subprocess.run(['pip', 'install', 'fake_useragent'])
-        from fake_useragent import UserAgent
+        subprocess.run(['pip', 'install', 'py_random_useragent'])
+        from py_random_useragent import UserAgent
 
     try:
         import uiautomator2 as u2
@@ -13214,6 +13214,9 @@ def insta_face_lite():
     first = True
     parar = False
     while parar is False:
+        if parar is True:
+            print('Parando Thread')
+            break
         try:
             try:
                 chrome.quit()
@@ -13226,9 +13229,7 @@ def insta_face_lite():
                 pass
         except:
             pass
-        if parar is True:
-            print('Parando Thread')
-            break
+        
         try:
             random_port = str(random.randint(1000, 9999))
             #gl = GoLogin({
@@ -13266,10 +13267,10 @@ def insta_face_lite():
             #    'extra_params': ['--window-position=0,0', ],
             #    "profile_id": profile_id
             #    })
+            
+            UA = UserAgent()
 
-            user_agent = UserAgent()
-
-            random_user_agent = user_agent.random
+            random_user_agent = UA.get_ua()
 
             chrome_driver_path = "chromedriver.exe"
             
@@ -13281,7 +13282,7 @@ def insta_face_lite():
             else:
                 chrome_options.add_argument(f'--proxy-server=http://{ip}:{porta2}')
             chrome_options.add_argument(f'user-agent={random_user_agent}')
-            chrome_options.add_argument("--headless=new")
+            #chrome_options.add_argument("--headless=new")
             #chrome_options.add_experimental_option("debuggerAddress", debugger_address)
             service = Service(executable_path=chrome_driver_path)
             #chrome = uc.Chrome(service=service, options=chrome_options)
@@ -13314,7 +13315,9 @@ def insta_face_lite():
             chrome.find_element(By.NAME, "birthday_day").send_keys(random.randint(10, 27))
             chrome.find_element(By.NAME, "birthday_year").send_keys(random.randint(1970, 2003))
             url = chrome.current_url
-            chrome.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[1]/div[2]/div/div[2]/div/div/div[1]/form/div[1]/div[7]/span/span[1]/label").click()
+            chrome.find_element(By.NAME, "sex").click()
+                                           #/html/body/div[1]/div[2]/div[1]/div[2]/div/div[2]/div/div/div[1]/form/div[1]/div[7]/span/span[1]/input
+            
             time.sleep(5)
             chrome.find_element(By.NAME, "websubmit").click()
             substrings = ["confirmemail", "checkpoint"]
@@ -13619,7 +13622,10 @@ def insta_face_lite():
                     window.Refresh()
                 except:
                     pass
-                trocar_email()
+                try:
+                    trocar_email()
+                except:
+                    pass
                 sms = False
 
             else:
