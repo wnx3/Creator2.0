@@ -4532,7 +4532,7 @@ def insta_face_litee():
         sms = True
         try:
             d.app_stop("com.avast.android.vpn")
-            d.app_start("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
             time.sleep(10)
         except Exception as e:
             print(e)
@@ -9533,7 +9533,7 @@ def executar_2nr():
         sms = True
         try:
             d.app_stop("com.avast.android.vpn")
-            d.app_start("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
             time.sleep(10)
         except Exception as e:
             print(e)
@@ -11044,7 +11044,7 @@ def executar_2nr_insta():
         sms = True
         try:
             d.app_stop("com.avast.android.vpn")
-            d.app_start("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
             time.sleep(10)
         except Exception as e:
             print(e)
@@ -12637,7 +12637,7 @@ def insta_face_lite():
         sms = True
         try:
             d.app_stop("com.avast.android.vpn")
-            d.app_start("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
             time.sleep(10)
         except Exception as e:
             print(e)
