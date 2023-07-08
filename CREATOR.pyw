@@ -4958,6 +4958,7 @@ def insta_face_litee():
     d.settings['operation_delay_methods'] = ['click']
     d.settings['operation_delay'] = (0, 1)
     try:
+        
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
         scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -7594,6 +7595,7 @@ def executar_mailtm():
     # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True, stdout=subprocess.DEVNULL,
     #               stderr=subprocess.DEVNULL)
     window.Refresh()
+    
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     cont = True
@@ -9999,6 +10001,7 @@ def executar_2nr():
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     d.implicitly_wait(30.0)
+    d.set_fastinput_ime(True)
     while parar is False:
         if parar is True:
             print('Parando Thread')
@@ -11509,6 +11512,7 @@ def executar_2nr_insta():
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     d.implicitly_wait(30.0)
+    d.set_fastinput_ime(True)
     while parar is False:
         if parar is True:
             print('Parando Thread')
@@ -13188,6 +13192,7 @@ def insta_face_lite():
     window.Refresh()
 
     num = 'InstaFace'
+    d.set_fastinput_ime(True)
     try:
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
