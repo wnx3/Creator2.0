@@ -12531,6 +12531,15 @@ def insta_face_lite():
 
     # verifica se o arquivo existe na pasta do bo
     try:
+        from fake_useragent import UserAgent
+    except:
+        subprocess.run(['venv/scripts/activate.bat'], shell=True)
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
+        window.Refresh()
+        subprocess.run(['pip', 'install', 'fake_useragent'])
+        from fake_useragent import UserAgent
+
+    try:
         import uiautomator2 as u2
     except:
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
@@ -12540,14 +12549,15 @@ def insta_face_lite():
         import requests
         time.sleep(10)
         import uiautomator2 as u2
+    
     try:
         
         import psutil
     except:
         subprocess.run(['venv/scripts/activate.bat'], shell=True)
-        subprocess.run(['pip', 'install', 'psutil'])
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instalando dependências...')
         window.Refresh()
+        subprocess.run(['pip', 'install', 'psutil'])
         import psutil
     try:
         from gologin import GoLogin
@@ -13256,6 +13266,11 @@ def insta_face_lite():
             #    'extra_params': ['--window-position=0,0', ],
             #    "profile_id": profile_id
             #    })
+
+            user_agent = UserAgent()
+
+            random_user_agent = user_agent.random
+
             chrome_driver_path = "chromedriver.exe"
             
             #debugger_address = gl.start()
@@ -13265,6 +13280,7 @@ def insta_face_lite():
                 pass
             else:
                 chrome_options.add_argument(f'--proxy-server=http://{ip}:{porta2}')
+            chrome_options.add_argument(f'user-agent={random_user_agent}')
             chrome_options.add_argument("--headless=new")
             #chrome_options.add_experimental_option("debuggerAddress", debugger_address)
             service = Service(executable_path=chrome_driver_path)
