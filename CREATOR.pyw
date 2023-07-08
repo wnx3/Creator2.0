@@ -4703,7 +4703,7 @@ def insta_face_litee():
             d.app_start('com.surfshark.vpnclient.android')
         except:
             pass
-        time.sleep(5)
+        time.sleep(15)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
@@ -9725,7 +9725,7 @@ def executar_2nr():
             d.app_start('com.surfshark.vpnclient.android')
         except:
             pass
-        time.sleep(5)
+        time.sleep(15)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
@@ -11236,7 +11236,7 @@ def executar_2nr_insta():
             d.app_start('com.surfshark.vpnclient.android')
         except:
             pass
-        time.sleep(5)
+        time.sleep(15)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
@@ -12829,7 +12829,7 @@ def insta_face_lite():
             d.app_start('com.surfshark.vpnclient.android')
         except:
             pass
-        time.sleep(5)
+        time.sleep(15)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
