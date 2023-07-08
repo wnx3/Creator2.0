@@ -13282,7 +13282,7 @@ def insta_face_lite():
             else:
                 chrome_options.add_argument(f'--proxy-server=http://{ip}:{porta2}')
             chrome_options.add_argument(f'user-agent={random_user_agent}')
-            #chrome_options.add_argument("--headless=new")
+            chrome_options.add_argument("--headless=new")
             #chrome_options.add_experimental_option("debuggerAddress", debugger_address)
             service = Service(executable_path=chrome_driver_path)
             #chrome = uc.Chrome(service=service, options=chrome_options)
