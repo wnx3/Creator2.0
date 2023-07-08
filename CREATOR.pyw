@@ -13022,110 +13022,115 @@ def insta_face_lite():
         global sobrenome 
         global nome_completo
         global nome_completo_s
-        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Trocando e-mail.')
-        window.Refresh()
-
-        chrome.get('https://accountscenter.instagram.com/personal_info/')
         try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/div/div/div[3]/div/div[1]/div/div/a[2]/div[1]/div/div[1]/div/div/span[2]'))).click()
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/div/div/div[3]/div/div[1]/div/div/a[2]'))).click()
-        time.sleep(10)
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Trocando e-mail.')
+            window.Refresh()
 
-        chrome.get('https://accountscenter.instagram.com/accounts/')
-        WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/main/div[3]/div/div/div/div[1]/div/div[2]/div/a/div/div[1]/div/span/span"))).click()
-        try:
-            WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
-
-        except:
-            WebDriverWait(chrome, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
-
-        try:
-            WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/span/span"))).click()
-
-        except:
-            WebDriverWait(chrome, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/span/span"))).click()
-
-        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Facebook desvinculado à conta.')
-        window.Refresh()
-        chrome.get('https://accountscenter.instagram.com/personal_info/contact_points/')
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div/div/div/div[1]/div[1]/div/div[2]/div/div/span[1]"))).click()
-
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div/div/div[2]/div/div/div/div/div[1]/div[1]/div/div[2]/div/div/span[1]"))).click()
-
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div/span"))).click()
-
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div/span"))).click()
-
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div/div/div[1]/div/span/span"))).click()
-
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div/div/div[1]/div/span/span"))).click()
-
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div[2]/div/div[3]/div[2]/div[4]/div/div/div[1]/div[2]/span[2]/div"))).click()
-
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div[2]/div/div[5]/div[2]/div[1]/div/div/div[1]/div[2]/span[2]/div"))).click()
-
-        test = Email()
-        while True:
+            chrome.get('https://accountscenter.instagram.com/personal_info/')
             try:
-                nomea = fake.first_name_female().replace(" ", "")
-                nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-                sobrenomea = fake.last_name().replace(" ", "").lower()
-                sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-                nome_completo = nome + ' ' + sobrenome
-                nome_completo_s = nome + sobrenome
-                test.register(username=nome_completo_s + str(random.randint(000, 999)), password=senha)
-                break  # Saia do loop se o registro for bem-sucedido
-            
-            except requests.exceptions.HTTPError as e:
-                nomea = fake.first_name_female().replace(" ", "")
-                nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-                sobrenomea = fake.last_name().replace(" ", "").lower()
-                sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-                nome_completo = nome + ' ' + sobrenome
-                nome_completo_s = nome + sobrenome
-                if e.response.status_code == 422:
-                    print("Erro 422: Unprocessable Entity. Tentando novamente...")
-                    time.sleep(1)  # Espere um segundo antes de tentar novamente
-                    continue  # Volte ao início do loop
-                else:
-                    # Outro código de tratamento de erros, se necessário
-                    # ...
-                    break  # Saia do loop se ocorrer um erro diferente
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/div/div/div[3]/div/div[1]/div/div/a[2]/div[1]/div/div[1]/div/div/span[2]'))).click()
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/div/div/div[3]/div/div[1]/div/div/a[2]'))).click()
+            time.sleep(10)
+
+            chrome.get('https://accountscenter.instagram.com/accounts/')
+            WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[1]/div/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[2]/main/main/div[3]/div/div/div/div[1]/div/div[2]/div/a/div/div[1]/div/span/span"))).click()
+            try:
+                WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
+
+            except:
+                WebDriverWait(chrome, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
+
+            try:
+                WebDriverWait(chrome, 35).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/span/span"))).click()
+
+            except:
+                WebDriverWait(chrome, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div[1]/div[1]/div/div/div[1]/div/span/span"))).click()
+
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Facebook desvinculado à conta.')
+            window.Refresh()
+            chrome.get('https://accountscenter.instagram.com/personal_info/contact_points/')
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div/div/div/div/div[1]/div[1]/div/div[2]/div/div/span[1]"))).click()
+
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div/div/div[2]/div/div/div/div/div[1]/div[1]/div/div[2]/div/div/span[1]"))).click()
+
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div/span"))).click()
+
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/div/div/span"))).click()
+
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div/div/div[1]/div/span/span"))).click()
+
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[1]/div/div[2]/div/div/div/div[3]/div[2]/div/div/div/div[1]/div/span/span"))).click()
+
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div[2]/div/div[3]/div[2]/div[4]/div/div/div[1]/div[2]/span[2]/div"))).click()
+
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div[2]/div/div[5]/div[2]/div[1]/div/div/div[1]/div[2]/span[2]/div"))).click()
+
+            test = Email()
+            while True:
+                try:
+                    nomea = fake.first_name_female().replace(" ", "")
+                    nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                    sobrenomea = fake.last_name().replace(" ", "").lower()
+                    sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                    nome_completo = nome + ' ' + sobrenome
+                    nome_completo_s = nome + sobrenome
+                    test.register(username=nome_completo_s + str(random.randint(000, 999)), password=senha)
+                    break  # Saia do loop se o registro for bem-sucedido
                 
-            except requests.exceptions.RequestException as e:
-                nomea = fake.first_name_female().replace(" ", "")
-                nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-                sobrenomea = fake.last_name().replace(" ", "").lower()
-                sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-                nome_completo = nome + ' ' + sobrenome
-                nome_completo_s = nome + sobrenome
-                # Tratamento de erros de conexão, se necessário
-                # ...
-                break  # Saia do loop se ocorrer um erro de conexão
-        email = str(test.address)
+                except requests.exceptions.HTTPError as e:
+                    nomea = fake.first_name_female().replace(" ", "")
+                    nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                    sobrenomea = fake.last_name().replace(" ", "").lower()
+                    sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                    nome_completo = nome + ' ' + sobrenome
+                    nome_completo_s = nome + sobrenome
+                    if e.response.status_code == 422:
+                        print("Erro 422: Unprocessable Entity. Tentando novamente...")
+                        time.sleep(1)  # Espere um segundo antes de tentar novamente
+                        continue  # Volte ao início do loop
+                    else:
+                        # Outro código de tratamento de erros, se necessário
+                        # ...
+                        break  # Saia do loop se ocorrer um erro diferente
+                    
+                except requests.exceptions.RequestException as e:
+                    nomea = fake.first_name_female().replace(" ", "")
+                    nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                    sobrenomea = fake.last_name().replace(" ", "").lower()
+                    sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                    nome_completo = nome + ' ' + sobrenome
+                    nome_completo_s = nome + sobrenome
+                    # Tratamento de erros de conexão, se necessário
+                    # ...
+                    break  # Saia do loop se ocorrer um erro de conexão
+            email = str(test.address)
 
 
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div[2]/div/div/div/div/input"))).send_keys(email)
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div[2]/div/div/div/div/input"))).send_keys(email)
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[3]/div[2]/div[4]/div[2]/div/div/div/div/input"))).send_keys(email)
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[5]/div[2]/div[1]/div[2]/div/div/div/div/input"))).send_keys(email)
 
-        try:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
+            try:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[4]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
 
-        except:
-            WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
+            except:
+                WebDriverWait(chrome, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[2]/div/div/div/div/div/div/div/div[6]/div[3]/div/div/div/div/div/div/div/div/div[1]/div/span/span"))).click()
 
-        codigo = 0
+            codigo = 0
+        except Exception as e:
+            print(e)
+            pass
+        
         def listener(message):
             global nome
             global sobrenome
