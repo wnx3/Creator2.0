@@ -10039,6 +10039,13 @@ def executar_2nr():
             except:
                 pass
             try:
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+                
+                
+            except:
+                pass
+            try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
             except Exception as e:
@@ -10727,47 +10734,70 @@ def executar_2nr():
                     d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]/android.view.View')
                 except:
                     continue
-                while sms is False:
-                    
+                if os.path.exists('teste'):
                     try:
-                        window['output'].print(linha_ret)
+                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+                    except:
+                        pass
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Utilizando Instagram normal.')
+                    window.Refresh()
+                    d.set_fastinput_ime(True)
+                    d.app_start('com.instagram.android')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
+                    window.Refresh()
+                    time.sleep(10)
+                    try:
+                        d.xpath('//android.view.View[@content-desc="Nome de usuário, email ou número de celular"]').wait(timeout=80)
+                        d.xpath('//android.view.View[@content-desc="Nome de usuário, email ou número de celular"]').set_text(user_completo)
+                    except Exception as e:
+                        print(e)
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "WindscribeVPN":
+                            vpn_windscribe()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HmaVPN":
+                            vpn_hma()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                    d.xpath('//android.view.View[@content-desc="Senha"]').set_text(senha)
+                    d.xpath('//android.view.View[@content-desc="Entrar"]').click()
+                    d.xpath('//android.view.View[@content-desc="Salvar suas informações de login?"]').wait(20)
+                    if d.xpath('//android.view.View[@content-desc="Salvar suas informações de login?"]').exists:
+                        d.xpath('//android.view.View[@content-desc="Agora não"]').click()
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta logada.')
                         window.Refresh()
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
-                        window.Refresh()
-                        # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
-                        # Clicar no botão de perfil
-                        try:
-                            time.sleep(3)
-                            #d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]').click()
-                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[last()]').click()
-                        except Exception as e:
-                            print(e)
-                            time.sleep(3)
-                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]').click()
-
-                            # Clicar em perfis
-                        time.sleep(8)
-                        try:
-                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
-                        except Exception as e:
-                            print(e)
-                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View').click()
-                        # Clicar em adicionar conta
+                    while sms is False:
+                        d(resourceId='com.instagram.android:id/profile_tab').click()
+                        time.sleep(3)
+                        d(resourceId='com.instagram.android:id/action_bar_title_chevron').click()
                         time.sleep(2)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]').click()
-                        # Clicar em criar nova conta
-                        time.sleep(10)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]').click()
+                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[last()]/android.widget.FrameLayout/android.widget.ImageView').click()
+                        time.sleep(4)
+                        d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click()
+                        time.sleep(3)
                         # Gerar nome de usuário, digitar no campo e clicar em avançae
                         lista_user = random.choices(range(0, 9), k=2)
                         lista_letras = random.choices(letras, k=1)
-
-                        with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
-                            nomes = nomes_arquivo.readlines()
-
-                        with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
-                            sobrenomes = sobrenomes_arquivo.readlines()
-
                         nomea = fake.first_name_female().replace(" ", "")
                         nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
                         sobrenomea = fake.last_name().replace(" ", "").lower()
@@ -10778,95 +10808,123 @@ def executar_2nr():
 
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                         window.Refresh()
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').set_text(
-                            user_completo)
-                        time.sleep(1)
-                        d.xpath(    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
+                        d(resourceId='com.instagram.android:id/username').set_text(user_completo)
+                        time.sleep(3)
+                        d(resourceId='com.instagram.android:id/button_text').click()
                         # Digitar senha e avançar
                         time.sleep(3)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').set_text(
-                            senha)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]').click()
+                        try:
+                            d(resourceId='com.instagram.android:id/password').set_text(senha)
+                        except:
+                            try:
+                                conteudo = config['vpn']
+                                if conteudo == "AVG":
+                                    vpn_avg()
+                                elif conteudo == "SurfShark":
+                                    vpn_surf()
+                                elif conteudo == "Avast":
+                                    vpn_avast()
+                                elif conteudo == "ExpressVPN":
+                                    vpn_express()
+                                elif conteudo == "PiaVPN":
+                                    vpn_pia()
+                                elif conteudo == "WindscribeVPN":
+                                    vpn_windscribe()
+                                elif conteudo == "BetterNet":
+                                    vpn_better()
+                                elif conteudo == "CyberGhost":
+                                    vpn_cyberghost()
+                                elif conteudo == "HmaVPN":
+                                    vpn_hma()
+                                elif conteudo == "NordVPN":
+                                    vpn_nord()
+                                elif conteudo == "HotspotShield":
+                                    vpn_hotspotshield()
+                                else:
+                                    window['output'].print(
+                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                    window.Refresh()
+
+                            except:
+                                sms = True
+                        d(resourceId='com.instagram.android:id/button_text').click()
                         # Clicar em concluir cadastro
-                        time.sleep(1)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View')
-                        time.sleep(2)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View').click()
+                        time.sleep(3)
+                        d(resourceId='com.instagram.android:id/button_text').click()
+                        
                         time.sleep(4)
                         feedback = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.View')
                         if feedback.exists:
                             sms = True
 
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
-                        time.sleep(20)
-                        d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
-
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
                         window.Refresh()
                         # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
-                        #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
-                        time.sleep(5)
-                        verificar = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
-
-                        conta_criada = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
-                        conta_sms = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.View[4]')
+                        #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
+                        #d(resourceId='com.instagram.android:id/connect_text').wait()
+                        d(resourceId='com.instagram.android:id/connect_text').wait(timeout=30)
+                        time.sleep(3)
+                        verificar = d(resourceId='com.instagram.android:id/connect_text')
+                        
                         if verificar.exists:
                             try:
-                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]').click()
+                                conteudo = config['vpn']
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
+                                window.Refresh()
+                                contagem += 1
+                                window['criadas'].update(contagem)
+                                window.Refresh()
+                                now = datetime.now()
+                                now_brasilia = tz.localize(now)
+                                timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                                
+
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                rows = sheet.get_all_values()
+
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
+
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                window['total'].update(num_rows)
+                                time.sleep(4)
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                
+                                
+
                             except:
                                 pass
-                            seguido = False
-                            conteudo = config['vpn']
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
-                            window.Refresh()
-                            contagem += 1
-                            window['criadas'].update(contagem)
-                            window.Refresh()
-                            now = datetime.now()
-                            now_brasilia = tz.localize(now)
-                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-                            
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-                            
-
-                            rows = sheet.get_all_values()
-
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
-
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
-                            window['total'].update(num_rows)
-
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
 
                             window.Refresh()
                             arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
@@ -10875,10 +10933,31 @@ def executar_2nr():
                             arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
                             # Escreva mais conteúdo no arquivo
                             arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]').click()
                             window.Refresh()
-                            sms = False
+                            d(resourceId='com.instagram.android:id/skip_button').click()
+                            time.sleep(1)
+                            d(resourceId='com.instagram.android:id/negative_button').click()
+                            time.sleep(3)
+                            d(resourceId='com.instagram.android:id/skip_button').click()
+                            time.sleep(1)
+                            try:
+                                d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                            except:
+                                d(resourceId='com.instagram.android:id/skip_button').click()
+                                d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
 
+                            time.sleep(1)
+                            time.sleep(3)
+                            try:
+                                d(resourceId='com.instagram.android:id/profile_tab').click()
+                            except:
+                                d(resourceId='com.instagram.android:id/button_text').click()
+                                d(resourceId='com.instagram.android:id/profile_tab').click()
+                            sms = False
+                            window['output'].print(linha_ret)
+                            window.Refresh()
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
+                            window.Refresh()
                         else:
                             try:
                                 conteudo = config['vpn']
@@ -10892,28 +10971,218 @@ def executar_2nr():
                                     vpn_express()
                                 elif conteudo == "PiaVPN":
                                     vpn_pia()
-                                elif conteudo == "Nenhuma":
-                                    nenhuma_vpn()
+                                elif conteudo == "WindscribeVPN":
+                                    vpn_windscribe()
                                 elif conteudo == "BetterNet":
                                     vpn_better()
                                 elif conteudo == "CyberGhost":
                                     vpn_cyberghost()
+                                elif conteudo == "HmaVPN":
+                                    vpn_hma()
                                 elif conteudo == "NordVPN":
                                     vpn_nord()
                                 elif conteudo == "HotspotShield":
                                     vpn_hotspotshield()
-                                    break
                                 else:
                                     window['output'].print(
                                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                                     window.Refresh()
 
-                            except:
+                            except Exception as e:
                                 sms = True
-                    except Exception as e:
-                        print(e)
+                                pass
+                    else:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Houve algum erro ao logar.')
+                        window.Refresh()
                         sms = True
-                        continue
+                else:
+                    while sms is False:
+                        
+                        try:
+                            window['output'].print(linha_ret)
+                            window.Refresh()
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
+                            window.Refresh()
+                            # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
+                            # Clicar no botão de perfil
+                            try:
+                                time.sleep(3)
+                                #d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]').click()
+                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[last()]').click()
+                            except Exception as e:
+                                print(e)
+                                time.sleep(3)
+                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]').click()
+
+                                # Clicar em perfis
+                            time.sleep(8)
+                            try:
+                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
+                            except Exception as e:
+                                print(e)
+                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View').click()
+                            # Clicar em adicionar conta
+                            time.sleep(2)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]').click()
+                            # Clicar em criar nova conta
+                            time.sleep(10)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[3]').click()
+                            # Gerar nome de usuário, digitar no campo e clicar em avançae
+                            lista_user = random.choices(range(0, 9), k=2)
+                            lista_letras = random.choices(letras, k=1)
+
+                            with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
+                                nomes = nomes_arquivo.readlines()
+
+                            with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
+                                sobrenomes = sobrenomes_arquivo.readlines()
+
+                            nomea = fake.first_name_female().replace(" ", "")
+                            nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                            sobrenomea = fake.last_name().replace(" ", "").lower()
+                            sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                            nome_completo = nome + sobrenome
+                            numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+                            user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
+                            window.Refresh()
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').set_text(
+                                user_completo)
+                            time.sleep(1)
+                            d.xpath(    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
+                            # Digitar senha e avançar
+                            time.sleep(3)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').set_text(
+                                senha)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[3]').click()
+                            # Clicar em concluir cadastro
+                            time.sleep(1)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View')
+                            time.sleep(2)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[1]/android.view.View').click()
+                            time.sleep(4)
+                            feedback = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.View')
+                            if feedback.exists:
+                                sms = True
+
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
+                            time.sleep(20)
+                            d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]').click()
+
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
+                            window.Refresh()
+                            # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
+                            #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
+                            time.sleep(5)
+                            verificar = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
+
+                            conta_criada = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[2]')
+                            conta_sms = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[1]/android.view.View[4]')
+                            if verificar.exists:
+                                try:
+                                    d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[11]').click()
+                                except:
+                                    pass
+                                seguido = False
+                                conteudo = config['vpn']
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
+                                window.Refresh()
+                                contagem += 1
+                                window['criadas'].update(contagem)
+                                window.Refresh()
+                                now = datetime.now()
+                                now_brasilia = tz.localize(now)
+                                timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                                
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+                                
+
+                                rows = sheet.get_all_values()
+
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
+
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                window['total'].update(num_rows)
+
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                window.Refresh()
+                                arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(user_completo + ' ' + senha + "\n")
+                                arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                                d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]').click()
+                                window.Refresh()
+                                sms = False
+
+                            else:
+                                try:
+                                    conteudo = config['vpn']
+                                    if conteudo == "AVG":
+                                        vpn_avg()
+                                    elif conteudo == "SurfShark":
+                                        vpn_surf()
+                                    elif conteudo == "Avast":
+                                        vpn_avast()
+                                    elif conteudo == "ExpressVPN":
+                                        vpn_express()
+                                    elif conteudo == "PiaVPN":
+                                        vpn_pia()
+                                    elif conteudo == "Nenhuma":
+                                        nenhuma_vpn()
+                                    elif conteudo == "BetterNet":
+                                        vpn_better()
+                                    elif conteudo == "CyberGhost":
+                                        vpn_cyberghost()
+                                    elif conteudo == "NordVPN":
+                                        vpn_nord()
+                                    elif conteudo == "HotspotShield":
+                                        vpn_hotspotshield()
+                                        break
+                                    else:
+                                        window['output'].print(
+                                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                        window.Refresh()
+
+                                except:
+                                    sms = True
+                        except Exception as e:
+                            print(e)
+                            sms = True
+                            continue
 
             
             except Exception as e:
@@ -12597,12 +12866,22 @@ def insta_face_lite():
     import string
     
     from minuteinbox import Inbox
-    from selenium import webdriver
+    try:
+        from selenium_profiles.webdriver import Chrome
+        from selenium_profiles.profiles import profiles
+    except:
+        subprocess.run(['venv/scripts/activate.bat'], shell=True)
+        subprocess.run(['pip', 'install', 'selenium-profiles'])
+        subprocess.run(['deactivate'], shell=True)
+        from selenium_profiles.webdriver import Chrome
+        from selenium_profiles.profiles import profiles
+    #import seleniumwire.undetected_chromedriver as uc
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.common.keys import Keys
     from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.chrome.service import Service
+    from selenium.webdriver import ChromeOptions
     
     
     from selenium.webdriver.chrome.options import Options
@@ -13192,7 +13471,6 @@ def insta_face_lite():
     window.Refresh()
 
     num = 'InstaFace'
-    d.set_fastinput_ime(True)
     try:
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
@@ -13278,20 +13556,35 @@ def insta_face_lite():
             random_user_agent = UA.get_ua()
 
             chrome_driver_path = "chromedriver.exe"
-            
+            profile = profiles.Windows() # or .Android()
             #debugger_address = gl.start()
-            chrome_options = Options()
+            chrome_options = ChromeOptions()
             chrome_options.page_load_strategy = 'eager'
-            if porta2 == '':
-                pass
-            else:
+            if senha2 == '':
                 chrome_options.add_argument(f'--proxy-server=http://{ip}:{porta2}')
+                options = {
+                    'request_storage_base_dir': 'storage\\'
+                    #'ca_cert': 'C:\\Users\\welli\\Desktop\\Outros\\Creator 2.0.1\\ca.crt'
+                }
+            else:
+                #options = {
+                #'request_storage_base_dir': 'storage\\'
+                #'ca_cert': 'C:\\Users\\welli\\Desktop\\Outros\\Creator 2.0.1\\ca.crt'  # Use own root certificate
+                #'proxy': {
+                #    'http': f'http://{usuario}:{senha2}@{ip}:{porta2}'
+                #}
+                profile["proxy"] = {
+                "proxy":f"http://{usuario}:{senha2}@{ip}:{porta2}"
+                }
             chrome_options.add_argument(f'user-agent={random_user_agent}')
+            chrome_options.add_argument('--ignore-certificate-errors')
+            chrome_options.add_argument('--ignore-ssl-errors')
+
             chrome_options.add_argument("--headless=new")
             #chrome_options.add_experimental_option("debuggerAddress", debugger_address)
             service = Service(executable_path=chrome_driver_path)
             #chrome = uc.Chrome(service=service, options=chrome_options)
-            chrome = webdriver.Chrome(service=service, options=chrome_options)
+            chrome = Chrome(service=service, options=chrome_options, profile=profile)
             chrome.set_window_size(700,2000)
             chrome.implicitly_wait(30)
             window['output'].print(linha_ret)
@@ -13486,7 +13779,7 @@ def insta_face_lite():
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
             window.Refresh()
             time.sleep(10)
-            if chrome.current_url == 'https://web.facebook.com/':
+            if chrome.current_url == 'https://web.facebook.com/' or chrome.current_url == 'https://www.facebook.com/':
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Facebook criado com sucesso', text_color='cyan')
                 window.Refresh()
             else:
@@ -13692,6 +13985,8 @@ def insta_face_lite():
                     except:
                         pass
                     d = u2.connect(f'127.0.0.1:{porta}')
+                    
+                    d.set_fastinput_ime(True)
                     d.app_start('com.instagram.android')
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                     window.Refresh()
@@ -14079,6 +14374,17 @@ def insta_face_lite():
             except Exception as e:
                 print(e)
                 try:
+                    if not os.path.exists('error_log'):
+                        os.makedirs('error_log')
+                    now = datetime.now()
+                    timestamp = now.strftime('%Y%m%d_%H%M%S')
+
+                    # Tirar o print da página
+                    screenshot_path = os.path.join('error_log', f'screenshot_{timestamp}.png')
+                    chrome.save_screenshot(screenshot_path)
+                except:
+                    pass
+                try:
                     chrome.quit()
                 except:
                     pass
@@ -14089,6 +14395,18 @@ def insta_face_lite():
             
         except Exception as e:
             print(e)
+            if not 'SMS.' in str(e):
+                try:
+                    if not os.path.exists('error_log'):
+                        os.makedirs('error_log')
+                    now = datetime.now()
+                    timestamp = now.strftime('%Y%m%d_%H%M%S')
+
+                    # Tirar o print da página
+                    screenshot_path = os.path.join('error_log', f'screenshot_{timestamp}.png')
+                    chrome.save_screenshot(screenshot_path)
+                except:
+                    pass
             try:
                 chrome.quit()
             except:
