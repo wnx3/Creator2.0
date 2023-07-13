@@ -10162,7 +10162,7 @@ def executar_2nr():
                         print(e)
                     continue
                 perm = d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree')
-                if perm.exists:
+                if perm.exists(timeout=30):
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
                     window.Refresh()
                     d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
@@ -10176,7 +10176,10 @@ def executar_2nr():
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                     time.sleep(0.5)
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                
+                else:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro.')
+                    window.Refresh()
+                    raise Exception('Erro.')
                 qtd_num2 = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                 qtd_num = qtd_num2.all()
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(qtd_num)} número(s) encontrado.')
