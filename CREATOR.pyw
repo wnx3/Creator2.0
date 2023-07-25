@@ -12114,11 +12114,14 @@ def executar_2nr_insta():
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(user_completo)
                 time.sleep(3)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+                time.sleep(3)
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText').set_text(f'+48{num}')
                 time.sleep(1)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-                
-                time.sleep(4)
+                new_acc = d(resourceId='android:id/button2')
+                if new_acc.exists(timeout=10):
+                    d(resourceId='android:id/button2').click()
+                    time.sleep(2)
                 restricao = d.xpath('//android.view.View[@content-desc="Cadastrar-se com o email"]')
                 if restricao.exists and tentativa is True:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
@@ -12290,7 +12293,8 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
                 window.Refresh()
                 d.app_start('com.instagram.android')
-                time.sleep(5)
+                time.sleep(1)
+                
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(codigo)
                 #time.sleep(100)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
@@ -12381,9 +12385,32 @@ def executar_2nr_insta():
                             d(resourceId='com.instagram.android:id/skip_button').click()
                             time.sleep(4)
                             try:
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                                window.Refresh()
+                                for element in elements:
+                                    if element.get_text() == target_text:
+                                        element.click()
+                                        time.sleep(1)
                                 d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
-                            except:
+                            except Exception as e:
+                                print(e)
                                 time.sleep(2)
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print("Seguindo sugeridos...")
+                                window.Refresh()
+                                for element in elements:
+                                    if element.get_text() == target_text:
+                                        element.click()
+                                        time.sleep(1)
                                 d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
                             time.sleep(1)
                             try:
@@ -12658,7 +12685,7 @@ def executar_2nr_insta():
                         
                         time.sleep(4)
                         feedback = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.View')
-                        if len(feedback) == 1:
+                        if feedback.exists:
                             sms = True
 
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
@@ -12736,9 +12763,31 @@ def executar_2nr_insta():
                             d(resourceId='com.instagram.android:id/skip_button').click()
                             time.sleep(1)
                             try:
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                                window.Refresh()
+                                for element in elements:
+                                    if element.get_text() == target_text:
+                                        element.click()
+                                        time.sleep(1)
                                 d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
                             except:
                                 d(resourceId='com.instagram.android:id/skip_button').click()
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print("Seguindo sugeridos...")
+                                window.Refresh()
+                                for element in elements:
+                                    if element.text == target_text:
+                                        element.click()
+                                        time.sleep(1)
                                 d.xpath('//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
 
                             time.sleep(1)
@@ -12784,7 +12833,8 @@ def executar_2nr_insta():
 
                             except:
                                 sms = True
-                    except:
+                    except Exception as e:
+                        print(e)
                         sms = True
 
             
