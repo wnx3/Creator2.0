@@ -230,6 +230,7 @@ button_color = sg.theme_background_color()
 inicio = [
     [sg.Frame('WNx3 CREATOR', [
         [sg.Button("CREATOR", font='opensans 9', button_color='#1c2024', border_width=0, size=(35, 1))],
+        [sg.Button("CREATOR 2NR", font='opensans 9', button_color='#1c2024', border_width=0, size=(35, 1))],
         [sg.Button("DIVISOR", font='opensans 9', button_color='#1c2024', border_width=0, size=(35, 1))],
         [sg.Button("MONTADOR", font='opensans 9', disabled=True, button_color='#1c2024', border_width=0, size=(35, 1))],
         [sg.Button("CRIAR POR CIMA", font='opensans 9', disabled=False, button_color='#1c2024', border_width=0, size=(35, 1))]
@@ -10177,8 +10178,21 @@ def executar_2nr():
                     time.sleep(0.5)
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 else:
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro.')
-                    window.Refresh()
+                    try:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
+                        window.Refresh()
+                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                        client = gspread.authorize(creds)
+                        # Abre a planilha e a planilha de uma determinada aba
+                        spreadsheet_id = config['spreadsheet']
+                        sheet_name = config['2nr']
+                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+
+                        # Apaga a primeira célula da coluna A e desloca as células abaixo
+                        sheet.delete_rows(1, 1)
+                    except Exception as e:
+                        print(e)
                     raise Exception('Erro.')
                 qtd_num2 = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                 qtd_num = qtd_num2.all()
@@ -14422,6 +14436,759 @@ def insta_face_lite():
             sms = True
             continue
     
+def executar_creator_2nr():
+    import time
+    import re
+    import requests
+    import random
+    import PySimpleGUI as sg
+    import json
+    from datetime import datetime
+    import threading
+    import subprocess
+    import string
+    from appium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.chrome.options import Options
+    from selenium.common.exceptions import NoSuchElementException
+    try:
+        from minuteinbox import Inbox
+    except:
+        subprocess.run(['venv/scripts/activate.bat'], shell=True)
+        subprocess.run(['pip', 'install', 'minuteinbox'])
+        subprocess.run(['deactivate'], shell=True)
+        from minuteinbox import Inbox
+    from faker import Faker
+    linha_ret = '_________________________________________________\n'
+    fake = Faker('pt_BR')
+    try:
+        import uiautomator2 as u2
+    except:
+        subprocess.run(['venv/scripts/activate.bat'], shell=True)
+        subprocess.run(['pip', 'install', 'uiautomator2'])
+        subprocess.run(['deactivate'], shell=True)
+        subprocess.run(['pip', 'install', '--upgrade', 'requests'])
+        import requests
+        time.sleep(10)
+        import uiautomator2 as u2
+
+    # use without parameters to create a new inbox
+    # inbox = Inbox()
+
+    try:
+        with open("config2nr.json", "r") as f:
+            config = json.load(f)
+    except FileNotFoundError:
+        config = {}
+    d = u2.connect(f'{porta}')
+    subprocess.run(f'adb -s {porta} uninstall io.appium.uiautomator2.server.test',
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL, shell=True)
+    subprocess.run(f'adb -s {porta} uninstall io.appium.uiautomator2.server',
+                   stdout=subprocess.DEVNULL,
+                   stderr=subprocess.DEVNULL, shell=True)
+    #test = Email()
+    
+    def listener(message):
+        global nome
+        global sobrenome
+        global cod
+        if '2nr' in message['subject']:
+            
+            urls = re.findall("(?P<url>https?://[^\s]+)", message['text'] if message['text'] else message['html'])
+
+            # Acessar cada URL
+            for url in urls:
+                if url.startswith('https://api.2nr.xyz/register/?'):
+                    response = requests.get(url)
+
+                    # Verificar o código de status
+                    if response.status_code == 200:
+                        pass
+                    else:
+                        print(f"Erro ao acessar o link: {response.status_code}")
+    contagem = 0
+    troca_ip = 0
+
+    def gerar_id():
+        chars = string.ascii_lowercase + string.digits
+        android_id = ''.join(random.choice(chars) for i in range(16))
+        return android_id
+    
+    def vpn_avast():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da Avast', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
+            time.sleep(10)
+        except Exception as e:
+            print(e)
+        abc = False
+
+    def nenhuma_vpn():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.facebook.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        time.sleep(10)
+
+    def vpn_hotspotshield():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da HotspotShield', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop('hotspotshield.android.vpn')
+            d.app_start('hotspotshield.android.vpn')
+        except Exception as e:
+            print(e)
+        d(resourceId='hotspotshield.android.vpn:id/tryAgainButton').click()
+        time.sleep(5)
+        d(resourceId='hotspotshield.android.vpn:id/btnVpnConnect').click()
+
+        # subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        abc = False
+
+    def vpn_pia():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da PiaVPN', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop('com.privateinternetaccess.android')
+            d.app_start('com.privateinternetaccess.android')
+        except:
+            pass
+        # subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        d(resourceId='com.privateinternetaccess.android:id/connection_background').click()
+        time.sleep(3)
+        d(resourceId='com.privateinternetaccess.android:id/connection_background').click()
+
+        abc = False
+
+    def vpn_express():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da ExpressVPN', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop('com.expressvpn.vpn')
+            d.app_start('com.expressvpn.vpn')
+        except:
+            pass
+        # subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        d(resourceId='com.expressvpn.vpn:id/obiButton').click()
+        time.sleep(3)
+        d(resourceId='com.expressvpn.vpn:id/obiButton').click()
+
+        abc = False
+
+    def vpn_nord():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da NordVPN', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        sms = True
+        try:
+            d.app_stop('com.nordvpn.android')
+            d.app_start('com.nordvpn.android')
+        except:
+            pass
+        time.sleep(10)
+        time.sleep(5)
+        subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        abc = False
+
+    def vpn_surf():
+        global nome
+        global sobrenome
+        global sms
+        sms = True
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da SurfShark', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+
+        try:
+            d.app_stop('com.surfshark.vpnclient.android')
+            d.app_start('com.surfshark.vpnclient.android')
+        except:
+            pass
+        time.sleep(15)
+        subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        abc = False
+
+    def vpn_better():
+        global nome
+        global sobrenome
+        global sms
+        sms = True
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da BetterNet', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        try:
+            d.app_stop('com.freevpnintouch')
+            d.app_start('com.freevpnintouch')
+        except:
+            pass
+        time.sleep(10)
+        dialog = d(resourceId='com.freevpnintouch:id/dialogCtaPositive')
+        connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+        if dialog.exists:
+            d(resourceId='com.freevpnintouch:id/dialogCtaPositive').click()
+            time.sleep(3)
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
+            # time.sleep(5)
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
+        while connect == 'CONNECT':
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
+            time.sleep(4)
+            connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+            # WebDriverWait(driver, 20).until(
+            # EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect').click()
+        # time.sleep(5)
+        subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        ip = '' + porta
+
+        output = subprocess.check_output(['adb', '-s', ip, 'shell', 'ifconfig'])
+
+        # Verifica se a conexão VPN está ativa
+        if not re.search(b"tun0", output):
+            window['output'].print("Não conectado na BetterNet.")
+            window.Refresh()
+            try:
+                connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+                d.app_stop('com.freevpnintouch')
+                d.app_start('com.freevpnintouch')
+                while connect == 'CONNECT':
+                    d(resourceId='com.freevpnintouch:id/buttonConnect').click()
+                    time.sleep(4)
+                    connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+            except:
+                pass
+        abc = False
+
+    def vpn_cyberghost():
+        global nome
+        global sobrenome
+        global sms
+        sms = True
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da CyberGhost', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+
+        try:
+            d.app_stop('de.mobileconcepts.cyberghost')
+            d.app_start('de.mobileconcepts.cyberghost')
+        except:
+            pass
+        # time.sleep(3)
+        d(resourceId='de.mobileconcepts.cyberghost:id/button').click()
+        rate = d(resourceId='de.mobileconcepts.cyberghost:id/rate_me_text')
+        if rate.exists:
+            d(resourceId='android:id/button2').click()
+        time.sleep(2)
+        d(resourceId='de.mobileconcepts.cyberghost:id/button').click()
+        # time.sleep(5)
+        subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        abc = False
+
+    def vpn_avg():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da AVG', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop('com.avg.android.vpn')
+            d.app_start("com.avg.android.vpn", "com.avast.android.vpn.app.wizard.WizardActivity")
+        except:
+            pass
+        #subprocess.run(f'adb -s {porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #               stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        time.sleep(30)
+        
+    def vpn_windscribe():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da Windscribe', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            #subprocess.run(f'adb shell am start -n com.avg.android.vpn/com.avast.android.vpn.app.wizard.WizardActivity', shell=True)
+            d.app_stop("com.windscribe.vpn")
+            d.app_start("com.windscribe.vpn")
+        except:
+            pass
+        d(resourceId='com.windscribe.vpn:id/on_off_button').click()
+        time.sleep(10)
+
+    def vpn_hma():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da HMA', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        
+        try:
+            subprocess.run(f'adb -s {porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            #subprocess.run(f'adb shell am start -n com.avg.android.vpn/com.avast.android.vpn.app.wizard.WizardActivity', shell=True)
+            
+            d.app_stop("com.hidemyass.hidemyassprovpn")
+            time.sleep(3)
+            d.app_start('com.hidemyass.hidemyassprovpn', 'com.avast.android.vpn.activity.HmaOnboardingActivity')
+        except:
+            pass
+        time.sleep(10)
+
+    while True:
+        window['output'].print(linha_ret)
+        window.Refresh()
+        print(troca_ip)
+        try:
+            if troca_ip == 5:
+                try:
+                    troca_ip = 0
+                    conteudo = config['vpn']
+                    if conteudo == "AVG":
+                        vpn_avg()
+                    elif conteudo == "SurfShark":
+                        vpn_surf()
+                    elif conteudo == "Nenhuma":
+                        nenhuma_vpn()
+                    elif conteudo == "Avast":
+                        vpn_avast()
+                    elif conteudo == "ExpressVPN":
+                        vpn_express()
+                    elif conteudo == "PiaVPN":
+                        vpn_pia()
+                    elif conteudo == "BetterNet":
+                        vpn_better()
+                    elif conteudo == "CyberGhost":
+                        vpn_cyberghost()
+                    elif conteudo == "NordVPN":
+                        vpn_nord()
+                    elif conteudo == "HotspotShield":
+                        vpn_hotspotshield()
+                    elif conteudo == "WindscribeVPN":
+                        vpn_windscribe()
+                    elif conteudo == "HmaVPN":
+                        vpn_hma()
+                    else:
+                        window['output'].print(
+                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                        window.Refresh()
+
+                except Exception as e:
+                    print(e)
+                    troca_ip = 0
+            nome = fake.first_name()
+            sobrenome = fake.last_name()
+            if event == sg.WINDOW_CLOSED:
+                break
+            try:
+                #if thread_parar:
+                #    break
+                try:
+                    subprocess.run(f'adb -s {porta} shell pm clear pl.rs.sip.softphone.newapp', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+                except:
+                    pass
+                
+                senha = config['senha2nr']
+
+                quantidade = 0
+                
+
+                d.app_start('pl.rs.sip.softphone.newapp')
+                d.set_fastinput_ime(True)
+                try:
+                    d(resourceId='pl.rs.sip.softphone.newapp:id/registerButton').click()
+                except:
+                    d(resourceId='pl.rs.sip.softphone.newapp:id/registerButton').click()
+                try:
+                    subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.READ_CONTACTS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.CAMERA', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.RECORD_AUDIO', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                except:
+                    pass
+                #inbox = Inbox(
+                #    address="",
+                #    token="",
+                #)
+        
+                #address = inbox.address
+                #token = inbox.token
+
+                # extend the expiration of the inbox by 10 minutes
+                #inbox.extend_10m()
+                lista_user = random.choices(range(1, 9), k=3)
+                nome_completo_s = nome + sobrenome
+                numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+                user_completo = nome_completo_s + '.' + str(numeros_concatenados)
+                #test.register(username=user_completo, password=senha)
+                try:
+                    inbox = Inbox(
+                        address="",
+                        token="",
+                    )
+                    email = inbox.address
+                    #window['output'].print("Email: " + email)
+                    #window.Refresh()
+                except Exception as e:
+                    print(e)
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Email: {email}')
+                window.Refresh()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/inputEmailEditText').set_text(email)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/inputPasswordEditText').set_text(senha)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/repeat_password_edit_text').set_text(senha)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/checkPrivacyPolicy').click()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/buttonRegister').click()
+
+
+
+
+                # use with address and token to reuse an existing inbox
+                
+
+                
+                time.sleep(2)
+                
+                codigo = None
+                #try:
+                #    test.start(listener, interval=5)
+                #    codigo = 0
+                #    while codigo != 5:
+                #        time.sleep(2)
+                #        codigo = codigo + 1
+                #except Exception as e:
+                #    if "Too Many Requests" in str(e):
+                #        pass
+                #    else:
+                #        pass
+                
+                def listener(message):
+                    global nome
+                    global sobrenome
+                    global cod
+                    if '2nr' in message['subject']:
+                        
+                        urls = re.findall("(?P<url>https?://[^\s]+)", message['text'] if message['text'] else message['html'])
+
+                        # Acessar cada URL
+                        for url in urls:
+                            if url.startswith('https://api.2nr.xyz/register/?'):
+                                response = requests.get(url)
+
+                                # Verificar o código de status
+                                if response.status_code == 200:
+                                    pass
+                                else:
+                                    print(f"Erro ao acessar o link: {response.status_code}")
+
+
+                subject = False
+
+                def make_request(url):
+                    try:
+                        response = requests.get(url)
+                        if response.status_code == 200:
+                            print(f"Requisição bem-sucedida!")
+                        else:
+                            print(f"Falha na requisição para {url}. Código de status: {response.status_code}")
+                    except requests.exceptions.RequestException as e:
+                        print(f"Erro na requisição para {url}: {e}")
+
+                while subject == False:
+                    for mail in inbox.mails:
+                        time.sleep(10)
+                        cod = mail.content
+                        if '2nr' in mail.subject:
+                            urls = re.findall(r'href=["\']?([^"\'>]+)', mail.content)
+                            # Acessar cada URL
+                            for url in urls:
+                                make_request(url)
+                                time.sleep(0.5)
+                                #if url.startswith('https://api.2nr.xyz/register/?email'):
+                                #    try:
+                                #        new_url = url.replace('</p></div>', '')
+                                #        print(new_url)
+                                #    except:
+                                #        pass
+                                #    #response = requests.get(new_url)
+                                #    d.open_url(new_url)
+                                #    # Verificar o código de status
+                                #    #if response.status_code == 200:
+                                #    #    print('clicou')
+                                #    #    d.open_url(new_url)
+                                #    #    pass
+                                #    #else:
+                                #    #    print(f"Erro ao acessar o link: {response.status_code}")
+                                #    print('d')
+                            subject = True
+                
+                troca_ip += 1
+                
+                d(resourceId='pl.rs.sip.softphone.newapp:id/buttonOk').click()
+                d.xpath('//android.widget.LinearLayout[@content-desc="Log in"]/android.widget.TextView').click()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/emailEdiText').set_text(email)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/passwordEdiText').set_text(senha)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/buttonLogin').click()
+
+                d(resourceId='pl.rs.sip.softphone.newapp:id/addNumber').click()
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR criado com sucesso.', text_color=('cyan'))
+                contagem = contagem + 1
+                try:
+                    arquivo = open('configuracoes/contas/contas2nr.txt', 'x')
+                except FileExistsError:
+                    arquivo = open('configuracoes/contas/contas2nr.txt', 'a')
+
+                arquivo.write(email + ' ' + senha + "\n")
+                arquivo.close()
+                window['criadas'].update(contagem)
+                window.Refresh()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/inputNumberName').set_text(random.choice(list(range(1, 100))))
+                d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+                
+                d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                time.sleep(1)
+                d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+                success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
+                tries = 0
+                success = 'Null'
+                while success != 'Successful verification' or tries != '30':
+                    success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
+                    if success == 'Successful verification':
+                        break
+                    tries += 1
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Captcha aceito.')
+                window.Refresh()
+                d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número criado com sucesso.', text_color=('lime'))
+                window.Refresh()
+                sms = False
+                while sms is False:
+                    try:
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/numbers').click()
+                        time.sleep(2)
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                        time.sleep(1)
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+                        success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
+                        tries = 0
+                        success = 'Null'
+                        while success != 'Successful verification' or tries != '30':
+                            success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
+                            if success == 'Successful verification':
+                                break
+                            tries += 1
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Captcha aceito.')
+                        window.Refresh()
+                        d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número criado com sucesso.', text_color=('lime'))
+                        window.Refresh()
+                        #d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        #d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        #d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        #d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                    except Exception as e:
+                        print(e)
+                        sms = True
+
+                
+            except Exception as e:
+                print(e)
+        except Exception as e:
+            print(e)
+
 
 pool = concurrent.futures.ThreadPoolExecutor()
 while True:
@@ -14768,7 +15535,174 @@ while True:
                         layout_configuracoes[6][0].update(value=config.get("spreadsheet", ""))
                         layout_configuracoes[7][0].update(value=config.get("2nr", ""))
 
-                    
+    if event == 'CREATOR 2NR':
+        dialog_layout = [
+            [sg.Text('Digite a porta:', font=('Open Sans', 10))],
+            [sg.Input(key='port', font=('Open Sans', 10))],
+            [sg.Button('Avançar', font=('Open Sans', 10), button_color='#1c2024')]
+        ]
+        try:
+            state = config['fixtop']
+            if state:
+                dialog_window = sg.Window('Digite a porta do celular.', dialog_layout, keep_on_top=True)
+            else:
+                dialog_window = sg.Window('Digite a porta do celular.', dialog_layout, keep_on_top=False)
+        except:
+            dialog_window = sg.Window('Digite a porta do celular.', dialog_layout, keep_on_top=False)
+
+        # Loop principal da janela de diálogo
+        while True:
+            dialog_event, dialog_values = dialog_window.read()
+
+            # Finaliza a janela de diálogo se o usuário fechar a janela
+            if dialog_event == sg.WINDOW_CLOSED:
+                break
+
+            # Avança para a janela principal se o usuário clicar no botão
+            if dialog_event == 'Avançar':
+                porta = dialog_values['port']
+                break
+
+        dialog_window.close()
+        port = porta
+        time_img = 'storage\\img\\time.png'
+        url = "https://i.ibb.co/5vJ5sQz/time.png"
+        filename = 'time.png'
+        diretorio = 'storage/img/'  # Diretório onde você deseja verificar a existência do arquivo
+
+        caminho_arquivo = os.path.join(diretorio, filename)
+
+        if not os.path.exists(caminho_arquivo):
+            response = requests.get(url)
+            
+            if response.status_code == 200:
+                image_content = response.content
+                
+                with open(caminho_arquivo, 'wb') as image_file:
+                    image_file.write(image_content)
+                print("Imagem baixada com sucesso.")
+            else:
+                print("Falha ao baixar a imagem.")
+        else:
+            pass
+            
+        layout = [
+        [
+            sg.Frame('WNx3 CREATOR', [
+                [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
+            ], border_width=5, title_location='n')
+        ],
+        [
+            sg.Button('Executar', button_color='#1c2024'),
+            sg.Button('Configurações', key='-config-', button_color='#1c2024'),
+            sg.Image(filename=check_img, pad=((40, 0), 0)), sg.Text('0', key='total'),
+            sg.Image(filename=criada_img, pad=((0, 0), 0)), sg.Text('0', key='criadas'),
+            sg.Image(filename=time_img, pad=((0, 0), 0)), sg.Text("00:00:00", key="-TIME-", pad=((0, 0), 0))
+        ]
+        ]
+        window = sg.Window(f'CREATOR 2NR WNx3 | Porta: {porta}', layout, keep_on_top=False)
+        
+
+        inicio.close()
+        while True:
+            global thread_parar
+            minha_thread = None
+            parar = False
+            event, values = window.read()
+
+            # Finaliza a janela se o usuário fechar a janela
+            if event == sg.WINDOW_CLOSED:
+                
+                parar = True
+                time_thread.join()
+                break
+
+            # Executa o código e atualiza a saída na Multiline em tempo real
+            if event == 'Executar':
+                contagem = 0
+                running = True
+                def format_time(seconds):
+                    hours = seconds // 3600
+                    minutes = (seconds % 3600) // 60
+                    seconds = seconds % 60
+                    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+#
+                def update_time(window):
+                    start_time = time.time()  # Armazena o tempo inicial
+                    while running:
+                        current_time = time.time() - start_time
+                        window["-TIME-"].update(format_time(int(current_time)))
+                        window['criadas'].update(contagem)
+                        window.refresh()  # Atualiza a interface do usuário
+                time_thread = threading.Thread(target=update_time, args=(window,))
+                time_thread.start()
+                #tentativa = False
+                if not os.path.exists("credentials.json"):
+                    # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
+                    window.Refresh()
+                    time.sleep(200)
+                else:
+                    pass
+
+                
+                contagem = 0
+                thread_parar = False
+                window['Executar'].update(disabled=True)
+                window['output'].print(f'Bot iniciado.')
+                window.Refresh()
+                try:
+                    with open("config2nr.json", "r") as f:
+                        config = json.load(f)
+                except FileNotFoundError:
+                    config = {}
+
+                minha_thread = threading.Thread(target=executar_creator_2nr)
+                minha_thread.start()
+            if event == 'clear':
+                window['output'].update('')
+                if not os.path.exists("credentials.json"):
+                    # se o arquivo não existe, pede o nome do arquivo ao usuário e armazena em uma variável global
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nenhum credentials.json encontrado.')
+                    window.Refresh()
+                    time.sleep(200)
+                else:
+                    pass
+                if 'senha' not in config or config['maquina'] == '':
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Configure o bot primeiro.')
+                    window.Refresh()
+                    time.sleep(200)
+            if event == '-config-':
+                layout_configuracoes = [
+                    [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
+                    sg.InputText(key="-senha2nr-", default_text=config.get("senha2nr", "@SenhaPadrao2023"))],
+                    [sg.Text('VPN: ', font=('Open Sans', 12)),
+                    sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
+                    [sg.Button("Salvar")]
+                ]
+
+                # Criar a janela da GUI de configuração
+                janela_configuracoes = sg.Window("Configurações", layout_configuracoes)
+
+                while True:
+                    #janela_configuracoes = sg.Window('Configurações', layout_configuracoes)
+                    evento, valores = janela_configuracoes.read()
+
+                    if evento == sg.WINDOW_CLOSED:
+                        thread_parar = True
+                        break
+
+                    if evento == "Salvar":
+                        # Salvar as configurações em um arquivo JSON
+                        config = {
+                            "senha2nr": valores['-senha2nr-'],
+                            "vpn": valores["-vpn-"]
+                        }
+                        with open("config2nr.json", "w") as f:
+                            json.dump(config, f)
+
+                        # Atualizar os valores padrão dos campos na GUI de configuração
+                    janela_configuracoes.close()
     if event == 'DIVISOR':
         inicio.close()
         import PySimpleGUI as sg
