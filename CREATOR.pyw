@@ -14993,6 +14993,12 @@ def executar_creator_2nr():
                     subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.READ_CONTACTS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                     subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.CAMERA', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                     subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.RECORD_AUDIO', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    try:
+                        subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.ACCESS_NOTIFICATION_POLICY', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    expcept:
+                        pass
+                    
+                    subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.POST_NOTIFICATIONS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 except:
                     pass
                 #inbox = Inbox(
