@@ -10004,11 +10004,19 @@ def executar_2nr():
     d.implicitly_wait(30.0)
     d.set_fastinput_ime(True)
     while parar is False:
+        
         if parar is True:
             print('Parando Thread')
             break
-        try:
 
+        try:
+            if os.path.exists('teste2'):
+                try:
+                    subprocess.run(f'uiautomator2 -s 127.0.0.1:{porta} uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                                    stderr=subprocess.DEVNULL, check=True, shell=True)
+                except:
+                    pass
+                d.app_install('https://www.dropbox.com/s/kbflliyjze5x9bi/InstagramLite.apk?dl=1')
             window['output'].print(linha_ret)
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
