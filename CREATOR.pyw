@@ -11993,14 +11993,13 @@ def executar_2nr_insta():
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                     time.sleep(0.5)
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                print('1')
+                
                 try:
                     qtd_num2 = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[*]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]')
                     qtd_num = qtd_num2.all()
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(qtd_num)} número(s) encontrado.')
                 except Exception as e:
                     print(e)
-                print('2')
                 if len(qtd_num) == 0:
                     try:
                         scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -12016,7 +12015,6 @@ def executar_2nr_insta():
                     except Exception as e:
                         print(e)
                     continue
-                print('3')
                 window.Refresh()
                 try:
                     num = d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout[2]/androidx.recyclerview.widget.RecyclerView/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.LinearLayout/android.widget.TextView[1]').get_text()
@@ -12026,7 +12024,6 @@ def executar_2nr_insta():
                     email = num
                 except Exception as e:
                     print(e)
-                print('4')
                 d(resourceId='pl.rs.sip.softphone.newapp:id/messages').click()
                 d(resourceId='pl.rs.sip.softphone.newapp:id/buttonSettings').click()
                 d(resourceId='pl.rs.sip.softphone.newapp:id/buttonDelete').click()
