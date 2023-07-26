@@ -12687,7 +12687,7 @@ def executar_2nr_insta():
                         window.Refresh()
                         # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                         #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
-                        time.sleep(15)
+                        time.sleep(30)
                         verificar = d(resourceId='com.instagram.android:id/connect_text')
 
                         if verificar.exists:
