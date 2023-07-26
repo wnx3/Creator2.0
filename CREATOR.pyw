@@ -12098,7 +12098,10 @@ def executar_2nr_insta():
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(str(idade_aleatoria))
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
                 time.sleep(2)
-                d(resourceId='android:id/button2').click()
+                new_acc = d(resourceId='android:id/button2')
+                if new_acc.exists:
+                    d(resourceId='android:id/button2').click()
+                    time.sleep(2)
                 try:
                     d.xpath('//android.view.View[@content-desc="Alterar nome de usuário"]').click()
                 except:
