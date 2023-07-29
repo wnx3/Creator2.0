@@ -11798,6 +11798,7 @@ def executar_2nr_insta():
             window.Refresh()
 
     except Exception as e:
+        print(e)
         pass
 
     window.Refresh()
