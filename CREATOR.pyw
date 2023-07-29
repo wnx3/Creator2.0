@@ -11489,9 +11489,11 @@ def executar_2nr_insta():
         except:
             pass
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL, check=True, shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
