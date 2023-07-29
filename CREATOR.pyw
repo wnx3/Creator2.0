@@ -11495,7 +11495,8 @@ def executar_2nr_insta():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android', '.MainActivity')
+            time.sleep(5)
+            d.app_start('com.nordvpn.android', use_monkey=True)
         except:
             pass
         time.sleep(10)
@@ -13145,6 +13146,7 @@ def insta_face_lite():
         try:
             d.app_stop('com.nordvpn.android')
             d.app_start('com.nordvpn.android', '.MainActivity')
+            
         except:
             pass
         time.sleep(10)
