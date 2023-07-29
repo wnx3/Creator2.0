@@ -561,7 +561,7 @@ def free_sms_beta():
         try:
             d.app_stop("com.nordvpn.android")
             time.sleep(5)
-            d.app_start("com.nordvpn.android")
+            d.app_start("com.nordvpn.android", ".MainActivity")
         except:
             pass
         time.sleep(20)
@@ -3322,7 +3322,7 @@ def free_sms_lite():
         try:
             d.app_stop("com.nordvpn.android")
             time.sleep(5)
-            d.app_start("com.nordvpn.android")
+            d.app_start("com.nordvpn.android", ".MainActivity")
         except:
             pass
         time.sleep(20)
@@ -4666,7 +4666,7 @@ def insta_face_litee():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android')
+            d.app_start('com.nordvpn.android', '.MainActivity')
         except:
             pass
         time.sleep(10)
@@ -9690,7 +9690,7 @@ def executar_2nr():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android')
+            d.app_start("com.nordvpn.android", ".MainActivity")
         except:
             pass
         time.sleep(10)
@@ -11495,7 +11495,7 @@ def executar_2nr_insta():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android')
+            d.app_start('com.nordvpn.android', '.MainActivity')
         except:
             pass
         time.sleep(10)
@@ -13144,7 +13144,7 @@ def insta_face_lite():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android')
+            d.app_start('com.nordvpn.android', '.MainActivity')
         except:
             pass
         time.sleep(10)
@@ -14748,7 +14748,7 @@ def executar_creator_2nr():
         sms = True
         try:
             d.app_stop('com.nordvpn.android')
-            d.app_start('com.nordvpn.android')
+            d.app_start('com.nordvpn.android', '.MainActivity')
         except:
             pass
         time.sleep(10)
