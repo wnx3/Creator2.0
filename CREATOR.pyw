@@ -12426,13 +12426,6 @@ def executar_2nr_insta():
                         except:
                             pass
                     else:
-                        try:
-                            d.app_stop('com.instagram.android')
-                        except:
-                            pass
-                        time.sleep(3)
-                        d.app_start('com.instagram.android')
-                        time.sleep(10)
                         verificar = d(resourceId='com.instagram.android:id/profile_tab')
                         if verificar.exists:
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
