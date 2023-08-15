@@ -10010,13 +10010,17 @@ def executar_2nr():
             break
 
         try:
-            if os.path.exists('teste2'):
-                try:
-                    subprocess.run(f'uiautomator2 -s 127.0.0.1:{porta} uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
-                                    stderr=subprocess.DEVNULL, check=True, shell=True)
-                except:
-                    pass
+            try:
+                subprocess.run(f'uiautomator2 -s 127.0.0.1:{porta} uninstall com.instagram.lite', stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL, check=True, shell=True)
+            except Exception as e:
+                print(e)
+                pass
+            try:
                 d.app_install('https://www.dropbox.com/s/kbflliyjze5x9bi/InstagramLite.apk?dl=1')
+            except Exception as e:
+                print(e)
+                pass
             window['output'].print(linha_ret)
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
@@ -10519,7 +10523,13 @@ def executar_2nr():
                 nome_completo = nome + ' ' + sobrenome
                 nome_completo_s = nome + sobrenome
                 numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                user_completo = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                user_completo1 = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+                user_completo = random.randint(1, len(user_completo1))
+                # Insira o ponto no índice aleatório
+                string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                user_completo = string_with_dot.lower()
+                print(user_completo)
                 ######################################################################
 
                 senha = config['senha']
@@ -10613,59 +10623,61 @@ def executar_2nr():
 
                 try:
                     if verificar.exists:
-                        
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
-                        window.Refresh()
-                        seguido = False
-                        contagem += 1
-                        window['criadas'].update(contagem)
-                        window.Refresh()
-                        now = datetime.now()
-                        now_brasilia = tz.localize(now)
-                        timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-                        
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                        client = gspread.authorize(creds)
+                        try:
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
+                            window.Refresh()
+                            seguido = False
+                            contagem += 1
+                            window['criadas'].update(contagem)
+                            window.Refresh()
+                            now = datetime.now()
+                            now_brasilia = tz.localize(now)
+                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                            
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
 
-                        spreadsheet_id = config['spreadsheet']
-                        sheet_name = 'contas'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
-                        
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                            
 
-                        rows = sheet.get_all_values()
+                            rows = sheet.get_all_values()
 
-                        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                        regex = re.compile(r'\S+\s\S+')
-                        
-                        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in rows if regex.match(row[0]))
-                        window['total'].update(num_rows)
+                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                            regex = re.compile(r'\S+\s\S+')
+                            
+                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                        client = gspread.authorize(creds)
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                            client = gspread.authorize(creds)
 
-                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                        sheet_name = 'relatorio_geral'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
-
+                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                            sheet_name = 'relatorio_geral'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                        except Exception as e:
+                            print(e)
+                            pass
                         window.Refresh()
                         arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
                         # Escreva mais conteúdo no arquivo
@@ -10829,8 +10841,13 @@ def executar_2nr():
                         sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
                         nome_completo = nome + sobrenome
                         numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                        user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                        user_completo1 = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
 
+                        user_completo = random.randint(1, len(user_completo1))
+                        # Insira o ponto no índice aleatório
+                        string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                        user_completo = string_with_dot.lower()
+                        print(user_completo)
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                         window.Refresh()
                         d(resourceId='com.instagram.android:id/username').set_text(user_completo)
@@ -11068,8 +11085,13 @@ def executar_2nr():
                             sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
                             nome_completo = nome + sobrenome
                             numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                            user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                            user_completo1 = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
 
+                            user_completo = random.randint(1, len(user_completo1))
+                            # Insira o ponto no índice aleatório
+                            string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                            user_completo = string_with_dot
+                            print(user_completo)
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                             window.Refresh()
                             d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.widget.MultiAutoCompleteTextView').set_text(
@@ -12058,7 +12080,12 @@ def executar_2nr_insta():
                 nome_completo = nome + ' ' + sobrenome
                 nome_completo_s = nome + sobrenome
                 numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                user_completo = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                user_completo1 = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+                user_completo = random.randint(1, len(user_completo1))
+                # Insira o ponto no índice aleatório
+                string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                user_completo = string_with_dot.lower()
                 ######################################################################
 
                 cancel = d(resourceId='com.google.android.gms:id/cancel')
@@ -12125,7 +12152,7 @@ def executar_2nr_insta():
                 if restricao.exists and tentativa is True:
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
                     window.Refresh()
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Já foi feita uma tentativa.\nApagando número.')
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Já foi feita uma tentativa. Apagando número.')
                     window.Refresh()
                     tentativa = False
                     
@@ -12237,7 +12264,7 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
                 window.Refresh()
 
-                time.sleep(10)
+                time.sleep(20)
                 d(resourceId='pl.rs.sip.softphone.newapp:id/messages').click()
                 window.Refresh()
                 try:
@@ -12314,59 +12341,61 @@ def executar_2nr_insta():
                 # time.sleep(10)
                 try:
                     if verificar.exists:
-                        
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
-                        window.Refresh()
-                        seguido = False
-                        contagem += 1
-                        window['criadas'].update(contagem)
-                        window.Refresh()
-                        now = datetime.now()
-                        now_brasilia = tz.localize(now)
-                        timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-                        
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                        client = gspread.authorize(creds)
+                        try:
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
+                            window.Refresh()
+                            seguido = False
+                            contagem += 1
+                            window['criadas'].update(contagem)
+                            window.Refresh()
+                            now = datetime.now()
+                            now_brasilia = tz.localize(now)
+                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                            
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
 
-                        spreadsheet_id = config['spreadsheet']
-                        sheet_name = 'contas'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
-                        
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                            
 
-                        rows = sheet.get_all_values()
+                            rows = sheet.get_all_values()
 
-                        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                        regex = re.compile(r'\S+\s\S+')
+                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                            regex = re.compile(r'\S+\s\S+')
 
-                        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in rows if regex.match(row[0]))
-                        window['total'].update(num_rows)
+                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                        client = gspread.authorize(creds)
+                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                            client = gspread.authorize(creds)
 
-                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                        sheet_name = 'relatorio_geral'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
-
+                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                            sheet_name = 'relatorio_geral'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row+1}:E{last_row+1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+                        except Exception as e:
+                            print(e)
+                            pass
                         window.Refresh()
                         arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
                         # Escreva mais conteúdo no arquivo
@@ -12391,6 +12420,7 @@ def executar_2nr_insta():
                                 elements = d(resourceId=element_id)
                                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
                                 window.Refresh()
+                                time.sleep(5)
                                 for element in elements:
                                     if element.get_text() == target_text:
                                         element.click()
@@ -12579,7 +12609,6 @@ def executar_2nr_insta():
                             "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                         window.Refresh()
                     sms = True
-                    break
                 while sms is False:
                     try:
                         time.sleep(3)
@@ -12623,8 +12652,13 @@ def executar_2nr_insta():
                         sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
                         nome_completo = nome + sobrenome
                         numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                        user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                        user_completo1 = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
 
+                        user_completo = random.randint(1, len(user_completo1))
+                        # Insira o ponto no índice aleatório
+                        string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                        user_completo = string_with_dot.lower()
+                        print(user_completo)
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                         window.Refresh()
                         d(resourceId='com.instagram.android:id/username').set_text(
@@ -15135,9 +15169,9 @@ def executar_creator_2nr():
                         if response.status_code == 200:
                             print(f"Requisição bem-sucedida!")
                         else:
-                            print(f"Falha na requisição para {url}. Código de status: {response.status_code}")
+                            print(f"Falha na requisição. Código de status: {response.status_code}")
                     except requests.exceptions.RequestException as e:
-                        print(f"Erro na requisição para {url}: {e}")
+                        print(f"Erro na requisição: {e}")
 
                 while subject == False:
                     for mail in inbox.mails:
@@ -15201,6 +15235,10 @@ def executar_creator_2nr():
                     success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
                     if success == 'Successful verification':
                         break
+                    elif success == 'Veryfication failed':
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Falha na verificação.')
+                        window.Refresh()
+                        raise Exception('Falha na verificação.')
                     tries += 1
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Captcha aceito.')
                 window.Refresh()
