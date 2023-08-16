@@ -12052,7 +12052,7 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 d.app_start('com.instagram.android')
-                d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=80)
+                d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=120)
                 #time.sleep(6)
                 #novo_layout = d.xpath('//android.view.View[@content-desc="Qual é o seu nome?"]')
                 #if len(novo_layout) == 1:
