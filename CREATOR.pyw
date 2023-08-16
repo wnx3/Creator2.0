@@ -11851,26 +11851,36 @@ def executar_2nr_insta():
             window['output'].print(linha_ret)
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
+            window.Refresh()
+            try:
+                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                client = gspread.authorize(creds)
 
-            scope = ['https://www.googleapis.com/auth/spreadsheets']
-            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-            client = gspread.authorize(creds)
+                spreadsheet_id = config['spreadsheet']
+                sheet_name = 'contas'
+                # Insert user, password, and timestamp into first empty row
+                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                values = sheet.col_values(1)
 
-            spreadsheet_id = config['spreadsheet']
-            sheet_name = 'contas'
-            # Insert user, password, and timestamp into first empty row
-            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-            values = sheet.col_values(1)
+                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                rows = sheet.get_all_values()
 
-            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-            rows = sheet.get_all_values()
+                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                regex = re.compile(r'\S+\s\S+')
 
-            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-            regex = re.compile(r'\S+\s\S+')
+                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                window['total'].update(num_rows)
+            except Exception as e:
+                print(e)
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu algum erro ao acessar a planilha.')
+                window.Refresh()
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando novamente em 1 minuto.')
+                window.Refresh()
+                time.sleep(60)
+                raise Exception('skip')
 
-            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-            num_rows = sum(1 for row in rows if regex.match(row[0]))
-            window['total'].update(num_rows)
             try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
                             stderr=subprocess.DEVNULL, check=True, shell=True)
