@@ -11902,7 +11902,18 @@ def executar_2nr_insta():
                 gerar_id()
                 android_id = gerar_id()
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-
+                try:
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.READ_CONTACTS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.CAMERA', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.RECORD_AUDIO', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    try:
+                        subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.ACCESS_NOTIFICATION_POLICY', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    except:
+                        pass
+                    
+                    subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.POST_NOTIFICATIONS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                except:
+                    pass
                 d.app_start('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
                 scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -11983,21 +11994,9 @@ def executar_2nr_insta():
                 time.sleep(0.5)
                 d(resourceId='pl.rs.sip.softphone.newapp:id/buttonLogin').click()
                 time.sleep(3)
-                perm = d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree')
+                perm = d(resourceId='pl.rs.sip.softphone.newapp:id/messages')
                 if perm.exists(timeout=30):
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aceitando permissões.')
-                    window.Refresh()
-                    d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
-                    d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.ScrollView/androidx.appcompat.widget.LinearLayoutCompat/androidx.cardview.widget.CardView[1]/androidx.appcompat.widget.LinearLayoutCompat/android.widget.TextView').click()
-                    d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[2]/android.widget.RelativeLayout').click()
-                    d.xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[1]/android.widget.LinearLayout[2]/android.widget.Switch').click()
-                    d.xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[2]/android.widget.LinearLayout[2]/android.widget.Switch').click()
-                    d.xpath('/hierarchy/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[3]/android.widget.LinearLayout[2]/android.widget.Switch').click()
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                    time.sleep(0.5)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                    time.sleep(0.5)
-                    subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_BACK', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    pass
                 else:
                     try:
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
@@ -12055,7 +12054,6 @@ def executar_2nr_insta():
                 d.app_start('com.instagram.android')
                 d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=80)
                 #time.sleep(6)
-                time.sleep(6)
                 #novo_layout = d.xpath('//android.view.View[@content-desc="Qual é o seu nome?"]')
                 #if len(novo_layout) == 1:
                 #    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
@@ -12089,7 +12087,7 @@ def executar_2nr_insta():
                 ######################################################################
 
                 cancel = d(resourceId='com.google.android.gms:id/cancel')
-                if cancel.exists:
+                if cancel.exists(timeout=10):
                     d(resourceId='com.google.android.gms:id/cancel').click()
                 senha = config['senha']
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(nome_completo)
@@ -12125,11 +12123,11 @@ def executar_2nr_insta():
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
                 time.sleep(2)
                 new_acc = d(resourceId='android:id/button2')
-                if new_acc.exists:
+                if new_acc.exists(timeout=10):
                     d(resourceId='android:id/button2').click()
                     time.sleep(2)
                 try:
-                    d.xpath('//android.view.View[@content-desc="Alterar nome de usuário"]').click()
+                    d.xpath('//android.view.View[@content-desc="Alterar nome de usuário"]').click(timeout=5)
                 except:
                     pass
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
