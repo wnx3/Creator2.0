@@ -11996,6 +11996,7 @@ def executar_2nr_insta():
                 time.sleep(3)
                 perm = d(resourceId='pl.rs.sip.softphone.newapp:id/messages')
                 if perm.exists(timeout=30):
+                    time.sleep(10)
                     pass
                 else:
                     try:
@@ -12052,7 +12053,41 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
                 window.Refresh()
                 d.app_start('com.instagram.android')
-                d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=120)
+                try:
+                    d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=120)
+                except:
+                    conteudo = config['vpn']
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Pagina Estática.')
+                    window.Refresh()
+                    if conteudo == "AVG":
+                        vpn_avg()
+                    elif conteudo == "SurfShark":
+                        vpn_surf()
+                    elif conteudo == "Nenhuma":
+                        nenhuma_vpn()
+                    elif conteudo == "Avast":
+                        vpn_avast()
+                    elif conteudo == "ExpressVPN":
+                        vpn_express()
+                    elif conteudo == "PiaVPN":
+                        vpn_pia()
+                    elif conteudo == "BetterNet":
+                        vpn_better()
+                    elif conteudo == "CyberGhost":
+                        vpn_cyberghost()
+                    elif conteudo == "NordVPN":
+                        vpn_nord()
+                    elif conteudo == "HotspotShield":
+                        vpn_hotspotshield()
+                    elif conteudo == "WindscribeVPN":
+                        vpn_windscribe()
+                    elif conteudo == "HmaVPN":
+                        vpn_hma()
+                    else:
+                        window['output'].print(
+                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                        window.Refresh()
+                    raise Exception('skip')
                 #time.sleep(6)
                 #novo_layout = d.xpath('//android.view.View[@content-desc="Qual é o seu nome?"]')
                 #if len(novo_layout) == 1:
