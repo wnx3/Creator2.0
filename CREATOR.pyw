@@ -11924,7 +11924,11 @@ def executar_2nr_insta():
                     subprocess.run(f'adb -s {porta} shell pm grant pl.rs.sip.softphone.newapp android.permission.POST_NOTIFICATIONS', stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
                 except:
                     pass
-                d.app_start('pl.rs.sip.softphone.newapp')
+                try:
+                    d.app_start('pl.rs.sip.softphone.newapp')
+                except:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu algum erro ao abrir o 2NR, tentando novamente.')
+                    window.Refresh()
                 time.sleep(3)
                 scope = ['https://www.googleapis.com/auth/spreadsheets']
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
@@ -11978,7 +11982,11 @@ def executar_2nr_insta():
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(regex2nr)} conta(s) encontrada.')
                 window.Refresh()
                 time.sleep(3)
-                d(resourceId='pl.rs.sip.softphone.newapp:id/loginButton').click()
+                try:
+                    d(resourceId='pl.rs.sip.softphone.newapp:id/loginButton').click(timeout=60)
+                except:
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao clicar em login. Tentando novamente.')
+                    window.Refresh()
                 time.sleep(5)
                 spreadsheet_id = config['spreadsheet']
                 sheet_name = config['2nr']
@@ -12182,7 +12190,7 @@ def executar_2nr_insta():
                 window.Refresh()
                 time.sleep(3)
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text('')
-                time.sleep(2)
+                time.sleep(1)
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(user_completo)
                 time.sleep(3)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
