@@ -12764,9 +12764,11 @@ def executar_2nr_insta():
                         window.Refresh()
                         # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
                         #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')
-                        time.sleep(30)
+                        
                         verificar = d(resourceId='com.instagram.android:id/connect_text')
-
+                        if verificar.exists(timeout=60):
+                            time.sleep(20)
+                            verificar = d(resourceId='com.instagram.android:id/connect_text')
                         if verificar.exists:
                             conteudo = config['vpn']
                             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.', text_color=('lime'))
