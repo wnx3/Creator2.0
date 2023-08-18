@@ -12152,7 +12152,7 @@ def executar_2nr_insta():
                 d.xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(senha)
                 time.sleep(1)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-                time.sleep(5)
+                time.sleep(10)
                 cancel = d(resourceId='com.google.android.gms:id/cancel')
                 if cancel.exists(timeout=10):
                     d(resourceId='com.google.android.gms:id/cancel').click()
