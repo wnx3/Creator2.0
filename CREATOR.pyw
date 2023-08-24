@@ -12956,30 +12956,59 @@ def executar_2nr_insta():
                             now = datetime.now()
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                            try:
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
 
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
+                                rows = sheet.get_all_values()
 
-                            rows = sheet.get_all_values()
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
 
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            except Exception as e:
+                                print(e)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao salvar a conta na planilha.')
+                                tempo_aleatorio = random.randint(10, 40)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
+                                time.sleep(tempo_aleatorio)
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
 
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                rows = sheet.get_all_values()
+
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
+
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
 
                             scope = ['https://www.googleapis.com/auth/spreadsheets']
@@ -13065,74 +13094,152 @@ def executar_2nr_insta():
                     else:
                         verificar = d(resourceId='com.instagram.android:id/profile_tab')
                         if verificar.exists:
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
-                                                   text_color=('lime'))
-                            window.Refresh()
-                            seguido = False
-                            contagem += 1
-                            window['criadas'].update(contagem)
-                            window.Refresh()
-                            now = datetime.now()
-                            now_brasilia = tz.localize(now)
-                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-                            rows = sheet.get_all_values()
-
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
-
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
-                            window['total'].update(num_rows)
-
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-                            window.Refresh()
-                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(user_completo + ' ' + senha + "\n")
-                            arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                             try:
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
+                                                    text_color=('lime'))
+                                window.Refresh()
+                                seguido = False
+                                contagem += 1
+                                window['criadas'].update(contagem)
+                                window.Refresh()
+                                now = datetime.now()
+                                now_brasilia = tz.localize(now)
+                                timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
                                 try:
-                                    d(resourceId='com.instagram.android:id/profile_tab').click()
-                                except:
-                                    time.sleep(2)
-                                    d(resourceId='com.instagram.android:id/tab_avatar').click()
-                                sms = False
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+                                    rows = sheet.get_all_values()
+
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
+
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                except Exception as e:
+                                    print(e)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao salvar a conta na planilha.')
+                                    tempo_aleatorio = random.randint(10, 40)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
+                                    time.sleep(tempo_aleatorio)
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+                                    rows = sheet.get_all_values()
+
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
+
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                window['total'].update(num_rows)
+
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+                            except Exception as e:
+                                print(e)
+                                pass
+                        window.Refresh()
+                        arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
+                        arquivo.write(user_completo + ' ' + senha + "\n")
+                        arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                        # Escreva mais conteúdo no arquivo
+                        arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                        try:
+                            d.xpath('//android.view.View[@content-desc="Pular"]').click()
+                            time.sleep(2)
+                            d(resourceId='com.instagram.android:id/skip_button').click()
+                            time.sleep(2)
+                            d(resourceId='com.instagram.android:id/negative_button').click()
+                            time.sleep(2)
+                            d(resourceId='com.instagram.android:id/skip_button').click()
+                            time.sleep(4)
+                            try:
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                                window.Refresh()
+                                time.sleep(5)
+                                for element in elements:
+                                    if element.get_text() == target_text:
+                                        element.click()
+                                        time.sleep(1)
+                                d.xpath(
+                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                            except Exception as e:
+                                print(e)
+                                time.sleep(2)
+                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                target_text = "Seguir"
+
+                                # Encontre todos os elementos que correspondem ao ID fornecido
+                                elements = d(resourceId=element_id)
+                                window['output'].print("Seguindo sugeridos...")
+                                window.Refresh()
+                                for element in elements:
+                                    if element.get_text() == target_text:
+                                        element.click()
+                                        time.sleep(1)
+                                d.xpath(
+                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                            time.sleep(1)
+                            try:
+                                d(resourceId='com.instagram.android:id/button_text').click()
                             except:
                                 pass
+                            time.sleep(3)
+                            try:
+                                d(resourceId='com.instagram.android:id/profile_tab').click()
+                            except:
+                                time.sleep(2)
+                                d(resourceId='com.instagram.android:id/tab_avatar').click()
+                            sms = False
+                        except Exception as e:
+                            print(e)
+                            pass
                         else:
                             if seguido is True:
                                 seguido = False
@@ -13346,46 +13453,79 @@ def executar_2nr_insta():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
-                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                                client = gspread.authorize(creds)
+                                try:
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
 
-                                spreadsheet_id = config['spreadsheet']
-                                sheet_name = 'contas'
-                                # Insert user, password, and timestamp into first empty row
-                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                values = sheet.col_values(1)
-                                last_row = len(values)
-                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                for i, val in enumerate(values):
-                                    cell_list[i].value = val
-                                sheet.update_cells(cell_list)
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
 
-                                rows = sheet.get_all_values()
+                                    rows = sheet.get_all_values()
 
-                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                                regex = re.compile(r'\S+\s\S+')
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
 
-                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                except Exception as e:
+                                    print(e)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao salvar a conta na planilha.')
+                                    tempo_aleatorio = random.randint(10, 40)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
+                                    time.sleep(tempo_aleatorio)
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+                                    rows = sheet.get_all_values()
+
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
+
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                    
                                 window['total'].update(num_rows)
+                                try:
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                    client = gspread.authorize(creds)
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
-                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                                client = gspread.authorize(creds)
-
-                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                                sheet_name = 'relatorio_geral'
-                                # Insert user, password, and timestamp into first empty row
-                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                values = sheet.col_values(1)
-                                last_row = len(values)
-                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                for i, val in enumerate(values):
-                                    cell_list[i].value = val
-                                sheet.update_cells(cell_list)
+                                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                    sheet_name = 'relatorio_geral'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+                                except:
+                                    pass
 
                                 window.Refresh()
                                 arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
