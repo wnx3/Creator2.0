@@ -14956,7 +14956,7 @@ def insta_face_lite():
                     while sms is False:
                         d(resourceId='com.instagram.android:id/profile_tab').click()
                         time.sleep(3)
-                        d(resourceId='com.instagram.android:id/action_bar_title_chevron').click()
+                        d(resourceId='com.instagram.android:id/action_bar_title_chevron').click(timeout=50)
                         time.sleep(2)
                         d.xpath(
                             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[last()]/android.widget.FrameLayout/android.widget.ImageView').click()
