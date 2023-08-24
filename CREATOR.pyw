@@ -10514,6 +10514,31 @@ def executar_2nr():
 
                         # Apaga a primeira célula da coluna A e desloca as células abaixo
                         sheet.delete_rows(1, 1)
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "Nenhuma":
+                            nenhuma_vpn()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
                     except Exception as e:
                         print(e)
                     continue
@@ -10554,6 +10579,31 @@ def executar_2nr():
 
                         # Apaga a primeira célula da coluna A e desloca as células abaixo
                         sheet.delete_rows(1, 1)
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "Nenhuma":
+                            nenhuma_vpn()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
                     except Exception as e:
                         print(e)
                     raise Exception('Erro.')
