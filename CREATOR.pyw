@@ -13059,7 +13059,8 @@ def executar_2nr_insta():
                                 time.sleep(2)
                                 d(resourceId='com.instagram.android:id/tab_avatar').click()
                             sms = False
-                        except:
+                        except Exception as e:
+                            print(e)
                             pass
                     else:
                         verificar = d(resourceId='com.instagram.android:id/profile_tab')
@@ -13333,110 +13334,115 @@ def executar_2nr_insta():
                             time.sleep(20)
                             verificar = d(resourceId='com.instagram.android:id/connect_text')
                         if verificar.exists:
-                            conteudo = config['vpn']
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
-                                                   text_color=('lime'))
-                            window.Refresh()
-                            contagem += 1
-                            window['criadas'].update(contagem)
-                            window.Refresh()
-                            now = datetime.now()
-                            now_brasilia = tz.localize(now)
-                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-                            rows = sheet.get_all_values()
-
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
-
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
-                            window['total'].update(num_rows)
-
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-                            window.Refresh()
-                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(user_completo + ' ' + senha + "\n")
-                            arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                            window.Refresh()
-                            d(resourceId='com.instagram.android:id/skip_button').click()
-                            time.sleep(1)
-                            d(resourceId='com.instagram.android:id/negative_button').click()
-                            time.sleep(3)
-                            d(resourceId='com.instagram.android:id/skip_button').click()
-                            time.sleep(1)
-                            try:
-                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
-                                target_text = "Seguir"
-
-                                # Encontre todos os elementos que correspondem ao ID fornecido
-                                elements = d(resourceId=element_id)
-                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                            try
+                                conteudo = config['vpn']
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
+                                                    text_color=('lime'))
                                 window.Refresh()
-                                for element in elements:
-                                    if element.get_text() == target_text:
-                                        element.click()
-                                        time.sleep(1)
-                                d.xpath(
-                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
-                            except:
+                                contagem += 1
+                                window['criadas'].update(contagem)
+                                window.Refresh()
+                                now = datetime.now()
+                                now_brasilia = tz.localize(now)
+                                timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                rows = sheet.get_all_values()
+
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
+
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                window['total'].update(num_rows)
+
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                window.Refresh()
+                                arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(user_completo + ' ' + senha + "\n")
+                                arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                                window.Refresh()
                                 d(resourceId='com.instagram.android:id/skip_button').click()
-                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
-                                target_text = "Seguir"
+                                time.sleep(1)
+                                d(resourceId='com.instagram.android:id/negative_button').click()
+                                time.sleep(3)
+                                d(resourceId='com.instagram.android:id/skip_button').click()
+                                time.sleep(1)
+                                try:
+                                    element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                    target_text = "Seguir"
 
-                                # Encontre todos os elementos que correspondem ao ID fornecido
-                                elements = d(resourceId=element_id)
-                                window['output'].print("Seguindo sugeridos...")
-                                window.Refresh()
-                                for element in elements:
-                                    if element.text == target_text:
-                                        element.click()
-                                        time.sleep(1)
-                                d.xpath(
-                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                                    # Encontre todos os elementos que correspondem ao ID fornecido
+                                    elements = d(resourceId=element_id)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                                    window.Refresh()
+                                    for element in elements:
+                                        if element.get_text() == target_text:
+                                            element.click()
+                                            time.sleep(1)
+                                    d.xpath(
+                                        '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                                except Exception as e:
+                                    print(e)
+                                    d(resourceId='com.instagram.android:id/skip_button').click()
+                                    element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                    target_text = "Seguir"
 
-                            time.sleep(1)
-                            time.sleep(3)
-                            try:
-                                d(resourceId='com.instagram.android:id/profile_tab').click()
-                            except:
-                                d(resourceId='com.instagram.android:id/button_text').click()
-                                d(resourceId='com.instagram.android:id/profile_tab').click()
-                            sms = False
+                                    # Encontre todos os elementos que correspondem ao ID fornecido
+                                    elements = d(resourceId=element_id)
+                                    window['output'].print("Seguindo sugeridos...")
+                                    window.Refresh()
+                                    for element in elements:
+                                        if element.text == target_text:
+                                            element.click()
+                                            time.sleep(1)
+                                    d.xpath(
+                                        '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+
+                                time.sleep(1)
+                                time.sleep(3)
+                                try:
+                                    d(resourceId='com.instagram.android:id/profile_tab').click()
+                                except Exception as e:
+                                    print(e)
+                                    d(resourceId='com.instagram.android:id/button_text').click()
+                                    d(resourceId='com.instagram.android:id/profile_tab').click()
+                                sms = False
+                            except Exception as e:
+                                print(e)
 
                         else:
                             try:
