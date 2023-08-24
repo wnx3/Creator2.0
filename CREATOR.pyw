@@ -12716,10 +12716,6 @@ def executar_2nr_insta():
                     senha)
                 time.sleep(1)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-                time.sleep(15)
-                cancel = d(resourceId='com.google.android.gms:id/cancel')
-                if cancel.exists(timeout=20):
-                    d(resourceId='com.google.android.gms:id/cancel').click()
                 new_acc = d(resourceId='android:id/button2')
                 if new_acc.exists:
                     d(resourceId='android:id/button2').click()
@@ -12730,7 +12726,7 @@ def executar_2nr_insta():
 
                 time.sleep(3)
                 new_acc = d(resourceId='android:id/button2')
-                if new_acc.exists:
+                if new_acc.exists(timeout=20):
                     d(resourceId='android:id/button2').click()
                     time.sleep(2)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
