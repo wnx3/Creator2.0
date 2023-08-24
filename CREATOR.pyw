@@ -32,8 +32,8 @@ except ModuleNotFoundError:
     import requests
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -55,8 +55,8 @@ except ModuleNotFoundError:
     fake = Faker('pt_BR')
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -74,8 +74,8 @@ except ModuleNotFoundError:
     import pytz
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -98,8 +98,8 @@ except ModuleNotFoundError:
     from oauth2client.service_account import ServiceAccountCredentials
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -133,8 +133,8 @@ except ModuleNotFoundError:
     import PySimpleGUI as sg
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -163,8 +163,8 @@ for file_name in file_list:
         with open(local_path, 'w', encoding='utf-8') as f:
             f.write(github_version)
         sg.theme('DarkGrey14')
-        layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-                  [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+        layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+                  [sg.Text("Abra novamente.", font=('Open Sans', 10))],
                   [sg.Button("OK", button_color='#1c2024')]]
         window = sg.Window("Atualização", layout)
         event, values = window.read()
@@ -182,8 +182,8 @@ except ModuleNotFoundError:
     subprocess.run(['deactivate'], shell=True)
 
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Comic Sans MS', 10))],
-              [sg.Text("Abra novamente.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Bot atualizado com sucesso.", font=('Open Sans', 10))],
+              [sg.Text("Abra novamente.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Atualização", layout)
     event, values = window.read()
@@ -218,7 +218,7 @@ try:
 except FileNotFoundError:
     # Se o arquivo não existir, abre uma GUI para informar o usuário
     sg.theme('DarkGrey14')
-    layout = [[sg.Text("Arquivo credentials.json não encontrado.", font=('Comic Sans MS', 10))],
+    layout = [[sg.Text("Arquivo credentials.json não encontrado.", font=('Open Sans', 10))],
               [sg.Button("OK", button_color='#1c2024')]]
     window = sg.Window("Erro", layout)
     event, values = window.read()
@@ -232,12 +232,12 @@ criada_img = 'storage\\img\\check.png'
 button_color = sg.theme_background_color()
 inicio = [
     [sg.Frame('WNx3 CREATOR', [
-        [sg.Button("CREATOR", font=('Comic Sans MS', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
-        [sg.Button("CREATOR 2NR", font=('Comic Sans MS', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
-        [sg.Button("DIVISOR", font=('Comic Sans MS', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
-        [sg.Button("MONTADOR", font=('Comic Sans MS', 9), disabled=True, button_color='#1c2024', border_width=0,
+        [sg.Button("CREATOR", font=('Open Sans', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
+        [sg.Button("CREATOR 2NR", font=('Open Sans', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
+        [sg.Button("DIVISOR", font=('Open Sans', 9), button_color='#1c2024', border_width=0, size=(35, 1))],
+        [sg.Button("MONTADOR", font=('Open Sans', 9), disabled=True, button_color='#1c2024', border_width=0,
                    size=(35, 1))],
-        [sg.Button("CRIAR POR CIMA", font=('Comic Sans MS', 9), disabled=False, button_color='#1c2024', border_width=0,
+        [sg.Button("CRIAR POR CIMA", font=('Open Sans', 9), disabled=False, button_color='#1c2024', border_width=0,
                    size=(35, 1))]
 
     ], border_width=3, title_location='n')
@@ -252,7 +252,7 @@ except:
     inicio = sg.Window(f'WNx3 CREATOR', inicio, keep_on_top=False)
 
 sg.theme('DarkGrey14')
-sg.SetOptions(font=('Comic Sans MS', 10))
+sg.SetOptions(font=('Open Sans', 10))
 # Define a janela com uma Multiline e um botão
 check_img = 'storage\\img\\total.png'
 criada_img = 'storage\\img\\check.png'
@@ -263,11 +263,11 @@ vpn_list = ["Nenhuma", "AVG", "Avast", "SurfShark", "ExpressVPN", "PiaVPN", "Bet
             "HotspotShield", "HmaVPN", "WindscribeVPN"]
 # Definir o layout da GUI de configuração
 layout_configuracoes = [
-    [sg.Text("Senha dos perfis: ", font=('Comic Sans MS', 12)),
+    [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
      sg.InputText(key="-senha-", default_text=config.get("senha", ""))],
-    [sg.Text('VPN: ', font=('Comic Sans MS', 12)),
+    [sg.Text('VPN: ', font=('Open Sans', 12)),
      sg.OptionMenu(vpn_list, size=(7, 19), key="-vpn-", default_value=config.get("vpn", ""))],
-    [sg.Text('Email ou número: ', font=('Comic Sans MS', 12)),
+    [sg.Text('Email ou número: ', font=('Open Sans', 12)),
      sg.Radio('Mail.TM', 'RADIO1', key='-mailtm-', default=config.get("email", "") == "-mailtm-"),
      sg.Radio('MinuteInBox', 'RADIO1', key='-minuteinbox-', default=config.get("email", "") == "-minuteinbox-"),
      sg.Radio('2NR', 'RADIO1', key='-2nr-', default=config.get("email", "") == "-2nr-"),
@@ -16003,9 +16003,9 @@ while True:
 
     if event == 'CREATOR':
         dialog_layout = [
-            [sg.Text('Digite a porta:', font=('Comic Sans MS', 10))],
-            [sg.Input(key='port', font=('Comic Sans MS', 10))],
-            [sg.Button('Avançar', font=('Comic Sans MS', 10), button_color='#1c2024')]
+            [sg.Text('Digite a porta:', font=('Open Sans', 10))],
+            [sg.Input(key='port', font=('Open Sans', 10))],
+            [sg.Button('Avançar', font=('Open Sans', 10), button_color='#1c2024')]
         ]
         try:
             state = config['fixtop']
@@ -16055,7 +16055,7 @@ while True:
         layout = [
             [
                 sg.Frame('WNx3 CREATOR', [
-                    [sg.Multiline(font=('Comic Sans MS', 10), key='output', size=(50, 15), disabled=True)]
+                    [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
                 ], border_width=5, title_location='n')
             ],
             [
@@ -16263,12 +16263,12 @@ while True:
                 else:
                     wn3_folder_exists = False
                 layout_configuracoes = [
-                    [sg.Text("Senha dos perfis: ", font=('Comic Sans MS', 12)),
+                    [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
                      sg.InputText(key="-senha-", default_text=config.get("senha", ""))],
-                    [sg.Text('VPN: ', font=('Comic Sans MS', 12)),
+                    [sg.Text('VPN: ', font=('Open Sans', 12)),
                      sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
                     # sg.OptionMenu(vpn_list, size=(7, 19), key="-vpn-", default_value=config.get("vpn", ""))],
-                    [sg.Text('Email ou número: ', font=('Comic Sans MS', 12)),
+                    [sg.Text('Email ou número: ', font=('Open Sans', 12)),
                      sg.Radio('Mail.TM', 'RADIO1', key='-mailtm-', default=config.get("email", "") == "-mailtm-"),
                      sg.Radio('MinuteInBox', 'RADIO1', key='-minuteinbox-',
                               default=config.get("email", "") == "-minuteinbox-"),
@@ -16352,9 +16352,9 @@ while True:
 
     if event == 'CREATOR 2NR':
         dialog_layout = [
-            [sg.Text('Digite a porta:', font=('Comic Sans MS', 10))],
-            [sg.Input(key='port', font=('Comic Sans MS', 10))],
-            [sg.Button('Avançar', font=('Comic Sans MS', 10), button_color='#1c2024')]
+            [sg.Text('Digite a porta:', font=('Open Sans', 10))],
+            [sg.Input(key='port', font=('Open Sans', 10))],
+            [sg.Button('Avançar', font=('Open Sans', 10), button_color='#1c2024')]
         ]
         try:
             state = config['fixtop']
@@ -16404,7 +16404,7 @@ while True:
         layout = [
             [
                 sg.Frame('WNx3 CREATOR', [
-                    [sg.Multiline(font=('Comic Sans MS', 10), key='output', size=(50, 15), disabled=True)]
+                    [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
                 ], border_width=5, title_location='n')
             ],
             [
@@ -16494,9 +16494,9 @@ while True:
                     time.sleep(200)
             if event == '-config-':
                 layout_configuracoes = [
-                    [sg.Text("Senha dos perfis: ", font=('Comic Sans MS', 12)),
+                    [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
                      sg.InputText(key="-senha2nr-", default_text=config.get("senha2nr", "@SenhaPadrao2023"))],
-                    [sg.Text('VPN: ', font=('Comic Sans MS', 12)),
+                    [sg.Text('VPN: ', font=('Open Sans', 12)),
                      sg.Combo(vpn_list, default_value=config.get("vpn", ""), readonly=True, key='-vpn-')],
                     [sg.Button("Salvar")]
                 ]
@@ -16621,9 +16621,9 @@ while True:
                 window_resultado.close()
     if event == 'CRIAR POR CIMA':
         dialog_layout = [
-            [sg.Text('Digite a porta:', font=('Comic Sans MS', 10))],
-            [sg.Input(key='port', font=('Comic Sans MS', 10))],
-            [sg.Button('Avançar', font=('Comic Sans MS', 10), button_color='#1c2024')]
+            [sg.Text('Digite a porta:', font=('Open Sans', 10))],
+            [sg.Input(key='port', font=('Open Sans', 10))],
+            [sg.Button('Avançar', font=('Open Sans', 10), button_color='#1c2024')]
         ]
 
         dialog_window = sg.Window('Digite a porta do emulador.', dialog_layout)
@@ -16646,7 +16646,7 @@ while True:
         layoutporcima = [
             [
                 sg.Frame('WNx3 CREATOR', [
-                    [sg.Multiline(font=('Comic Sans MS', 10), key='output', size=(50, 15), disabled=True)]
+                    [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
                 ], border_width=5, title_location='n')
             ],
             [
@@ -16697,9 +16697,9 @@ while True:
                 except FileNotFoundError:
                     config2 = {}
                 layout_configuracoes = [
-                    [sg.Text("Senha dos perfis: ", font=('Comic Sans MS', 12)),
+                    [sg.Text("Senha dos perfis: ", font=('Open Sans', 12)),
                      sg.InputText(key="-senha-", default_text=config2.get("senha", ""))],
-                    [sg.Text('VPN: ', font=('Comic Sans MS', 12)),
+                    [sg.Text('VPN: ', font=('Open Sans', 12)),
                      sg.Combo(vpn_list, default_value=config2.get("vpn", ""), readonly=True, key='-vpn-')],
                     [sg.HorizontalSeparator()],
                     [sg.Text("Nome da maquina: "),
@@ -16749,7 +16749,7 @@ while True:
         layoutporcima = [
             [
                 sg.Frame('WNx3 CREATOR', [
-                    [sg.Multiline(font=('Comic Sans MS', 10), key='output', size=(50, 15), disabled=True)]
+                    [sg.Multiline(font=('Open Sans', 10), key='output', size=(50, 15), disabled=True)]
                 ], border_width=5, title_location='n')
             ],
             [
@@ -16857,7 +16857,7 @@ while True:
                 except FileNotFoundError:
                     config4 = {}
                 layout_configuracoes = [
-                    [sg.Text("Tempo entre ações:", font=('Comic Sans MS', 12))],
+                    [sg.Text("Tempo entre ações:", font=('Open Sans', 12))],
                     [sg.Text("MIN: "),
                      sg.Slider(range=(0, 50), orientation='h', default_value=config4.get("min", ""), key='min')],
                     [sg.Text("MAX: "),
