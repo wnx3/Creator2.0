@@ -12558,6 +12558,36 @@ def executar_2nr_insta():
 
                         # Apaga a primeira célula da coluna A e desloca as células abaixo
                         sheet.delete_rows(1, 1)
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Nenhuma":
+                            nenhuma_vpn()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        elif conteudo == "WindscribeVPN":
+                            vpn_windscribe()
+                        elif conteudo == "HmaVPN":
+                            vpn_hma()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                        raise Exception('skip')
                     except Exception as e:
                         print(e)
                     raise Exception('Erro.')
@@ -12686,7 +12716,7 @@ def executar_2nr_insta():
                     senha)
                 time.sleep(1)
                 d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-                time.sleep(10)
+                time.sleep(15)
                 cancel = d(resourceId='com.google.android.gms:id/cancel')
                 if cancel.exists(timeout=20):
                     d(resourceId='com.google.android.gms:id/cancel').click()
@@ -13178,68 +13208,73 @@ def executar_2nr_insta():
                             except Exception as e:
                                 print(e)
                                 pass
-                        window.Refresh()
-                        arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
-                        # Escreva mais conteúdo no arquivo
-                        arquivo.write(user_completo + ' ' + senha + "\n")
-                        arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                        # Escreva mais conteúdo no arquivo
-                        arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                        try:
-                            d.xpath('//android.view.View[@content-desc="Pular"]').click()
-                            time.sleep(2)
-                            d(resourceId='com.instagram.android:id/skip_button').click()
-                            time.sleep(2)
-                            d(resourceId='com.instagram.android:id/negative_button').click()
-                            time.sleep(2)
-                            d(resourceId='com.instagram.android:id/skip_button').click()
-                            time.sleep(4)
+                            window.Refresh()
+                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                            # Escreva mais conteúdo no arquivo
+                            arquivo.write(user_completo + ' ' + senha + "\n")
+                            arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                            # Escreva mais conteúdo no arquivo
+                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                             try:
-                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
-                                target_text = "Seguir"
+                                d.xpath('//android.view.View[@content-desc="Pular"]').click()
+                                time.sleep(2)
+                                d(resourceId='com.instagram.android:id/skip_button').click()
+                                time.sleep(2)
+                                d(resourceId='com.instagram.android:id/negative_button').click()
+                                time.sleep(2)
+                                d(resourceId='com.instagram.android:id/skip_button').click()
+                                time.sleep(4)
+                                try:
+                                    element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                    target_text = "Seguir"
 
-                                # Encontre todos os elementos que correspondem ao ID fornecido
-                                elements = d(resourceId=element_id)
-                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
-                                window.Refresh()
-                                time.sleep(5)
-                                for element in elements:
-                                    if element.get_text() == target_text:
-                                        element.click()
-                                        time.sleep(1)
-                                d.xpath(
-                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                                    # Encontre todos os elementos que correspondem ao ID fornecido
+                                    elements = d(resourceId=element_id)
+                                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Seguindo sugeridos...')
+                                    window.Refresh()
+                                    time.sleep(5)
+                                    for element in elements:
+                                        if element.get_text() == target_text:
+                                            element.click()
+                                            time.sleep(1)
+                                    d.xpath(
+                                        '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                                except Exception as e:
+                                    print(e)
+                                    time.sleep(2)
+                                    element_id = "com.instagram.android:id/row_recommended_user_follow_button"
+                                    target_text = "Seguir"
+
+                                    # Encontre todos os elementos que correspondem ao ID fornecido
+                                    elements = d(resourceId=element_id)
+                                    window['output'].print("Seguindo sugeridos...")
+                                    window.Refresh()
+                                    for element in elements:
+                                        if element.get_text() == target_text:
+                                            element.click()
+                                            time.sleep(1)
+                                    d.xpath(
+                                        '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
+                                time.sleep(1)
+                                try:
+                                    d(resourceId='com.instagram.android:id/button_text').click()
+                                except:
+                                    pass
+                                time.sleep(3)
+                                try:
+                                    d(resourceId='com.instagram.android:id/profile_tab').click()
+                                except:
+                                    time.sleep(2)
+                                    d(resourceId='com.instagram.android:id/tab_avatar').click()
+                                sms = False
                             except Exception as e:
                                 print(e)
-                                time.sleep(2)
-                                element_id = "com.instagram.android:id/row_recommended_user_follow_button"
-                                target_text = "Seguir"
-
-                                # Encontre todos os elementos que correspondem ao ID fornecido
-                                elements = d(resourceId=element_id)
-                                window['output'].print("Seguindo sugeridos...")
+                                window['output'].print(
+                                    f'[{datetime.now().strftime("%H:%M:%S")}] Reabrindo Instagram.')
                                 window.Refresh()
-                                for element in elements:
-                                    if element.get_text() == target_text:
-                                        element.click()
-                                        time.sleep(1)
-                                d.xpath(
-                                    '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView').click()
-                            time.sleep(1)
-                            try:
-                                d(resourceId='com.instagram.android:id/button_text').click()
-                            except:
+                                d.app_stop('com.instagram.android')
+                                d.app_start('com.instagram.android')
                                 pass
-                            time.sleep(3)
-                            try:
-                                d(resourceId='com.instagram.android:id/profile_tab').click()
-                            except:
-                                time.sleep(2)
-                                d(resourceId='com.instagram.android:id/tab_avatar').click()
-                            sms = False
-                        except Exception as e:
-                            print(e)
-                            pass
                         else:
                             if seguido is True:
                                 seguido = False
@@ -13327,8 +13362,12 @@ def executar_2nr_insta():
                 while sms is False:
                     try:
                         time.sleep(3)
-                        d(resourceId='com.instagram.android:id/profile_tab').click()
-
+                        try:
+                            d(resourceId='com.instagram.android:id/profile_tab').click(timeout=120)
+                        except:
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu algum erro nesta conta.')
+                            window.Refresh()
+                            raise Exception('Erro na conta')
                         window['output'].print(linha_ret)
                         window.Refresh()
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
