@@ -13334,7 +13334,7 @@ def executar_2nr_insta():
                             time.sleep(20)
                             verificar = d(resourceId='com.instagram.android:id/connect_text')
                         if verificar.exists:
-                            try
+                            try:
                                 conteudo = config['vpn']
                                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
                                                     text_color=('lime'))
