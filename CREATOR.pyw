@@ -12720,9 +12720,12 @@ def executar_2nr_insta():
                 if new_acc.exists:
                     d(resourceId='android:id/button2').click()
                 time.sleep(2)
-                salvar_senha = d.xpath('//android.view.View[@content-desc="Agora não"]')
-                if salvar_senha.exists(timeout=60):
-                    d.xpath('//android.view.View[@content-desc="Agora não"]').click()
+                try:
+                    salvar_senha = d.xpath('//android.view.View[@content-desc="Agora não"]')
+                    if salvar_senha.exists(timeout=60):
+                        d.xpath('//android.view.View[@content-desc="Agora não"]').click()
+                except Exception as e:
+                    print(e)
 
                 time.sleep(3)
                 new_acc = d(resourceId='android:id/button2')
