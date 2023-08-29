@@ -13043,7 +13043,7 @@ def executar_2nr_insta():
                             random_number = random.random()
 
                             # Definir a chance desejada (10%)
-                            chance = 0.2
+                            chance = 0.1
 
                             # Verificar se o número aleatório está abaixo da chance
                             if random_number < chance:
@@ -13198,7 +13198,7 @@ def executar_2nr_insta():
                                 random_number = random.random()
 
                                 # Definir a chance desejada (10%)
-                                chance = 0.2
+                                chance = 0.1
 
                                 # Verificar se o número aleatório está abaixo da chance
                                 if random_number < chance:
@@ -13563,7 +13563,7 @@ def executar_2nr_insta():
                                     random_number = random.random()
 
                                     # Definir a chance desejada (10%)
-                                    chance = 0.2
+                                    chance = 0.1
 
                                     # Verificar se o número aleatório está abaixo da chance
                                     if random_number < chance:
