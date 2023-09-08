@@ -424,7 +424,7 @@ def free_sms_beta():
 
     # RANGE_NAME = 'contas!A:D'
     #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     def vpn_avast():
         global nome
@@ -839,7 +839,7 @@ def free_sms_beta():
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     try:
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -1298,7 +1298,7 @@ def free_sms_beta():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -1324,7 +1324,7 @@ def free_sms_beta():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
                         time.sleep(4)
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -1570,7 +1570,7 @@ def free_sms_beta():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                             client = gspread.authorize(creds)
 
@@ -1596,7 +1596,7 @@ def free_sms_beta():
                             num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
                             time.sleep(4)
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                             client = gspread.authorize(creds)
 
@@ -1787,7 +1787,7 @@ def free_sms():
 
     # RANGE_NAME = 'contas!A:D'
     #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     def vpn_avast():
         global nome
@@ -2295,7 +2295,7 @@ def free_sms():
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
     try:
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -2739,7 +2739,7 @@ def free_sms():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                             client = gspread.authorize(creds)
 
@@ -2765,7 +2765,7 @@ def free_sms():
                             num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
                             time.sleep(4)
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                             client = gspread.authorize(creds)
 
@@ -2855,7 +2855,7 @@ def free_sms():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -2881,7 +2881,7 @@ def free_sms():
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
                                 time.sleep(4)
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -3107,7 +3107,7 @@ def free_sms():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -3133,7 +3133,7 @@ def free_sms():
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
                                 time.sleep(4)
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -3716,7 +3716,7 @@ def free_sms_lite():
     try:
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -4236,7 +4236,7 @@ def free_sms_lite():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -4262,7 +4262,7 @@ def free_sms_lite():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -4507,7 +4507,7 @@ def free_sms_lite():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                             client = gspread.authorize(creds)
 
@@ -4533,7 +4533,7 @@ def free_sms_lite():
                             num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                             client = gspread.authorize(creds)
 
@@ -5158,7 +5158,7 @@ def insta_face_litee():
 
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -5538,7 +5538,7 @@ def insta_face_litee():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -5564,7 +5564,7 @@ def insta_face_litee():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -5794,7 +5794,7 @@ def insta_face_litee():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                             client = gspread.authorize(creds)
 
@@ -5820,7 +5820,7 @@ def insta_face_litee():
                             num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                             client = gspread.authorize(creds)
 
@@ -6481,7 +6481,7 @@ def criarporcima():
             window.Refresh()
 
             time.sleep(5)
-            scope = ['https://www.googleapis.com/auth/spreadsheets']
+            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
             client = gspread.authorize(creds)
 
@@ -6528,7 +6528,7 @@ def criarporcima():
                 window['output'].print(
                     f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta encontrada. Tentando novamente em 5 min.')
                 window.Refresh()
-                cope = ['https://www.googleapis.com/auth/spreadsheets']
+                cope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
 
@@ -6753,7 +6753,7 @@ def criarporcima():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -6779,7 +6779,7 @@ def criarporcima():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -6808,7 +6808,7 @@ def criarporcima():
                         sms = False
 
                     else:
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
                         # Abre a planilha e a planilha de uma determinada aba
@@ -6935,7 +6935,7 @@ def executar_mailtm():
 
     # RANGE_NAME = 'contas!A:D'
     #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     def vpn_avast():
         global nome
@@ -7759,7 +7759,7 @@ def executar_mailtm():
                     now_brasilia = tz.localize(now)
                     timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
 
@@ -7784,7 +7784,7 @@ def executar_mailtm():
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                     client = gspread.authorize(creds)
 
@@ -7925,7 +7925,7 @@ def executar_mailtm():
         window.Refresh()
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Instagram')
 
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -8186,7 +8186,7 @@ def executar_mailtm():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -8211,7 +8211,7 @@ def executar_mailtm():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -8429,7 +8429,7 @@ def executar_minuteinbox():
 
     # RANGE_NAME = 'contas!A:D'
     #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     def vpn_avast():
         global nome
@@ -9195,7 +9195,7 @@ def executar_minuteinbox():
                     now_brasilia = tz.localize(now)
                     timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
 
@@ -9220,7 +9220,7 @@ def executar_minuteinbox():
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                     client = gspread.authorize(creds)
 
@@ -9333,7 +9333,7 @@ def executar_minuteinbox():
         window.Refresh()
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Instagram')
 
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -9592,7 +9592,7 @@ def executar_minuteinbox():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -9617,7 +9617,7 @@ def executar_minuteinbox():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
 
@@ -10363,7 +10363,7 @@ def executar_2nr():
             window.Refresh()
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
             time.sleep(5)
-            scope = ['https://www.googleapis.com/auth/spreadsheets']
+            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
             client = gspread.authorize(creds)
 
@@ -10415,7 +10415,7 @@ def executar_2nr():
                                shell=True)
                 d.app_start('pl.rs.sip.softphone.newapp')
                 time.sleep(3)
-                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
 
@@ -10436,7 +10436,7 @@ def executar_2nr():
                     window['output'].print(
                         f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
-                    cope = ['https://www.googleapis.com/auth/spreadsheets']
+                    cope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
 
@@ -10504,7 +10504,7 @@ def executar_2nr():
                     try:
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
                         window.Refresh()
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
                         # Abre a planilha e a planilha de uma determinada aba
@@ -10569,7 +10569,7 @@ def executar_2nr():
                     try:
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
                         window.Refresh()
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
                         # Abre a planilha e a planilha de uma determinada aba
@@ -10612,7 +10612,7 @@ def executar_2nr():
                 qtd_num = qtd_num2.all()
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] {len(qtd_num)} número(s) encontrado.')
                 if len(qtd_num) == 0:
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
                     # Abre a planilha e a planilha de uma determinada aba
@@ -11092,7 +11092,7 @@ def executar_2nr():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                             client = gspread.authorize(creds)
 
@@ -11117,7 +11117,7 @@ def executar_2nr():
                             num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
 
-                            scope = ['https://www.googleapis.com/auth/spreadsheets']
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                             creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                             client = gspread.authorize(creds)
 
@@ -11389,7 +11389,7 @@ def executar_2nr():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -11415,7 +11415,7 @@ def executar_2nr():
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
                                 time.sleep(4)
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -11636,7 +11636,7 @@ def executar_2nr():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -11662,7 +11662,7 @@ def executar_2nr():
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -11834,7 +11834,7 @@ def executar_2nr_insta():
 
     # RANGE_NAME = 'contas!A:D'
     #
-    # SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+    # SCOPES = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
     def vpn_avast():
         global nome
@@ -12364,22 +12364,22 @@ def executar_2nr_insta():
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo 2NR')
             window.Refresh()
             try:
-                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
-
+#
                 spreadsheet_id = config['spreadsheet']
                 sheet_name = 'contas'
                 # Insert user, password, and timestamp into first empty row
                 sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
                 values = sheet.col_values(1)
-
+#
                 # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                 rows = sheet.get_all_values()
-
+#
                 # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
                 regex = re.compile(r'\S+\s\S+')
-
+#
                 # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                 window['total'].update(num_rows)
@@ -12399,7 +12399,8 @@ def executar_2nr_insta():
                                stderr=subprocess.DEVNULL, check=True, shell=True)
 
 
-            except:
+            except Expception as e:
+                print(e)
                 pass
             try:
                 subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp',
@@ -12454,7 +12455,7 @@ def executar_2nr_insta():
                         f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu algum erro ao abrir o 2NR, tentando novamente.')
                     window.Refresh()
                 time.sleep(3)
-                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                 client = gspread.authorize(creds)
 
@@ -12475,7 +12476,7 @@ def executar_2nr_insta():
                     window['output'].print(
                         f'[{datetime.now().strftime("%H:%M:%S")}] Nenhuma conta do 2NR encontrada.\nTentando novamente em 5 min.')
                     window.Refresh()
-                    cope = ['https://www.googleapis.com/auth/spreadsheets']
+                    cope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
 
@@ -12548,7 +12549,7 @@ def executar_2nr_insta():
                     try:
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta não existe.')
                         window.Refresh()
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
                         # Abre a planilha e a planilha de uma determinada aba
@@ -12601,7 +12602,7 @@ def executar_2nr_insta():
                     print(e)
                 if len(qtd_num) == 0:
                     try:
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
                         # Abre a planilha e a planilha de uma determinada aba
@@ -12987,7 +12988,7 @@ def executar_2nr_insta():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
                             try:
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -13016,7 +13017,7 @@ def executar_2nr_insta():
                                 tempo_aleatorio = random.randint(10, 40)
                                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
                                 time.sleep(tempo_aleatorio)
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -13047,7 +13048,7 @@ def executar_2nr_insta():
 
                             # Verificar se o número aleatório está abaixo da chance
                             if random_number < chance:
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -13142,7 +13143,7 @@ def executar_2nr_insta():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
                                 try:
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                     client = gspread.authorize(creds)
 
@@ -13171,7 +13172,7 @@ def executar_2nr_insta():
                                     tempo_aleatorio = random.randint(10, 40)
                                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
                                     time.sleep(tempo_aleatorio)
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                     client = gspread.authorize(creds)
 
@@ -13202,7 +13203,7 @@ def executar_2nr_insta():
 
                                 # Verificar se o número aleatório está abaixo da chance
                                 if random_number < chance:
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                     creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                     client = gspread.authorize(creds)
 
@@ -13505,7 +13506,7 @@ def executar_2nr_insta():
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
                                 try:
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                     client = gspread.authorize(creds)
 
@@ -13534,7 +13535,7 @@ def executar_2nr_insta():
                                     tempo_aleatorio = random.randint(10, 40)
                                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
                                     time.sleep(tempo_aleatorio)
-                                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                     client = gspread.authorize(creds)
 
@@ -13567,7 +13568,7 @@ def executar_2nr_insta():
 
                                     # Verificar se o número aleatório está abaixo da chance
                                     if random_number < chance:
-                                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                         client = gspread.authorize(creds)
 
@@ -14430,7 +14431,7 @@ def insta_face_lite():
     try:
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.')
         window.Refresh()
-        scope = ['https://www.googleapis.com/auth/spreadsheets']
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
         client = gspread.authorize(creds)
 
@@ -14836,7 +14837,7 @@ def insta_face_lite():
                     now_brasilia = tz.localize(now)
                     timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                     client = gspread.authorize(creds)
 
@@ -14861,7 +14862,7 @@ def insta_face_lite():
                     num_rows = sum(1 for row in rows if regex.match(row[0]))
                     window['total'].update(num_rows)
 
-                    scope = ['https://www.googleapis.com/auth/spreadsheets']
+                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                     creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                     client = gspread.authorize(creds)
 
@@ -15103,7 +15104,7 @@ def insta_face_lite():
                                 now_brasilia = tz.localize(now)
                                 timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -15129,7 +15130,7 @@ def insta_face_lite():
                                 num_rows = sum(1 for row in rows if regex.match(row[0]))
                                 window['total'].update(num_rows)
                                 time.sleep(4)
-                                scope = ['https://www.googleapis.com/auth/spreadsheets']
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                                 client = gspread.authorize(creds)
 
@@ -15304,7 +15305,7 @@ def insta_face_lite():
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
                         client = gspread.authorize(creds)
 
@@ -15329,7 +15330,7 @@ def insta_face_lite():
                         num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
 
-                        scope = ['https://www.googleapis.com/auth/spreadsheets']
+                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                         creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
                         client = gspread.authorize(creds)
                         try:
