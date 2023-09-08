@@ -13047,7 +13047,6 @@ def executar_2nr_insta():
                             chance = 0.3
 
                             # Verificar se o número aleatório está abaixo da chance
-                            if not os.path.exists("wn"):
                             if random_number < chance and not os.path.exists("wn"):
                                 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
                                 creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
