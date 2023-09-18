@@ -404,13 +404,13 @@ def free_sms_beta():
     import random
 
     import string
-    from appium import webdriver
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.chrome.service import Service
     from selenium.common.exceptions import NoSuchElementException
+    from selenium import webdriver
     from mailtm import Email
     import re
     import logging
@@ -916,26 +916,137 @@ def free_sms_beta():
                     window.Refresh()
             if stop is True:
                 raise Exception("skip.")
+            
+            ######################################################################
+            lista_user = random.choices(range(0, 9), k=2)
+            lista_letras = random.choices(letras, k=1)
+
+            with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
+                nomes = nomes_arquivo.readlines()
+
+            with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
+                sobrenomes = sobrenomes_arquivo.readlines()
+
+            nomea = fake.first_name_female().replace(" ", "")
+            nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+            sobrenomea = fake.last_name().replace(" ", "").lower()
+            sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+            nome_completo = nome + ' ' + sobrenome
+            nome_completo_s = nome + sobrenome
+            numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+            user_completo1 = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+            user_completo = random.randint(1, len(user_completo1))
+            # Insira o ponto no índice aleatório
+            string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+            user_completo = string_with_dot.lower()
+            ######################################################################
+            
+            cancel = d(resourceId='com.google.android.gms:id/cancel')
+            if cancel.exists:
+                d.xpath('com.google.android.gms:id/cancel').click()
+            senha = config['senha']
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: {nome_completo}')
+            window.Refresh()
+            d.xpath(
+                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').click()
+            time.sleep(1)
+            try:
+                d.xpath(
+                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                    nome_completo)
+            except:
+                time.sleep(5)
+                d.xpath(
+                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                    nome_completo)
+
+            # time.sleep(1)
+
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            # time.sleep(3)
+            d.xpath(
+                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                senha)
+            # time.sleep(1)
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            time.sleep(3)
+            new_acc = d(resourceId='android:id/button2')
+            if new_acc.exists:
+                d(resourceId='android:id/button2').click()
+            time.sleep(2)
+            salvar_senha = d.xpath('//android.view.View[@content-desc="Agora não"]')
+            if salvar_senha.exists:
+                d.xpath('//android.view.View[@content-desc="Agora não"]').click()
+
+            time.sleep(4)
+            new_acc = d.xpath('android:id/button2')
+            if new_acc.exists:
+                d(resourceId='android:id/button2').click()
+                time.sleep(2)
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            time.sleep(2)
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            idade_aleatoria = random.randint(18, 35)
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
+            window.Refresh()
+            d.xpath(
+                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                str(idade_aleatoria))
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            # time.sleep(2)
+            d(resourceId='android:id/button2').click()
+            try:
+                d.xpath('//android.view.View[@content-desc="Alterar nome de usuário"]').click()
+            except:
+                pass
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
+            window.Refresh()
+            # time.sleep(1)
+            d.xpath(
+                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                '')
+            # time.sleep(1)
+            d.xpath(
+                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
+                user_completo)
+            time.sleep(3)
+            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Free SMS.')
             window.Refresh()
-            chromedriver_path = 'storage\\driver\\driver.exe'
+            chromedriver_path = r'chromedriver.exe'
             service = Service(chromedriver_path)
             options = uc.ChromeOptions()
             options.add_argument("--blink-settings=imagesEnabled=false")
+            options.add_argument("--disable-gpu")
             # Configurações adicionais para o undetected_chromedriver
-
-            driver_executable_path = ChromeDriverManager(path=".\\").install()
+            import re
+            driver_executable_path = ChromeDriverManager().install()
             version_main = int(re.findall('[0-9]+\.', driver_executable_path)[0][:-1])
             chrome = uc.Chrome(use_subprocess=True, options=options,
-                               driver_executable_path=driver_executable_path, version_main=version_main, headless=True)
-            # chrome = uc.Chrome(options=options, service=service)
-            chrome.maximize_window()
+                               driver_executable_path=driver_executable_path, version_main=version_main, headless=False)
+            ## chrome = uc.Chrome(options=options, service=service)
+            #chrome.maximize_window()
             # chrome = uc.Chrome(enable_cdp_events=True, headless=True, options=options, service=service)
             # chrome.implicitly_wait(60)
+            
+            #import undetected_chromedriver as uc
+            #from selenium import webdriver
+#
+            #options = webdriver.ChromeOptions() 
+            #chromedriver_path = r'chromedriver.exe'
+            #service = Service(chromedriver_path)
+            #options.add_argument("start-maximized")
+            #options.add_argument("--blink-settings=imagesEnabled=false")
+            #options.add_argument("--disable-gpu")
+            #options.add_argument("--headless")
+            #chrome = uc.Chrome(options=options, service=service)
+            
             stop = False
             try:
                 chrome.get('https://temporary-phone-number.com/')
-                # chrome.set_window_size(800,2000)
+                chrome.set_window_size(800,2000)
 
                 try:
                     WebDriverWait(chrome, 35).until(EC.element_to_be_clickable(
@@ -950,7 +1061,7 @@ def free_sms_beta():
                         # chrome.find_element(By.XPATH, '/html/body/div[2]/aside/section/ul/li[2]').click()
                 except:
                     chrome.get('https://temporary-phone-number.com/US-Phone-Number/12673800457')
-                time.sleep(13)
+                time.sleep(7)
                 num_33 = True
                 tentativa = 0
                 while num_33 is True or tentativa == 5:
@@ -967,12 +1078,17 @@ def free_sms_beta():
                             chrome.quit()
                             raise Exception("skip.")
                         try:
-                            chrome.find_element(By.XPATH,
-                                                '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[2]').click()
+                            time.sleep(4)
+                            #chrome.execute_script("document.body.style.zoom='50%'")
+                            chrome.save_screenshot('screenshot.png')
+                            WebDriverWait(chrome, 35).until(EC.element_to_be_clickable(
+                            (By.CSS_SELECTOR, 'body > div.wrapper:nth-child(2) > div.content-wrapper:nth-child(3) > section.content:nth-child(2) > div.row:nth-child(1) > div.col-xs-12:nth-child(2) > div.box-body.text-center:nth-child(3) > button.btn-primary.btn:nth-child(2) > b'))).click()
+                            chrome.save_screenshot('screenshot2.png')
                             time.sleep(7)
+                            chrome.save_screenshot('screenshot3.png')
                             num = chrome.find_element(By.XPATH,
                                                       '/html/body/div[2]/div/section[2]/div[1]/div[1]/div/h1').text
-                            if num.startswith("+33") or num.startswith("+1"):
+                            if num.startswith("+33") or num.startswith("+1") or num.startswith("+31"):
                                 chrome.find_element(By.XPATH,
                                                     '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[2]').click()
                                 time.sleep(7)
@@ -1010,7 +1126,10 @@ def free_sms_beta():
                 except:
                     pass
                 raise Exception("skip.")
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número gerado: {num}')
+            if not num == '+33756495040':
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número gerado: {num}')
+            else:
+                raise Exception("Não foi possivel gerar um número.")
             window.Refresh()
 
             d.xpath(
@@ -1182,96 +1301,10 @@ def free_sms_beta():
                         "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                     window.Refresh()
 
-            ######################################################################
-            lista_user = random.choices(range(0, 9), k=2)
-            lista_letras = random.choices(letras, k=1)
-
-            with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
-                nomes = nomes_arquivo.readlines()
-
-            with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
-                sobrenomes = sobrenomes_arquivo.readlines()
-
-            nomea = fake.first_name_female().replace(" ", "")
-            nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-            sobrenomea = fake.last_name().replace(" ", "").lower()
-            sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-            nome_completo = nome + ' ' + sobrenome
-            nome_completo_s = nome + sobrenome
-            numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-            user_completo = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
-            ######################################################################
-
-            cancel = d(resourceId='com.google.android.gms:id/cancel')
-            if cancel.exists:
-                d.xpath('com.google.android.gms:id/cancel').click()
-            senha = config['senha']
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: {nome_completo}')
-            window.Refresh()
-            d.xpath(
-                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').click()
-            time.sleep(1)
-            try:
-                d.xpath(
-                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                    nome_completo)
-            except:
-                time.sleep(5)
-                d.xpath(
-                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                    nome_completo)
-
-            # time.sleep(1)
-
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-            # time.sleep(3)
-            d.xpath(
-                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                senha)
-            # time.sleep(1)
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-            time.sleep(5)
-            new_acc = d(resourceId='android:id/button2')
-            if new_acc.exists:
-                d(resourceId='android:id/button2').click()
-            time.sleep(4)
-            salvar_senha = d.xpath('//android.view.View[@content-desc="Agora não"]')
-            if salvar_senha.exists:
-                d.xpath('//android.view.View[@content-desc="Agora não"]').click()
-
-            time.sleep(4)
-            new_acc = d.xpath('android:id/button2')
-            if new_acc.exists:
-                d(resourceId='android:id/button2').click()
-                time.sleep(2)
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-            time.sleep(2)
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-            idade_aleatoria = random.randint(18, 35)
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
-            window.Refresh()
-            d.xpath(
-                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                str(idade_aleatoria))
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
-            # time.sleep(2)
-            d(resourceId='android:id/button2').click()
-            try:
-                d.xpath('//android.view.View[@content-desc="Alterar nome de usuário"]').click()
-            except:
-                pass
-            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
-            window.Refresh()
-            # time.sleep(1)
-            d.xpath(
-                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                '')
-            # time.sleep(1)
-            d.xpath(
-                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText').set_text(
-                user_completo)
-            time.sleep(3)
-            d.xpath('//android.view.View[@content-desc="Avançar"]').click()
+            
+            
+            
+            
             d.xpath('//android.view.View[@content-desc="Concordo"]').click()
             time.sleep(3)
             errodetec = d.xpath('//android.view.View[@content-desc="Concordo"]')
@@ -1281,7 +1314,7 @@ def free_sms_beta():
 
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
             window.Refresh()
-            time.sleep(20)
+            time.sleep(35)
             verificar = d.xpath('//android.view.View[@content-desc="Adicionar foto"]')
             # time.sleep(10)
             try:
@@ -1297,49 +1330,82 @@ def free_sms_beta():
                         now = datetime.now()
                         now_brasilia = tz.localize(now)
                         timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+                        try:
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
 
-                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                        client = gspread.authorize(creds)
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
 
-                        spreadsheet_id = config['spreadsheet']
-                        sheet_name = 'contas'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                  conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
+                            rows = sheet.get_all_values()
 
-                        rows = sheet.get_all_values()
+                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                            regex = re.compile(r'\S+\s\S+')
 
-                        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                        regex = re.compile(r'\S+\s\S+')
+                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                        except Exception as e:
+                            print(e)
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao salvar a conta na planilha.')
+                            tempo_aleatorio = random.randint(10, 40)
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
+                            time.sleep(tempo_aleatorio)
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                            client = gspread.authorize(creds)
 
-                        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                        num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            spreadsheet_id = config['spreadsheet']
+                            sheet_name = 'contas'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
+
+                            rows = sheet.get_all_values()
+
+                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                            regex = re.compile(r'\S+\s\S+')
+
+                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                            num_rows = sum(1 for row in rows if regex.match(row[0]))
                         window['total'].update(num_rows)
-                        time.sleep(4)
-                        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                        creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                        client = gspread.authorize(creds)
+                        random_number = random.random()
 
-                        spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                        sheet_name = 'relatorio_geral'
-                        # Insert user, password, and timestamp into first empty row
-                        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                        values = sheet.col_values(1)
-                        last_row = len(values)
-                        values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                  conteudo + ' - ' + app]
-                        cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                        for i, val in enumerate(values):
-                            cell_list[i].value = val
-                        sheet.update_cells(cell_list)
+                        # Definir a chance desejada (10%)
+                        chance = 0.3
+
+                        # Verificar se o número aleatório está abaixo da chance
+                        if random_number < chance and not os.path.exists("wn"):
+                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                            client = gspread.authorize(creds)
+
+                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                            sheet_name = 'relatorio_geral'
+                            # Insert user, password, and timestamp into first empty row
+                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                            values = sheet.col_values(1)
+                            last_row = len(values)
+                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                            for i, val in enumerate(values):
+                                cell_list[i].value = val
+                            sheet.update_cells(cell_list)
 
 
 
@@ -1496,7 +1562,13 @@ def free_sms_beta():
                     sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
                     nome_completo = nome + sobrenome
                     numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                    user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                    user_completo1 = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+                    user_completo = random.randint(1, len(user_completo1))
+                    # Insira o ponto no índice aleatório
+                    string_with_dot = user_completo1[:user_completo] + '_' + user_completo1[user_completo:]
+                    user_completo = string_with_dot.lower()
+                    print(user_completo)
 
                     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
                     window.Refresh()
@@ -1570,48 +1642,83 @@ def free_sms_beta():
                             now_brasilia = tz.localize(now)
                             timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
+                            try:
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
 
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                      conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
 
-                            rows = sheet.get_all_values()
+                                rows = sheet.get_all_values()
 
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
 
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
+                            except Exception as e:
+                                print(e)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao salvar a conta na planilha.')
+                                tempo_aleatorio = random.randint(10, 40)
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando {tempo_aleatorio} segundos para tentar novamente.')
+                                time.sleep(tempo_aleatorio)
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = config['spreadsheet']
+                                sheet_name = 'contas'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
+
+                                rows = sheet.get_all_values()
+
+                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                regex = re.compile(r'\S+\s\S+')
+
+                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                num_rows = sum(1 for row in rows if regex.match(row[0]))
                             window['total'].update(num_rows)
-                            time.sleep(4)
-                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
+                            
+                            random_number = random.random()
 
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                      conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
+                            # Definir a chance desejada (10%)
+                            chance = 0.3
+
+                            # Verificar se o número aleatório está abaixo da chance
+                            if random_number < chance and not os.path.exists("wn"):
+                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                client = gspread.authorize(creds)
+
+                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                sheet_name = 'relatorio_geral'
+                                # Insert user, password, and timestamp into first empty row
+                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                values = sheet.col_values(1)
+                                last_row = len(values)
+                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina, conteudo + ' - ' + app]
+                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                for i, val in enumerate(values):
+                                    cell_list[i].value = val
+                                sheet.update_cells(cell_list)
 
 
 
@@ -1696,7 +1803,6 @@ def free_sms_beta():
             print(e)
             pass
 
-
 def free_sms():
     SPREADSHEET_ID = config['spreadsheet']
     conteudo = config['vpn']
@@ -1752,22 +1858,23 @@ def free_sms():
     import subprocess
     from colorama import init, Fore, Back, Style
     from faker import Faker
-    # teste
-    init(autoreset=True)
-    console = Console()
-    from termcolor import colored
-
-    from rich.console import Console
-    from rich.panel import Panel
-    from rich.text import Text
-    from rich.rule import Rule
 
     linha_ret = '_________________________________________________\n'
     window.Refresh()
     import random
     from datetime import datetime
     import string
-    from appium import webdriver
+    try:
+        import uiautomator2 as u2
+    except:
+        subprocess.run(['venv/scripts/activate.bat'], shell=True)
+        subprocess.run(['pip', 'install', 'uiautomator2'])
+        subprocess.run(['deactivate'], shell=True)
+        subprocess.run(['pip', 'install', '--upgrade', 'requests'])
+        import requests
+        time.sleep(10)
+        import uiautomator2 as u2
+    d = u2.connect(f'127.0.0.1:{porta}')
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
@@ -1807,18 +1914,39 @@ def free_sms():
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
         sms = True
         try:
-            driver.start_activity("com.avast.android.vpn", ".app.wizard.WizardActivity")
+            d.app_stop("com.avast.android.vpn")
+            d.app_start("com.avast.android.vpn", ".app.wizard.WizardActivity")
             time.sleep(10)
         except Exception as e:
             print(e)
-
         abc = False
+
+    def nenhuma_vpn():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.facebook.lite', stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        time.sleep(10)
 
     def vpn_hotspotshield():
         global nome
@@ -1830,23 +1958,29 @@ def free_sms():
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp',
+                           stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
         sms = True
         try:
-            driver.activate("hotspotshield.android.vpn")
+            d.app_stop('hotspotshield.android.vpn')
+            d.app_start('hotspotshield.android.vpn')
         except Exception as e:
-            pass
-        WebDriverWait(driver, 25).until(
-            EC.element_to_be_clickable((By.ID, 'hotspotshield.android.vpn:id/btnVpnConnect'))).click()
+            print(e)
+        d(resourceId='hotspotshield.android.vpn:id/tryAgainButton').click()
         time.sleep(5)
-        WebDriverWait(driver, 25).until(
-            EC.element_to_be_clickable((By.ID, 'hotspotshield.android.vpn:id/btnVpnConnect'))).click()
+        d(resourceId='hotspotshield.android.vpn:id/btnVpnConnect').click()
+
         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
         #            stderr=subprocess.DEVNULL, check=True, shell=True)
 
@@ -1869,23 +2003,22 @@ def free_sms():
         except:
             pass
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
         sms = True
         try:
-            driver.start_activity("com.privateinternetaccess.android", ".ui.LauncherActivity")
+            d.app_stop('com.privateinternetaccess.android')
+            d.app_start('com.privateinternetaccess.android')
         except:
             pass
         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
         #            stderr=subprocess.DEVNULL, check=True, shell=True)
 
-        WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, 'com.privateinternetaccess.android:id/connection_background'))).click()
+        d(resourceId='com.privateinternetaccess.android:id/connection_background').click()
         time.sleep(3)
-        WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, 'com.privateinternetaccess.android:id/connection_background'))).click()
+        d(resourceId='com.privateinternetaccess.android:id/connection_background').click()
 
         abc = False
 
@@ -1906,23 +2039,22 @@ def free_sms():
         except:
             pass
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
         sms = True
         try:
-            driver.start_activity("com.expressvpn.vpn", ".ui.SplashActivity")
+            d.app_stop('com.expressvpn.vpn')
+            d.app_start('com.expressvpn.vpn')
         except:
             pass
         # subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
         #            stderr=subprocess.DEVNULL, check=True, shell=True)
 
-        WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, 'com.expressvpn.vpn:id/obiButton'))).click()
+        d(resourceId='com.expressvpn.vpn:id/obiButton').click()
         time.sleep(3)
-        WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.ID, 'com.expressvpn.vpn:id/obiButton'))).click()
+        d(resourceId='com.expressvpn.vpn:id/obiButton').click()
 
         abc = False
 
@@ -1941,37 +2073,23 @@ def free_sms():
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
         sms = True
         try:
-            driver.start_activity("com.nordvpn.android", ".MainActivity")
+            d.app_stop('com.nordvpn.android')
+            time.sleep(5)
+            d.app_start('com.nordvpn.android', use_monkey=True)
         except:
             pass
         time.sleep(10)
-        # try:
-        #    WebDriverWait(driver, 10).until(
-        #        EC.element_to_be_clickable((By.ID, 'com.nordvpn.android:id/reconnect_button'))).click()
-        # except:
-        #    pass
-        # try:
-        #    WebDriverWait(driver, 10).until(
-        #        EC.element_to_be_clickable((By.ID, 'com.nordvpn.android:id/secondary_quick_connect_button'))).click()
-        # except:
-        #    pass
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'com.nordvpn.android:id/primary_quick_connect_button'))).click()
-            time.sleep(5)
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-                           stderr=subprocess.DEVNULL, check=True, shell=True)
-        except:
-            pass
+        time.sleep(5)
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+                       stderr=subprocess.DEVNULL, check=True, shell=True)
 
         abc = False
 
@@ -1991,10 +2109,8 @@ def free_sms():
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
-        try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-        except:
-            pass
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+
         try:
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -2002,19 +2118,11 @@ def free_sms():
             pass
 
         try:
-            driver.start_activity("com.surfshark.vpnclient.android", ".StartActivity")
+            d.app_stop('com.surfshark.vpnclient.android')
+            d.app_start('com.surfshark.vpnclient.android')
         except:
             pass
-        time.sleep(3)
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        time.sleep(3)
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        time.sleep(5)
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        time.sleep(5)
+        time.sleep(15)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
@@ -2038,32 +2146,29 @@ def free_sms():
             pass
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
         try:
-            driver.start_activity("com.freevpnintouch", "com.anchorfree.betternet.ui.BetternetActivity")
+            d.app_stop('com.freevpnintouch')
+            d.app_start('com.freevpnintouch')
         except:
             pass
         time.sleep(10)
-        dialog = driver.find_elements(By.ID, 'com.freevpnintouch:id/dialogCtaPositive')
-        connect = driver.find_element(By.ID, 'com.freevpnintouch:id/buttonConnect').text
-        if len(dialog) == 1:
-            WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/dialogCtaPositive'))).click()
+        dialog = d(resourceId='com.freevpnintouch:id/dialogCtaPositive')
+        connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+        if dialog.exists:
+            d(resourceId='com.freevpnintouch:id/dialogCtaPositive').click()
             time.sleep(3)
-            WebDriverWait(driver, 20).until(
-                EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect'))).click()
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
             # time.sleep(5)
-            WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect'))).click()
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
         while connect == 'CONNECT':
-            WebDriverWait(driver, 20).until(
-                EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect'))).click()
+            d(resourceId='com.freevpnintouch:id/buttonConnect').click()
             time.sleep(4)
-            connect = driver.find_element(By.ID, 'com.freevpnintouch:id/buttonConnect').text
+            connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
             # WebDriverWait(driver, 20).until(
-            # EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect'))).click()
+            # EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect').click()
         # time.sleep(5)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -2076,13 +2181,13 @@ def free_sms():
             window['output'].print("Não conectado na BetterNet.")
             window.Refresh()
             try:
-                connect = driver.find_element(By.ID, 'com.freevpnintouch:id/buttonConnect').text
-                driver.start_activity("com.freevpnintouch", "com.anchorfree.betternet.ui.BetternetActivity")
+                connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
+                d.app_stop('com.freevpnintouch')
+                d.app_start('com.freevpnintouch')
                 while connect == 'CONNECT':
-                    WebDriverWait(driver, 20).until(
-                        EC.element_to_be_clickable((By.ID, 'com.freevpnintouch:id/buttonConnect'))).click()
+                    d(resourceId='com.freevpnintouch:id/buttonConnect').click()
                     time.sleep(4)
-                    connect = driver.find_element(By.ID, 'com.freevpnintouch:id/buttonConnect').text
+                    connect = d(resourceId='com.freevpnintouch:id/buttonConnect').get_text(timeout=80)
             except:
                 pass
         abc = False
@@ -2106,25 +2211,23 @@ def free_sms():
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
 
         try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
         except:
             pass
 
         try:
-            driver.start_activity("de.mobileconcepts.cyberghost", ".view.app.AppActivity filter")
+            d.app_stop('de.mobileconcepts.cyberghost')
+            d.app_start('de.mobileconcepts.cyberghost')
         except:
             pass
         # time.sleep(3)
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'de.mobileconcepts.cyberghost:id/button'))).click()
-        rate = driver.find_elements(By.ID, 'de.mobileconcepts.cyberghost:id/rate_me_text')
-        if len(rate) == 1:
-            WebDriverWait(driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'android:id/button2'))).click()
+        d(resourceId='de.mobileconcepts.cyberghost:id/button').click()
+        rate = d(resourceId='de.mobileconcepts.cyberghost:id/rate_me_text')
+        if rate.exists:
+            d(resourceId='android:id/button2').click()
         time.sleep(2)
-        WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'de.mobileconcepts.cyberghost:id/button'))).click()
+        d(resourceId='de.mobileconcepts.cyberghost:id/button').click()
         # time.sleep(5)
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
                        stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -2139,6 +2242,38 @@ def free_sms():
         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
         window.Refresh()
         gerar_id()
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear pl.rs.sip.softphone.newapp',
+                           stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
+        try:
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.lite', stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, check=True, shell=True)
+        except:
+            pass
+        sms = True
+        try:
+            d.app_stop('com.avg.android.vpn')
+            d.app_start("com.avg.android.vpn", "com.avast.android.vpn.app.wizard.WizardActivity")
+        except:
+            pass
+        # subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
+        #               stderr=subprocess.DEVNULL, check=True, shell=True)
+
+        time.sleep(30)
+
+    def vpn_windscribe():
+        global nome
+        global sobrenome
+        global sms
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Alterando IP da Windscribe', text_color='red')
+        window.Refresh()
+        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Limpando dados.')
+        window.Refresh()
+        gerar_id()
         subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
         try:
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
@@ -2147,18 +2282,13 @@ def free_sms():
             pass
         sms = True
         try:
-            driver.start_activity("com.avg.android.vpn", "com.avast.android.vpn.app.wizard.WizardActivity")
+            # subprocess.run(f'adb shell am start -n com.avg.android.vpn/com.avast.android.vpn.app.wizard.WizardActivity', shell=True)
+            d.app_stop("com.windscribe.vpn")
+            d.app_start("com.windscribe.vpn")
         except:
             pass
-        # subprocess.run(f'adb -s 127.0.0.1:{porta} shell input keyevent KEYCODE_HOME', stdout=subprocess.DEVNULL,
-        #               stderr=subprocess.DEVNULL, check=True, shell=True)
-
-        # time.sleep(10)
-        WebDriverWait(driver, 1).until(
-            EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
-        # time.sleep(10)
-        WebDriverWait(driver, 1).until(
-            EC.element_to_be_clickable((By.ID, 'com.avg.android.vpn:id/view_switch'))).click()
+        d(resourceId='com.windscribe.vpn:id/on_off_button').click()
+        time.sleep(10)
 
     def vpn_hma():
         global nome
@@ -2178,8 +2308,10 @@ def free_sms():
         sms = True
         try:
             # subprocess.run(f'adb shell am start -n com.avg.android.vpn/com.avast.android.vpn.app.wizard.WizardActivity', shell=True)
+
             d.app_stop("com.hidemyass.hidemyassprovpn")
-            d.app_start("com.hidemyass.hidemyassprovpn")
+            time.sleep(3)
+            d.app_start('com.hidemyass.hidemyassprovpn', 'com.avast.android.vpn.activity.HmaOnboardingActivity')
         except:
             pass
         time.sleep(10)
@@ -2279,576 +2411,429 @@ def free_sms():
     window.Refresh()
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando sistema inicializar.')
     window.Refresh()
-    try:
-        desired_caps = {}
-        desired_caps['udid'] = '127.0.0.1:' + porta
-        desired_caps['newCommandTimeout'] = '500'
-        desired_caps['platformName'] = 'Android'
-        desired_caps['automationName'] = 'UiAutomator2'
-        desired_caps['waitForIdleTimeout']: 0
-        desired_caps['systemPort'] = random.randint(1024, 65535)
-        desired_caps['uiautomator2ServerInstallTimeout'] = 120000
-        # desired_caps['noReset'] = True
-        driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-    except:
-        pass
+    
     window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Iniciando criação.\n')
     window.Refresh()
-    try:
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-        client = gspread.authorize(creds)
-
-        spreadsheet_id = config['spreadsheet']
-        sheet_name = 'contas'
-        # Insert user, password, and timestamp into first empty row
-        sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-        values = sheet.col_values(1)
-
-        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-        rows = sheet.get_all_values()
-
-        # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-        regex = re.compile(r'\S+\s\S+')
-        sheet_name = config['2nr']
-        # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-        num_rows = sum(1 for row in rows if regex.match(row[0]))
-        window['total'].update(num_rows)
-    except Exception as e:
-        print(e)
-    first = True
-    while True:
-        if first is False:
-            try:
-                driver.quit()
-            except:
-                pass
-            try:
-                comando = f"adb disconnect 127.0.0.1:{porta}"
-                subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
-                time.sleep(5)
-                subprocess.run(f"adb connect 127.0.0.1:{porta}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                               check=True, shell=True)
-
-            except:
-                pass
-            time.sleep(10)
-        first = False
+    d.implicitly_wait(30.0)
+    d.set_fastinput_ime(True)
+    while parar is False:
+        if parar is True:
+           print('Parando Thread')
+           break
         try:
-            desired_caps = {}
-            desired_caps['udid'] = '127.0.0.1:' + porta
-            desired_caps['newCommandTimeout'] = '500'
-            desired_caps['platformName'] = 'Android'
-            desired_caps['automationName'] = 'UiAutomator2'
-            desired_caps['waitForIdleTimeout']: 0
-            desired_caps['systemPort'] = random.randint(1024, 65535)
-
-            desired_caps['uiautomator2ServerInstallTimeout'] = 120000
-            # desired_caps['noReset'] = True
-            driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-            time.sleep(5)
-        except:
-            pass
-        try:
-            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
+                           stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
 
 
-        except:
-            pass
-        gerar_id()
-        android_id = gerar_id()
-        subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
-        try:
+            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+            client = gspread.authorize(creds)
 
+            spreadsheet_id = config['spreadsheet']
+            sheet_name = 'contas'
+            # Insert user, password, and timestamp into first empty row
+            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+            values = sheet.col_values(1)
+
+            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+            rows = sheet.get_all_values()
+
+            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+            regex = re.compile(r'\S+\s\S+')
+            sheet_name = config['2nr']
+            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+            num_rows = sum(1 for row in rows if regex.match(row[0]))
+            window['total'].update(num_rows)
+        except Exception as e:
+            print(e)
+            window['output'].print(
+                f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu algum erro ao acessar a planilha.')
+            window.Refresh()
+            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Tentando novamente em 1 minuto.')
+            window.Refresh()
+            time.sleep(60)
+            raise Exception('skip')
+        first = True
+        while True:
+            if first is False:
+                try:
+                    driver.quit()
+                except:
+                    pass
+                try:
+                    comando = f"adb disconnect 127.0.0.1:{porta}"
+                    subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    time.sleep(5)
+                    subprocess.run(f"adb connect 127.0.0.1:{porta}", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                                check=True, shell=True)
+
+                except:
+                    pass
+                time.sleep(10)
+            first = False
+            try:
+                subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
+                            stderr=subprocess.DEVNULL, check=True, shell=True)
+
+
+            except:
+                pass
+            gerar_id()
+            android_id = gerar_id()
+            subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings put secure android_id {android_id}', shell=True)
             try:
 
-                driver.activate_app('com.instagram.android')
-                window['output'].print(linha_ret)
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
-                window.Refresh()
-                time.sleep(10)
                 try:
-                    WebDriverWait(driver, 80).until(EC.element_to_be_clickable(
-                        (By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
-                except:
-                    desired_caps = {}
-                    desired_caps['udid'] = '127.0.0.1:' + porta
-                    desired_caps['newCommandTimeout'] = '500'
-                    desired_caps['platformName'] = 'Android'
-                    desired_caps['automationName'] = 'UiAutomator2'
-                    desired_caps['waitForIdleTimeout']: 0
-                    desired_caps['systemPort'] = random.randint(1024, 65535)
-                    desired_caps['uiautomator2ServerInstallTimeout'] = 120000
-                    # desired_caps['noReset'] = True
-                    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-                    time.sleep(5)
-                    WebDriverWait(driver, 80).until(EC.element_to_be_clickable(
-                        (By.XPATH, '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
-                time.sleep(6)
-                novo_layout = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Qual é o seu nome?"]')
-                if len(novo_layout) == 1:
-                    window['output'].print(
-                        f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
-                    window.Refresh()
-                    raise Exception("skip.")
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Free SMS.')
-                window.Refresh()
-                chromedriver_path = 'storage\\driver\\driver.exe'
-                service = Service(chromedriver_path)
-                options = uc.ChromeOptions()
-                options.add_argument("--start-maximized")
-                options.add_argument("--disable-gpu")
-                # Configurações adicionais para o undetected_chromedriver
-                chrome = uc.Chrome(options=options, service=service)
-                try:
-                    chrome.get('https://temporary-phone-number.com/')
-                    chrome.set_window_size(800, 2000)
-                    time.sleep(10)
 
+                    d.app_start('com.instagram.android')
+                    window['output'].print(linha_ret)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
+                    window.Refresh()
+                    d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=120)
+                
+                    time.sleep(6)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo Free SMS.')
+                    window.Refresh()
+                    chromedriver_path = 'storage\\driver\\driver.exe'
+                    service = Service(chromedriver_path)
+                    options = uc.ChromeOptions()
+                    options.add_argument("--start-maximized")
+                    options.add_argument("--disable-gpu")
+                    # Configurações adicionais para o undetected_chromedriver
+                    chrome = uc.Chrome(options=options, service=service)
                     try:
-                        WebDriverWait(chrome, 30).until(
-                            EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/aside/section/ul/li[2]'))).click()
-                        time.sleep(2)
-                        print('0')
-                        if chrome.current_url == "https://temporary-phone-number.com/#google_vignette":
-                            chrome.back()
-                            WebDriverWait(chrome, 30).until(EC.element_to_be_clickable(
-                                (By.XPATH, '/html/body/div[2]/aside/section/ul/li[2]'))).click()
-                    except:
-                        chrome.get('https://temporary-phone-number.com/US-Phone-Number/12673800457')
-                    print('0.8')
-                    time.sleep(13)
-                    num_33 = True
-                    while num_33 is True:
+                        chrome.get('https://temporary-phone-number.com/')
+                        chrome.set_window_size(800, 2000)
+                        time.sleep(10)
+
                         try:
-                            chrome.find_element(By.XPATH,
-                                                '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[2]').click()
-                            time.sleep(7)
-                            num = chrome.find_element(By.XPATH,
-                                                      '/html/body/div[2]/div/section[2]/div[1]/div[1]/div/h1').text
-                            if num.startswith("+33") or num.startswith("+1"):
+                            WebDriverWait(chrome, 30).until(
+                                EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/aside/section/ul/li[2]'))).click()
+                            time.sleep(2)
+                            print('0')
+                            if chrome.current_url == "https://temporary-phone-number.com/#google_vignette":
+                                chrome.back()
+                                WebDriverWait(chrome, 30).until(EC.element_to_be_clickable(
+                                    (By.XPATH, '/html/body/div[2]/aside/section/ul/li[2]'))).click()
+                        except:
+                            chrome.get('https://temporary-phone-number.com/US-Phone-Number/12673800457')
+                        print('0.8')
+                        time.sleep(13)
+                        num_33 = True
+                        while num_33 is True:
+                            try:
                                 chrome.find_element(By.XPATH,
                                                     '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[2]').click()
                                 time.sleep(7)
-                            else:
-                                num_33 = False
+                                num = chrome.find_element(By.XPATH,
+                                                        '/html/body/div[2]/div/section[2]/div[1]/div[1]/div/h1').text
+                                if num.startswith("+33") or num.startswith("+1"):
+                                    chrome.find_element(By.XPATH,
+                                                        '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[2]').click()
+                                    time.sleep(7)
+                                else:
+                                    num_33 = False
+                            except:
+                                chrome.quit()
+                                driver.quit()
+                    except Exception as e:
+                        print('_____________________________________')
+                        try:
+                            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
+                                        stdout=subprocess.DEVNULL,
+                                        stderr=subprocess.DEVNULL, check=True, shell=True)
+
+
                         except:
-                            chrome.quit()
-                            driver.quit()
-                except Exception as e:
-                    print('_____________________________________')
-                    try:
-                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
-                                       stdout=subprocess.DEVNULL,
-                                       stderr=subprocess.DEVNULL, check=True, shell=True)
-
-
-                    except:
-                        pass
-                    print(e)
-                print('1')
-                if len(novo_layout) == 1:
-                    window['output'].print(
-                        f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
-                    window.Refresh()
-                    chrome.quit()
-                    raise Exception("skip.")
-
-                try:
-                    print(num)
-                except:
-                    chrome.quit()
-                    driver.quit()
-                    try:
-                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
-                                       stdout=subprocess.DEVNULL,
-                                       stderr=subprocess.DEVNULL, check=True, shell=True)
-
-
-                    except:
-                        pass
-                    raise Exception("skip.")
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número gerado: {num}')
-                window.Refresh()
-
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText'))).send_keys(
-                    f'{num}')
-                time.sleep(1)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-
-                time.sleep(10)
-                restricao = driver.find_elements(By.XPATH,
-                                                 '//android.view.View[@content-desc="Cadastrar-se com o email"]')
-
-                if len(restricao) == 1:
-                    chrome.quit()
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
-                    window.Refresh()
-                    try:
-                        subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
-                                       stdout=subprocess.DEVNULL,
-                                       stderr=subprocess.DEVNULL, check=True, shell=True)
-
-
-                    except:
-                        pass
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
+                            pass
+                        print(e)
+                    print('1')
+                    if len(novo_layout) == 1:
                         window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            f'[{datetime.now().strftime("%H:%M:%S")}] Layout novo encontrado, reiniciando app.')
                         window.Refresh()
-                    driver.quit()
+                        chrome.quit()
+                        raise Exception("skip.")
 
-                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
-                                                                                  '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).click()
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
-                window.Refresh()
+                    try:
+                        print(num)
+                    except:
+                        chrome.quit()
+                        driver.quit()
+                        try:
+                            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
+                                        stdout=subprocess.DEVNULL,
+                                        stderr=subprocess.DEVNULL, check=True, shell=True)
 
-                time.sleep(3)
-                numeros = ''
-                encontrado = False
-                tentativa = 0
-                while not encontrado and tentativa < 6:
+
+                        except:
+                            pass
+                        raise Exception("skip.")
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número gerado: {num}')
+                    window.Refresh()
+
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText'))).send_keys(
+                        f'{num}')
+                    time.sleep(1)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+
+                    time.sleep(10)
+                    restricao = driver.find_elements(By.XPATH,
+                                                    '//android.view.View[@content-desc="Cadastrar-se com o email"]')
+
+                    if len(restricao) == 1:
+                        chrome.quit()
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Restrição.')
+                        window.Refresh()
+                        try:
+                            subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
+                                        stdout=subprocess.DEVNULL,
+                                        stderr=subprocess.DEVNULL, check=True, shell=True)
+
+
+                        except:
+                            pass
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                        driver.quit()
+
+                    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).click()
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Aguardando código...')
+                    window.Refresh()
+
+                    time.sleep(3)
+                    numeros = ''
+                    encontrado = False
+                    tentativa = 0
+                    while not encontrado and tentativa < 6:
+                        time.sleep(5)
+                        # Localize o elemento desejado e obtenha o texto
+                        elemento = chrome.find_element(By.XPATH,
+                                                    '/html/body/div[2]/div/section[2]/div[1]/div[3]/div/div[1]/div[1]/div[2]').text
+                        time_second = chrome.find_element(By.XPATH,
+                                                        '/html/body/div[2]/div/section[2]/div[1]/div[3]/div/div[1]/div[1]/div[1]/time').text
+
+                        # Verifique se o texto contém 'instagram'
+                        # if 'Instagram' in elemento.lower() and 'seconds' in time_second.lower():
+                        if 'Instagram' in elemento and (
+                                'seconds' in time_second or '1 min ago' in time_second or '2 mins ago' in time_second):
+                            encontrado = True
+                            match = re.search(r'\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+',
+                                            elemento)  # Extrai seis grupos de dígitos, permitindo espaços entre eles
+                            if match:
+                                numeros = ''.join(match.group().split())
+
+                        else:
+                            # Clique no outro elemento
+                            tentativa = tentativa + 1
+                            time.sleep(10)
+                            botao = chrome.find_element(By.XPATH,
+                                                        '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[1]')
+                            botao.click()
+                    if tentativa == 6:
+                        chrome.quit()
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo não recebido.')
+                        window.Refresh()
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                            break
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+                        driver.quit()
+                        raise Exception("Codigo não recebido.")
+                    codigo = numeros
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
+                    window.Refresh()
+                    chrome.quit()
+                    WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
+                                                                                    '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
+                        codigo)
+                    # time.sleep(100)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    time.sleep(4)
+
+                    codigo_invalido = driver.find_elements(By.XPATH,
+                                                        '//android.view.View[@content-desc="Não recebi o código"]')
+                    if len(codigo_invalido) == 1:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código inválido.')
+                        window.Refresh()
+                        #
+                        conteudo = config['vpn']
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
+
+                    ######################################################################
+                    lista_user = random.choices(range(0, 9), k=2)
+                    lista_letras = random.choices(letras, k=1)
+
+                    with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
+                        nomes = nomes_arquivo.readlines()
+
+                    with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
+                        sobrenomes = sobrenomes_arquivo.readlines()
+
+                    nomea = fake.first_name_female().replace(" ", "")
+                    nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                    sobrenomea = fake.last_name().replace(" ", "").lower()
+                    sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                    nome_completo = nome + ' ' + sobrenome
+                    nome_completo_s = nome + sobrenome
+                    numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+                    user_completo = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
+                    ######################################################################
+
+                    cancel = driver.find_elements(By.ID, 'com.google.android.gms:id/cancel')
+                    if len(cancel) == 1:
+                        driver.find_element(By.ID, 'com.google.android.gms:id/cancel').click()
+                    senha = config['senha']
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
+                        nome_completo)
+                    time.sleep(1)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: {nome_completo}')
+                    window.Refresh()
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    time.sleep(10)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
+                        senha)
+                    time.sleep(1)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
                     time.sleep(5)
-                    # Localize o elemento desejado e obtenha o texto
-                    elemento = chrome.find_element(By.XPATH,
-                                                   '/html/body/div[2]/div/section[2]/div[1]/div[3]/div/div[1]/div[1]/div[2]').text
-                    time_second = chrome.find_element(By.XPATH,
-                                                      '/html/body/div[2]/div/section[2]/div[1]/div[3]/div/div[1]/div[1]/div[1]/time').text
-
-                    # Verifique se o texto contém 'instagram'
-                    # if 'Instagram' in elemento.lower() and 'seconds' in time_second.lower():
-                    if 'Instagram' in elemento and (
-                            'seconds' in time_second or '1 min ago' in time_second or '2 mins ago' in time_second):
-                        encontrado = True
-                        match = re.search(r'\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+',
-                                          elemento)  # Extrai seis grupos de dígitos, permitindo espaços entre eles
-                        if match:
-                            numeros = ''.join(match.group().split())
-
-                    else:
-                        # Clique no outro elemento
-                        tentativa = tentativa + 1
-                        time.sleep(10)
-                        botao = chrome.find_element(By.XPATH,
-                                                    '/html/body/div[2]/div/section[2]/div[1]/div[2]/div[2]/button[1]')
-                        botao.click()
-                if tentativa == 6:
-                    chrome.quit()
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo não recebido.')
-                    window.Refresh()
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                        break
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-                    driver.quit()
-                    raise Exception("Codigo não recebido.")
-                codigo = numeros
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Codigo recebido: {codigo}')
-                window.Refresh()
-                chrome.quit()
-                WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
-                                                                                  '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
-                    codigo)
-                # time.sleep(100)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                time.sleep(4)
-
-                codigo_invalido = driver.find_elements(By.XPATH,
-                                                       '//android.view.View[@content-desc="Não recebi o código"]')
-                if len(codigo_invalido) == 1:
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Código inválido.')
-                    window.Refresh()
-                    #
-                    conteudo = config['vpn']
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-
-                ######################################################################
-                lista_user = random.choices(range(0, 9), k=2)
-                lista_letras = random.choices(letras, k=1)
-
-                with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
-                    nomes = nomes_arquivo.readlines()
-
-                with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
-                    sobrenomes = sobrenomes_arquivo.readlines()
-
-                nomea = fake.first_name_female().replace(" ", "")
-                nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-                sobrenomea = fake.last_name().replace(" ", "").lower()
-                sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-                nome_completo = nome + ' ' + sobrenome
-                nome_completo_s = nome + sobrenome
-                numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                user_completo = nome_completo_s + '' + str(numeros_concatenados) + ''.join(lista_letras)
-                ######################################################################
-
-                cancel = driver.find_elements(By.ID, 'com.google.android.gms:id/cancel')
-                if len(cancel) == 1:
-                    driver.find_element(By.ID, 'com.google.android.gms:id/cancel').click()
-                senha = config['senha']
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
-                    nome_completo)
-                time.sleep(1)
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Nome escolhido: {nome_completo}')
-                window.Refresh()
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                time.sleep(10)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
-                    senha)
-                time.sleep(1)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                time.sleep(5)
-                new_acc = driver.find_elements(By.ID, 'android:id/button2')
-                if len(new_acc) == 1:
-                    driver.find_element(By.ID, 'android:id/button2').click()
-                time.sleep(2)
-                salvar_senha = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Agora não"]')
-                if len(salvar_senha) == 1:
-                    driver.find_element(By.XPATH, '//android.view.View[@content-desc="Agora não"]').click()
-
-                time.sleep(3)
-                new_acc = driver.find_elements(By.ID, 'android:id/button2')
-                if len(new_acc) == 1:
-                    driver.find_element(By.ID, 'android:id/button2').click()
+                    new_acc = driver.find_elements(By.ID, 'android:id/button2')
+                    if len(new_acc) == 1:
+                        driver.find_element(By.ID, 'android:id/button2').click()
                     time.sleep(2)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                time.sleep(2)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                idade_aleatoria = random.randint(18, 35)
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
-                window.Refresh()
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
-                    idade_aleatoria)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                time.sleep(2)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'android:id/button2'))).click()
-                try:
-                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
-                        (By.XPATH, '//android.view.View[@content-desc="Alterar nome de usuário"]'))).click()
-                except:
-                    pass
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
-                window.Refresh()
-                time.sleep(3)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).clear()
-                time.sleep(2)
-                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
-                    user_completo)
-                time.sleep(3)
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
-                WebDriverWait(driver, 30).until(
-                    EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Concordo"]'))).click()
-                time.sleep(3)
-                errodetec = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Concordo"]')
-                if len(errodetec) == 1:
-                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram não deixou avançar.')
+                    salvar_senha = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Agora não"]')
+                    if len(salvar_senha) == 1:
+                        driver.find_element(By.XPATH, '//android.view.View[@content-desc="Agora não"]').click()
+
+                    time.sleep(3)
+                    new_acc = driver.find_elements(By.ID, 'android:id/button2')
+                    if len(new_acc) == 1:
+                        driver.find_element(By.ID, 'android:id/button2').click()
+                        time.sleep(2)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    time.sleep(2)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    idade_aleatoria = random.randint(18, 35)
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Idade escolhida: {idade_aleatoria}')
                     window.Refresh()
-
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
-                window.Refresh()
-                time.sleep(20)
-                verificar = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Adicionar foto"]')
-                # time.sleep(10)
-                try:
-                    if len(verificar) == 1:
-                        try:
-                            conteudo = config['vpn']
-                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
-                                                   text_color=('lime'))
-                            window.Refresh()
-                            contagem = contagem + 1
-                            window['criadas'].update(contagem)
-                            window.Refresh()
-                            now = datetime.now()
-                            now_brasilia = tz.localize(now)
-                            timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-
-                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = config['spreadsheet']
-                            sheet_name = 'contas'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                      conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-                            rows = sheet.get_all_values()
-
-                            # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                            regex = re.compile(r'\S+\s\S+')
-
-                            # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                            num_rows = sum(1 for row in rows if regex.match(row[0]))
-                            window['total'].update(num_rows)
-                            time.sleep(4)
-                            scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                            creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                            client = gspread.authorize(creds)
-
-                            spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                            sheet_name = 'relatorio_geral'
-                            # Insert user, password, and timestamp into first empty row
-                            sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                            values = sheet.col_values(1)
-                            last_row = len(values)
-                            values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                      conteudo + ' - ' + app]
-                            cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                            for i, val in enumerate(values):
-                                cell_list[i].value = val
-                            sheet.update_cells(cell_list)
-
-
-
-
-                        except Exception as e:
-                            print(e)
-
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
+                        idade_aleatoria)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    time.sleep(2)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'android:id/button2'))).click()
+                    try:
+                        WebDriverWait(driver, 10).until(EC.element_to_be_clickable(
+                            (By.XPATH, '//android.view.View[@content-desc="Alterar nome de usuário"]'))).click()
+                    except:
+                        pass
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: {user_completo}')
+                    window.Refresh()
+                    time.sleep(3)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).clear()
+                    time.sleep(2)
+                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[*]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'))).send_keys(
+                        user_completo)
+                    time.sleep(3)
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Avançar"]'))).click()
+                    WebDriverWait(driver, 30).until(
+                        EC.element_to_be_clickable((By.XPATH, '//android.view.View[@content-desc="Concordo"]'))).click()
+                    time.sleep(3)
+                    errodetec = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Concordo"]')
+                    if len(errodetec) == 1:
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Instagram não deixou avançar.')
                         window.Refresh()
-                        arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
-                        # Escreva mais conteúdo no arquivo
-                        arquivo.write(user_completo + ' ' + senha + "\n")
-                        arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                        # Escreva mais conteúdo no arquivo
-                        arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                        try:
-                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
-                                (By.XPATH, '//android.view.View[@content-desc="Pular"]'))).click()
-                            time.sleep(5)
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                            time.sleep(5)
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
-                            time.sleep(5)
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                            time.sleep(5)
-                            try:
-                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                                            '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-                            except:
-                                time.sleep(2)
-                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
-                                                                                            '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-                            time.sleep(5)
-                            try:
-                                WebDriverWait(driver, 5).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
-                            except:
-                                pass
-                            time.sleep(5)
-                            try:
-                                WebDriverWait(driver, 30).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-                            except:
-                                time.sleep(5)
-                                WebDriverWait(driver, 30).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
-                            sms = False
-                        except:
-                            pass
-                    else:
-                        try:
-                            driver.terminate_app('com.instagram.android')
-                        except:
-                            pass
-                        time.sleep(3)
-                        driver.activate_app('com.instagram.android')
-                        time.sleep(10)
-                        verificar = driver.find_elements(By.ID, 'com.instagram.android:id/profile_tab')
+
+                    window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
+                    window.Refresh()
+                    time.sleep(20)
+                    verificar = driver.find_elements(By.XPATH, '//android.view.View[@content-desc="Adicionar foto"]')
+                    # time.sleep(10)
+                    try:
                         if len(verificar) == 1:
                             try:
                                 conteudo = config['vpn']
-                                window['output'].print(
-                                    f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
-                                    text_color=('lime'))
+                                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
+                                                    text_color=('lime'))
                                 window.Refresh()
-                                contagem += 1
+                                contagem = contagem + 1
                                 window['criadas'].update(contagem)
                                 window.Refresh()
                                 now = datetime.now()
@@ -2866,7 +2851,7 @@ def free_sms():
                                 values = sheet.col_values(1)
                                 last_row = len(values)
                                 values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                          conteudo + ' - ' + app]
+                                        conteudo + ' - ' + app]
                                 cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
                                 for i, val in enumerate(values):
                                     cell_list[i].value = val
@@ -2892,7 +2877,7 @@ def free_sms():
                                 values = sheet.col_values(1)
                                 last_row = len(values)
                                 values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                          conteudo + ' - ' + app]
+                                        conteudo + ' - ' + app]
                                 cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
                                 for i, val in enumerate(values):
                                     cell_list[i].value = val
@@ -2901,8 +2886,8 @@ def free_sms():
 
 
 
-                            except:
-                                pass
+                            except Exception as e:
+                                print(e)
 
                             window.Refresh()
                             arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
@@ -2912,324 +2897,449 @@ def free_sms():
                             # Escreva mais conteúdo no arquivo
                             arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
                             try:
+                                WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
+                                    (By.XPATH, '//android.view.View[@content-desc="Pular"]'))).click()
+                                time.sleep(5)
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                time.sleep(5)
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
+                                time.sleep(5)
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                time.sleep(5)
                                 try:
-                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
-                                        (By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                                '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
                                 except:
                                     time.sleep(2)
-                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
-                                        (By.ID, 'com.instagram.android:id/tab_avatar'))).click()
+                                    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                                '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                                time.sleep(5)
+                                try:
+                                    WebDriverWait(driver, 5).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                                except:
+                                    pass
+                                time.sleep(5)
+                                try:
+                                    WebDriverWait(driver, 30).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                except:
+                                    time.sleep(5)
+                                    WebDriverWait(driver, 30).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/tab_avatar'))).click()
                                 sms = False
                             except:
                                 pass
                         else:
-
                             try:
-                                conteudo = config['vpn']
-
-                                # Executa a função correspondente ao conteúdo do arquivo
-                                if conteudo == "AVG":
-                                    vpn_avg()
-                                elif conteudo == "Avast":
-                                    vpn_avast()
-                                elif conteudo == "CyberGhost":
-                                    vpn_cyberghost()
-                                elif conteudo == "PiaVPN":
-                                    vpn_pia()
-                                elif conteudo == "ExpressVPN":
-                                    vpn_express()
-                                elif conteudo == "SurfShark":
-                                    vpn_surf()
-                                elif conteudo == "BetterNet":
-                                    vpn_better()
-                                elif conteudo == "NordVPN":
-                                    vpn_nord()
-                                elif conteudo == "HotspotShield":
-                                    vpn_hotspotshield()
-                                else:
-                                    window['output'].print(
-                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                                    window.Refresh()
-                                driver.quit()
-                            except:
-                                sms = True
-                                driver.quit()
-                                continue
-                except Exception as e:
-                    print(e)
-                    if conteudo == "AVG":
-                        vpn_avg()
-                    elif conteudo == "Avast":
-                        vpn_avast()
-                    elif conteudo == "CyberGhost":
-                        vpn_cyberghost()
-                    elif conteudo == "PiaVPN":
-                        vpn_pia()
-                    elif conteudo == "ExpressVPN":
-                        vpn_express()
-                    elif conteudo == "SurfShark":
-                        vpn_surf()
-                    elif conteudo == "BetterNet":
-                        vpn_better()
-                    elif conteudo == "NordVPN":
-                        vpn_nord()
-                    elif conteudo == "HotspotShield":
-                        vpn_hotspotshield()
-                    else:
-                        window['output'].print(
-                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                        window.Refresh()
-                    sms = True
-                    driver.quit()
-                while sms is False:
-                    try:
-                        time.sleep(3)
-                        WebDriverWait(driver, 30).until(
-                            EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-
-                        window['output'].print(linha_ret)
-                        window.Refresh()
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
-                        window.Refresh()
-                        seguido = False
-                        # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
-                        # Clicar no botão de perfil
-
-                        time.sleep(3)
-                        WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.ID,
-                                                                                    'com.instagram.android:id/action_bar_title_chevron'))).click()
-                        time.sleep(2)
-                        # Clicar em perfis
-                        try:
-                            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
-                                                                                              '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[last()]/android.widget.FrameLayout/android.widget.ImageView'))).click()
-                        except Exception as e:
-                            print(e)
-                            print('Erro aq')
-                            time.sleep(200)
-                        # Clicar em adicionar conta
-                        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
-                                                                                          '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
-
-                        time.sleep(3)
-                        # Gerar nome de usuário, digitar no campo e clicar em avançae
-                        lista_user = random.choices(range(0, 9), k=2)
-                        lista_letras = random.choices(letras, k=1)
-
-                        with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
-                            nomes = nomes_arquivo.readlines()
-
-                        with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
-                            sobrenomes = sobrenomes_arquivo.readlines()
-
-                        nomea = fake.first_name_female().replace(" ", "")
-                        nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
-                        sobrenomea = fake.last_name().replace(" ", "").lower()
-                        sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
-                        nome_completo = nome + sobrenome
-                        numeros_concatenados = ''.join(str(numero) for numero in lista_user)
-                        user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
-
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
-                        window.Refresh()
-                        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
-                                                                                          'com.instagram.android:id/username'))).send_keys(
-                            user_completo)
-                        time.sleep(3)
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,
-                                                                                    'com.instagram.android:id/button_text'))).click()
-                        # Digitar senha e avançar
-                        time.sleep(3)
-                        try:
-                            WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
-                                                                                              'com.instagram.android:id/password'))).send_keys(
-                                senha)
-                        except:
-                            try:
-                                conteudo = config['vpn']
-                                if conteudo == "AVG":
-                                    vpn_avg()
-                                elif conteudo == "SurfShark":
-                                    vpn_surf()
-                                elif conteudo == "Avast":
-                                    vpn_avast()
-                                elif conteudo == "ExpressVPN":
-                                    vpn_express()
-                                elif conteudo == "PiaVPN":
-                                    vpn_pia()
-                                elif conteudo == "BetterNet":
-                                    vpn_better()
-                                elif conteudo == "CyberGhost":
-                                    vpn_cyberghost()
-                                elif conteudo == "NordVPN":
-                                    vpn_nord()
-                                elif conteudo == "HotspotShield":
-                                    vpn_hotspotshield()
-                                    break
-                                else:
-                                    window['output'].print(
-                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
-                                    window.Refresh()
-
-                            except:
-                                sms = True
-                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,
-                                                                                    'com.instagram.android:id/button_text'))).click()
-                        # Clicar em concluir cadastro
-                        time.sleep(3)
-                        WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
-                                                                                          'com.instagram.android:id/button_text'))).click()
-
-                        time.sleep(4)
-                        feedback = driver.find_elements(By.XPATH,
-                                                        '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.View')
-                        if len(feedback) == 1:
-                            sms = True
-
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
-                        window.Refresh()
-                        # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
-                        #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
-                        time.sleep(20)
-                        verificar = driver.find_elements(By.ID,
-                                                         'com.instagram.android:id/connect_text')
-                        if len(verificar) == 1:
-                            try:
-                                conteudo = config['vpn']
-                                window['output'].print(
-                                    f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
-                                    text_color=('lime'))
-                                window.Refresh()
-                                contagem += 1
-                                window['criadas'].update(contagem)
-                                window.Refresh()
-                                now = datetime.now()
-                                now_brasilia = tz.localize(now)
-                                timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
-
-                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                                creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-                                client = gspread.authorize(creds)
-
-                                spreadsheet_id = config['spreadsheet']
-                                sheet_name = 'contas'
-                                # Insert user, password, and timestamp into first empty row
-                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                values = sheet.col_values(1)
-                                last_row = len(values)
-                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                          conteudo + ' - ' + app]
-                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                for i, val in enumerate(values):
-                                    cell_list[i].value = val
-                                sheet.update_cells(cell_list)
-
-                                rows = sheet.get_all_values()
-
-                                # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
-                                regex = re.compile(r'\S+\s\S+')
-
-                                # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
-                                num_rows = sum(1 for row in rows if regex.match(row[0]))
-                                window['total'].update(num_rows)
-                                time.sleep(4)
-                                scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-                                creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
-                                client = gspread.authorize(creds)
-
-                                spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
-                                sheet_name = 'relatorio_geral'
-                                # Insert user, password, and timestamp into first empty row
-                                sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
-                                values = sheet.col_values(1)
-                                last_row = len(values)
-                                values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
-                                          conteudo + ' - ' + app]
-                                cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
-                                for i, val in enumerate(values):
-                                    cell_list[i].value = val
-                                sheet.update_cells(cell_list)
-
-
-
-
+                                driver.terminate_app('com.instagram.android')
                             except:
                                 pass
-
-                            window.Refresh()
-                            arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(user_completo + ' ' + senha + "\n")
-                            arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
-                            # Escreva mais conteúdo no arquivo
-                            arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
-                            window.Refresh()
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                            time.sleep(1)
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
                             time.sleep(3)
-                            WebDriverWait(driver, 30).until(
-                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                            time.sleep(1)
-                            try:
-                                WebDriverWait(driver, 6).until(EC.element_to_be_clickable((By.XPATH,
-                                                                                           '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-                            except:
-                                WebDriverWait(driver, 30).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
-                                WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,
-                                                                                            '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
-
-                            time.sleep(1)
-                            time.sleep(3)
-                            try:
-                                WebDriverWait(driver, 10).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-                            except:
-                                WebDriverWait(driver, 30).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
-                                WebDriverWait(driver, 10).until(
-                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
-                            sms = False
-
-                        else:
-                            try:
-                                conteudo = config['vpn']
-                                if conteudo == "AVG":
-                                    vpn_avg()
-                                elif conteudo == "SurfShark":
-                                    vpn_surf()
-                                elif conteudo == "Avast":
-                                    vpn_avast()
-                                elif conteudo == "ExpressVPN":
-                                    vpn_express()
-                                elif conteudo == "PiaVPN":
-                                    vpn_pia()
-                                elif conteudo == "BetterNet":
-                                    vpn_better()
-                                elif conteudo == "CyberGhost":
-                                    vpn_cyberghost()
-                                elif conteudo == "NordVPN":
-                                    vpn_nord()
-                                elif conteudo == "HotspotShield":
-                                    vpn_hotspotshield()
-                                    break
-                                else:
+                            driver.activate_app('com.instagram.android')
+                            time.sleep(10)
+                            verificar = driver.find_elements(By.ID, 'com.instagram.android:id/profile_tab')
+                            if len(verificar) == 1:
+                                try:
+                                    conteudo = config['vpn']
                                     window['output'].print(
-                                        "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                        f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
+                                        text_color=('lime'))
                                     window.Refresh()
+                                    contagem += 1
+                                    window['criadas'].update(contagem)
+                                    window.Refresh()
+                                    now = datetime.now()
+                                    now_brasilia = tz.localize(now)
+                                    timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
 
-                            except Exception as e:
-                                sms = True
-                                driver.quit()
-                                pass
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
+                                            conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+                                    rows = sheet.get_all_values()
+
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
+
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                    window['total'].update(num_rows)
+                                    time.sleep(4)
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                    sheet_name = 'relatorio_geral'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
+                                            conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+
+
+
+                                except:
+                                    pass
+
+                                window.Refresh()
+                                arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(user_completo + ' ' + senha + "\n")
+                                arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                                try:
+                                    try:
+                                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
+                                            (By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                    except:
+                                        time.sleep(2)
+                                        WebDriverWait(driver, 30).until(EC.element_to_be_clickable(
+                                            (By.ID, 'com.instagram.android:id/tab_avatar'))).click()
+                                    sms = False
+                                except:
+                                    pass
+                            else:
+
+                                try:
+                                    conteudo = config['vpn']
+
+                                    # Executa a função correspondente ao conteúdo do arquivo
+                                    if conteudo == "AVG":
+                                        vpn_avg()
+                                    elif conteudo == "Avast":
+                                        vpn_avast()
+                                    elif conteudo == "CyberGhost":
+                                        vpn_cyberghost()
+                                    elif conteudo == "PiaVPN":
+                                        vpn_pia()
+                                    elif conteudo == "ExpressVPN":
+                                        vpn_express()
+                                    elif conteudo == "SurfShark":
+                                        vpn_surf()
+                                    elif conteudo == "BetterNet":
+                                        vpn_better()
+                                    elif conteudo == "NordVPN":
+                                        vpn_nord()
+                                    elif conteudo == "HotspotShield":
+                                        vpn_hotspotshield()
+                                    else:
+                                        window['output'].print(
+                                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                        window.Refresh()
+                                    driver.quit()
+                                except:
+                                    sms = True
+                                    driver.quit()
+                                    continue
                     except Exception as e:
+                        print(e)
+                        if conteudo == "AVG":
+                            vpn_avg()
+                        elif conteudo == "Avast":
+                            vpn_avast()
+                        elif conteudo == "CyberGhost":
+                            vpn_cyberghost()
+                        elif conteudo == "PiaVPN":
+                            vpn_pia()
+                        elif conteudo == "ExpressVPN":
+                            vpn_express()
+                        elif conteudo == "SurfShark":
+                            vpn_surf()
+                        elif conteudo == "BetterNet":
+                            vpn_better()
+                        elif conteudo == "NordVPN":
+                            vpn_nord()
+                        elif conteudo == "HotspotShield":
+                            vpn_hotspotshield()
+                        else:
+                            window['output'].print(
+                                "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                            window.Refresh()
                         sms = True
                         driver.quit()
-                        pass
+                    while sms is False:
+                        try:
+                            time.sleep(3)
+                            WebDriverWait(driver, 30).until(
+                                EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
 
+                            window['output'].print(linha_ret)
+                            window.Refresh()
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Criação de outro perfil.')
+                            window.Refresh()
+                            seguido = False
+                            # subprocess.run(f'adb -s 127.0.0.1:{porta} shell settings get secure android_id', shell=True)
+                            # Clicar no botão de perfil
+
+                            time.sleep(3)
+                            WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.ID,
+                                                                                        'com.instagram.android:id/action_bar_title_chevron'))).click()
+                            time.sleep(2)
+                            # Clicar em perfis
+                            try:
+                                WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH,
+                                                                                                '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[last()]/android.widget.FrameLayout/android.widget.ImageView'))).click()
+                            except Exception as e:
+                                print(e)
+                                print('Erro aq')
+                                time.sleep(200)
+                            # Clicar em adicionar conta
+                            WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.XPATH,
+                                                                                            '//android.widget.Button[@content-desc="Criar nova conta"]'))).click()
+
+                            time.sleep(3)
+                            # Gerar nome de usuário, digitar no campo e clicar em avançae
+                            lista_user = random.choices(range(0, 9), k=2)
+                            lista_letras = random.choices(letras, k=1)
+
+                            with open("storage\\txt\\nomes.txt", "r") as nomes_arquivo:
+                                nomes = nomes_arquivo.readlines()
+
+                            with open("storage\\txt\\sobrenomes.txt", "r") as sobrenomes_arquivo:
+                                sobrenomes = sobrenomes_arquivo.readlines()
+
+                            nomea = fake.first_name_female().replace(" ", "")
+                            nome = unicodedata.normalize('NFKD', nomea).encode('ASCII', 'ignore').decode('ASCII')
+                            sobrenomea = fake.last_name().replace(" ", "").lower()
+                            sobrenome = unicodedata.normalize('NFKD', sobrenomea).encode('ASCII', 'ignore').decode('ASCII')
+                            nome_completo = nome + sobrenome
+                            numeros_concatenados = ''.join(str(numero) for numero in lista_user)
+                            user_completo = nome_completo + '' + str(numeros_concatenados) + ''.join(lista_letras)
+
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Usuário: ' + user_completo)
+                            window.Refresh()
+                            WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
+                                                                                            'com.instagram.android:id/username'))).send_keys(
+                                user_completo)
+                            time.sleep(3)
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,
+                                                                                        'com.instagram.android:id/button_text'))).click()
+                            # Digitar senha e avançar
+                            time.sleep(3)
+                            try:
+                                WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
+                                                                                                'com.instagram.android:id/password'))).send_keys(
+                                    senha)
+                            except:
+                                try:
+                                    conteudo = config['vpn']
+                                    if conteudo == "AVG":
+                                        vpn_avg()
+                                    elif conteudo == "SurfShark":
+                                        vpn_surf()
+                                    elif conteudo == "Avast":
+                                        vpn_avast()
+                                    elif conteudo == "ExpressVPN":
+                                        vpn_express()
+                                    elif conteudo == "PiaVPN":
+                                        vpn_pia()
+                                    elif conteudo == "BetterNet":
+                                        vpn_better()
+                                    elif conteudo == "CyberGhost":
+                                        vpn_cyberghost()
+                                    elif conteudo == "NordVPN":
+                                        vpn_nord()
+                                    elif conteudo == "HotspotShield":
+                                        vpn_hotspotshield()
+                                        break
+                                    else:
+                                        window['output'].print(
+                                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                        window.Refresh()
+
+                                except:
+                                    sms = True
+                            WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID,
+                                                                                        'com.instagram.android:id/button_text'))).click()
+                            # Clicar em concluir cadastro
+                            time.sleep(3)
+                            WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.ID,
+                                                                                            'com.instagram.android:id/button_text'))).click()
+
+                            time.sleep(4)
+                            feedback = driver.find_elements(By.XPATH,
+                                                            '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.View')
+                            if len(feedback) == 1:
+                                sms = True
+
+                            window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Verificando...')
+                            window.Refresh()
+                            # WebDriverWait(driver, 40).until(EC.visibility_of_element_located)(((By.XPATH,
+                            #                                 '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup[*]/android.view.ViewGroup[10]')))
+                            time.sleep(20)
+                            verificar = driver.find_elements(By.ID,
+                                                            'com.instagram.android:id/connect_text')
+                            if len(verificar) == 1:
+                                try:
+                                    conteudo = config['vpn']
+                                    window['output'].print(
+                                        f'[{datetime.now().strftime("%H:%M:%S")}] Conta criada com sucesso.',
+                                        text_color=('lime'))
+                                    window.Refresh()
+                                    contagem += 1
+                                    window['criadas'].update(contagem)
+                                    window.Refresh()
+                                    now = datetime.now()
+                                    now_brasilia = tz.localize(now)
+                                    timestamp = now_brasilia.strftime("%d/%m/%Y %H:%M:%S")
+
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = config['spreadsheet']
+                                    sheet_name = 'contas'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
+                                            conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+                                    rows = sheet.get_all_values()
+
+                                    # Definir uma expressão regular para filtrar as linhas que atendem ao formato especificado
+                                    regex = re.compile(r'\S+\s\S+')
+
+                                    # Filtrar as linhas que atendem à expressão regular e contar o número de linhas
+                                    num_rows = sum(1 for row in rows if regex.match(row[0]))
+                                    window['total'].update(num_rows)
+                                    time.sleep(4)
+                                    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+                                    creds = ServiceAccountCredentials.from_json_keyfile_name('relatorio.json', scope)
+                                    client = gspread.authorize(creds)
+
+                                    spreadsheet_id = '1dA96HvQ8_i5Ybn8daBrffmhwwAjBmsTbrivGMxlJMa4'
+                                    sheet_name = 'relatorio_geral'
+                                    # Insert user, password, and timestamp into first empty row
+                                    sheet = client.open_by_key(spreadsheet_id).worksheet(sheet_name)
+                                    values = sheet.col_values(1)
+                                    last_row = len(values)
+                                    values = [user_completo + ' ' + senha, num + ' - ' + email, timestamp, maquina,
+                                            conteudo + ' - ' + app]
+                                    cell_list = sheet.range(f'A{last_row + 1}:E{last_row + 1}')
+                                    for i, val in enumerate(values):
+                                        cell_list[i].value = val
+                                    sheet.update_cells(cell_list)
+
+
+
+
+                                except:
+                                    pass
+
+                                window.Refresh()
+                                arquivo = open('configuracoes/contas/contas_criadas.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(user_completo + ' ' + senha + "\n")
+                                arquivo = open('configuracoes/contas/contas_criadas_email_incluso.txt', 'a')
+                                # Escreva mais conteúdo no arquivo
+                                arquivo.write(email + '\n' + user_completo + '\n' + senha + "\n\n")
+                                window.Refresh()
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                time.sleep(1)
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/negative_button'))).click()
+                                time.sleep(3)
+                                WebDriverWait(driver, 30).until(
+                                    EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                time.sleep(1)
+                                try:
+                                    WebDriverWait(driver, 6).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                            '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+                                except:
+                                    WebDriverWait(driver, 30).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/skip_button'))).click()
+                                    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,
+                                                                                                '//android.widget.Button[@content-desc="Avançar"]/android.widget.ImageView'))).click()
+
+                                time.sleep(1)
+                                time.sleep(3)
+                                try:
+                                    WebDriverWait(driver, 10).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                except:
+                                    WebDriverWait(driver, 30).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/button_text'))).click()
+                                    WebDriverWait(driver, 10).until(
+                                        EC.element_to_be_clickable((By.ID, 'com.instagram.android:id/profile_tab'))).click()
+                                sms = False
+
+                            else:
+                                try:
+                                    conteudo = config['vpn']
+                                    if conteudo == "AVG":
+                                        vpn_avg()
+                                    elif conteudo == "SurfShark":
+                                        vpn_surf()
+                                    elif conteudo == "Avast":
+                                        vpn_avast()
+                                    elif conteudo == "ExpressVPN":
+                                        vpn_express()
+                                    elif conteudo == "PiaVPN":
+                                        vpn_pia()
+                                    elif conteudo == "BetterNet":
+                                        vpn_better()
+                                    elif conteudo == "CyberGhost":
+                                        vpn_cyberghost()
+                                    elif conteudo == "NordVPN":
+                                        vpn_nord()
+                                    elif conteudo == "HotspotShield":
+                                        vpn_hotspotshield()
+                                        break
+                                    else:
+                                        window['output'].print(
+                                            "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
+                                        window.Refresh()
+
+                                except Exception as e:
+                                    sms = True
+                                    driver.quit()
+                                    pass
+                        except Exception as e:
+                            sms = True
+                            driver.quit()
+                            pass
+
+
+                except Exception as e:
+                    try:
+                        chrome.quit()
+                        driver.quit()
+                    except:
+                        pass
+                    print(e)
+                    pass
 
             except Exception as e:
                 try:
@@ -3239,15 +3349,6 @@ def free_sms():
                     pass
                 print(e)
                 pass
-
-        except Exception as e:
-            try:
-                chrome.quit()
-                driver.quit()
-            except:
-                pass
-            print(e)
-            pass
 
 
 def free_sms_lite():
