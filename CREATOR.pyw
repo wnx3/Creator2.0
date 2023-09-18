@@ -864,6 +864,14 @@ def free_sms_beta():
     while parar is False:
         if parar is True:
             print('Parando Thread')
+            try:
+                chrome.close()
+            except:
+                pass
+            try:
+                chrome.quit()
+            except:
+                pass
             break
         try:
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
@@ -1096,10 +1104,24 @@ def free_sms_beta():
                                 num_33 = False
                         except Exception as e:
                             print(e)
-                            chrome.quit()
+                            try:
+                                chrome.close()
+                            except:
+                                pass
+                            try:
+                                chrome.quit()
+                            except:
+                                pass
                     except Exception as e:
                         print(e)
-                        chrome.quit()
+                        try:
+                            chrome.close()
+                        except:
+                            pass
+                        try:
+                            chrome.quit()
+                        except:
+                            pass
                         raise Exception("skip.")
             except Exception as e:
                 print('_____________________________________')
@@ -1111,12 +1133,27 @@ def free_sms_beta():
 
                 except:
                     pass
+                try:
+                    chrome.close()
+                except:
+                    pass
+                try:
+                    chrome.quit()
+                except:
+                    pass
                 print(e)
 
             try:
                 print(num)
             except:
-                chrome.quit()
+                try:
+                    chrome.close()
+                except:
+                    pass
+                try:
+                    chrome.quit()
+                except:
+                    pass
                 try:
                     subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android',
                                    stdout=subprocess.DEVNULL,
@@ -1788,14 +1825,33 @@ def free_sms_beta():
 
                         except Exception as e:
                             sms = True
+                            try:
+                                chrome.close()
+                            except:
+                                pass
+                            try:
+                                chrome.quit()
+                            except:
+                                pass
                             pass
                 except Exception as e:
-                    sms = True
+                    try:
+                        chrome.close()
+                    except:
+                        pass
+                    try:
+                        chrome.quit()
+                    except:
+                        pass
                     pass
             pass
 
         except Exception as e:
             logger.error('Ocorreu um erro: %s', e)
+            try:
+                chrome.close()
+            except:
+                pass
             try:
                 chrome.quit()
             except:
