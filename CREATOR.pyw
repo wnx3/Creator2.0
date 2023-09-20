@@ -872,7 +872,6 @@ def free_sms_beta():
                 chrome.quit()
             except:
                 pass
-            break
         try:
             subprocess.run(f'adb -s 127.0.0.1:{porta} shell pm clear com.instagram.android', stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, check=True, shell=True)
@@ -889,10 +888,12 @@ def free_sms_beta():
             window['output'].print(linha_ret)
             window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Abrindo instagram.')
             window.Refresh()
-            time.sleep(10)
+            time.sleep(20)
             try:
                 d.xpath('//android.widget.Button[@content-desc="Criar nova conta"]').click(timeout=200)
             except:
+                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Página estática.')
+                window.Refresh()
                 stop = True
                 conteudo = config['vpn']
                 if conteudo == "AVG":
@@ -1817,13 +1818,13 @@ def free_sms_beta():
                                 vpn_nord()
                             elif conteudo == "HotspotShield":
                                 vpn_hotspotshield()
-                                break
                             else:
                                 window['output'].print(
                                     "Verifique se escreveu certo a VPN que deseja.\nOBS: Não pode conter espaços e o conteúdo tem que ser todo minúsculo")
                                 window.Refresh()
 
                         except Exception as e:
+                            print(e)
                             sms = True
                             try:
                                 chrome.close()
@@ -1835,6 +1836,7 @@ def free_sms_beta():
                                 pass
                             pass
                 except Exception as e:
+                    print(e)
                     try:
                         chrome.close()
                     except:
@@ -1843,6 +1845,7 @@ def free_sms_beta():
                         chrome.quit()
                     except:
                         pass
+                    sms = True
                     pass
             pass
 
@@ -12673,6 +12676,10 @@ def executar_2nr_insta():
                     window['output'].print(
                         f'[{datetime.now().strftime("%H:%M:%S")}] Ocorreu um erro ao clicar em login. Tentando novamente.')
                     window.Refresh()
+                    subprocess.run(
+                        f'uiautomator2 -s 127.0.0.1:{porta} uninstall com.github.uiautomator',
+                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, shell=True)
+                    raise Exception('Ocorreu um erro ao clicar em login.')
                 time.sleep(5)
                 spreadsheet_id = config['spreadsheet']
                 sheet_name = config['2nr']
