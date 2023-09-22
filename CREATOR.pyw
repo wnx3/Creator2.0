@@ -16068,7 +16068,6 @@ def executar_creator_2nr():
     while True:
         window['output'].print(linha_ret)
         window.Refresh()
-        print(troca_ip)
         try:
             if troca_ip == 5:
                 try:
@@ -16229,12 +16228,12 @@ def executar_creator_2nr():
                     try:
                         response = requests.get(url)
                         if response.status_code == 200:
-                            print(f"Requisição bem-sucedida!")
+                            pass
                         else:
                             print(f"Falha na requisição. Código de status: {response.status_code}")
                     except requests.exceptions.RequestException as e:
                         print(f"Erro na requisição: {e}")
-
+                    
                 while subject == False:
                     for mail in inbox.mails:
                         time.sleep(10)
@@ -16264,7 +16263,7 @@ def executar_creator_2nr():
                             subject = True
 
                 troca_ip += 1
-
+                print(f"Email confirmado.")
                 d(resourceId='pl.rs.sip.softphone.newapp:id/buttonOk').click()
                 d.xpath('//android.widget.LinearLayout[@content-desc="Log in"]/android.widget.TextView').click()
                 d(resourceId='pl.rs.sip.softphone.newapp:id/emailEdiText').set_text(email)
@@ -16274,7 +16273,9 @@ def executar_creator_2nr():
                 d(resourceId='pl.rs.sip.softphone.newapp:id/addNumber').click()
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] 2NR criado com sucesso.',
                                        text_color=('cyan'))
+                
                 contagem = contagem + 1
+                print(f'Contas criadas: {contagem}')
                 try:
                     arquivo = open('configuracoes/contas/contas2nr.txt', 'x')
                 except FileExistsError:
@@ -16282,7 +16283,7 @@ def executar_creator_2nr():
 
                 arquivo.write(email + ' ' + senha + "\n")
                 arquivo.close()
-                window['criadas'].update(contagem)
+                window['quantidade'].update(contagem)
                 window.Refresh()
                 d(resourceId='pl.rs.sip.softphone.newapp:id/inputNumberName').set_text(
                     random.choice(list(range(1, 100))))
@@ -16299,13 +16300,11 @@ def executar_creator_2nr():
                     success = d(resourceId='pl.rs.sip.softphone.newapp:id/captchaCode').get_text()
                     if success == 'Successful verification':
                         break
-                    elif success == 'Veryfication failed':
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Falha na verificação.')
+                    elif success == 'Verification failed':
+                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Falha no verificação.')
                         window.Refresh()
                         raise Exception('Falha na verificação.')
                     tries += 1
-                window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Captcha aceito.')
-                window.Refresh()
                 d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
                 window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número criado com sucesso.',
                                        text_color=('lime'))
@@ -16313,12 +16312,17 @@ def executar_creator_2nr():
                 sms = False
                 while sms is False:
                     try:
-                        d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        try:
+                            d(resourceId='pl.rs.sip.softphone.newapp:id/settings').click()
+                        except:
+                            raise Exception(' ')
                         d(resourceId='pl.rs.sip.softphone.newapp:id/numbers').click()
                         time.sleep(2)
                         d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
-
-                        d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                        try:
+                            d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
+                        except:
+                            raise Exception(' ')
                         time.sleep(1)
                         d(resourceId='pl.rs.sip.softphone.newapp:id/buttonAgree').click()
                         d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
@@ -16330,8 +16334,6 @@ def executar_creator_2nr():
                             if success == 'Successful verification':
                                 break
                             tries += 1
-                        window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Captcha aceito.')
-                        window.Refresh()
                         d(resourceId='pl.rs.sip.softphone.newapp:id/save').click()
                         window['output'].print(f'[{datetime.now().strftime("%H:%M:%S")}] Número criado com sucesso.',
                                                text_color=('lime'))
@@ -16713,6 +16715,7 @@ while True:
                         layout_configuracoes[7][0].update(value=config.get("2nr", ""))
 
     if event == 'CREATOR 2NR':
+        contagem = 0
         dialog_layout = [
             [sg.Text('Digite a porta:', font=('Open Sans', 10))],
             [sg.Input(key='port', font=('Open Sans', 10))],
@@ -16772,8 +16775,7 @@ while True:
             [
                 sg.Button('Executar', button_color='#1c2024'),
                 sg.Button('Configurações', key='-config-', button_color='#1c2024'),
-                sg.Image(filename=check_img, pad=((40, 0), 0)), sg.Text('0', key='total'),
-                sg.Image(filename=criada_img, pad=((0, 0), 0)), sg.Text('0', key='criadas'),
+                sg.Image(filename=criada_img, pad=((90, 0), 0)), sg.Text('0', key='quantidade'),
                 sg.Image(filename=time_img, pad=((0, 0), 0)), sg.Text("00:00:00", key="-TIME-", pad=((0, 0), 0))
             ]
         ]
@@ -16811,7 +16813,7 @@ while True:
                     while running:
                         current_time = time.time() - start_time
                         window["-TIME-"].update(format_time(int(current_time)))
-                        window['criadas'].update(contagem)
+                        #window['criadas'].update(contagem)
                         window.refresh()  # Atualiza a interface do usuário
 
 
